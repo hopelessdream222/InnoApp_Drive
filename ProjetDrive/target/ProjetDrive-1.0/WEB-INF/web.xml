@@ -8,6 +8,10 @@
         <servlet-name>Accueil</servlet-name>
         <jsp-file>/ajax/Accueil.html</jsp-file>
     </servlet>
+    <servlet>
+        <servlet-name>ServletConnexion</servlet-name>
+        <servlet-class>metier.action.ServletConnexion</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ServletDetailProd</servlet-name>
         <url-pattern>/ServletDetailProd</url-pattern>
@@ -15,6 +19,10 @@
     <servlet-mapping>
         <servlet-name>Accueil</servlet-name>
         <url-pattern>/Accueil</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletConnexion</servlet-name>
+        <url-pattern>/ServletConnexion</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
