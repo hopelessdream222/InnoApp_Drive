@@ -2,12 +2,14 @@ miage\dao\nbDde.class
 miage\metier\Fournisseur.class
 miage\metier\LigneCommandeId.class
 miage\metier\Stocker.class
+miage\metier\PanierId.class
 miage\metier\FournirId.class
 miage\dao\TestHibernate.class
 miage\metier\Client.class
 miage\metier\Fournir.class
 miage\metier\StockerId.class
 miage\metier\Rayon.class
+metier\action\ServletDetailProd.class
 miage\dao\HibernateUtil.class
 miage\metier\Magasin.class
 miage\metier\Categorie.class
