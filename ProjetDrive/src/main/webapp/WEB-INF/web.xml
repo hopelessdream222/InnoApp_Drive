@@ -4,9 +4,17 @@
         <servlet-name>ServletDetailProd</servlet-name>
         <servlet-class>metier.action.ServletDetailProd</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Accueil</servlet-name>
+        <jsp-file>/ajax/Accueil.html</jsp-file>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ServletDetailProd</servlet-name>
         <url-pattern>/ServletDetailProd</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Accueil</servlet-name>
+        <url-pattern>/Accueil</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
