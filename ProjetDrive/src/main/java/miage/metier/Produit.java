@@ -63,6 +63,7 @@ public class Produit {
 
     public Produit() {
     }
+    
 
     public Produit(String libelleP, float prixUnitaireP, float prixKGP, String nutriScoreP, Blob photoP, String labelP, String formatP, String conditionnementP, Categorie categorieP) {
         this.libelleP = libelleP;
