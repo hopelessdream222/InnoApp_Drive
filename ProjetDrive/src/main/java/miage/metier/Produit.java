@@ -56,6 +56,11 @@ public class Produit {
     @MapKeyJoinColumn(name = "IdP")
     private Map<Magasin, Stocker> stockages=new HashMap(0);
     
+    // Relation <Panier>
+    @OneToMany(mappedBy = "produits",cascade=CascadeType.ALL)
+    @MapKeyJoinColumn(name = "IdP")
+    private Map<Client, Panier> paniers=new HashMap(0);
+    
     // Relation <Fournir>
     //@OneToMany(mappedBy = "produits",cascade=CascadeType.ALL)
     //@MapKeyJoinColumn(name = "IdP")

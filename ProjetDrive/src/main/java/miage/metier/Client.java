@@ -5,7 +5,9 @@
  */
 package miage.metier;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -14,6 +16,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.MapKeyJoinColumn;
 import javax.persistence.OneToMany;
 
 /**
@@ -35,6 +38,11 @@ public class Client {
     // relation <Passer>
     @OneToMany(mappedBy = "clientCmd", cascade= CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Commande> commandes = new HashSet<>(0);
+    
+    // Relation <Panier>
+    @OneToMany(mappedBy = "clients",cascade=CascadeType.ALL)
+    @MapKeyJoinColumn(name = "IdCli")
+    private Map<Produit, Panier> paniers=new HashMap(0);
 
     public Client() {
     }

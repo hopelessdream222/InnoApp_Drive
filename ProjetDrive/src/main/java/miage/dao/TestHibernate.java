@@ -30,7 +30,7 @@ public class TestHibernate
 	 */
 
 	/*----- Création et enregistrement d'employés -----*/
-	public static List<Produit> chercherCinqProduits ()
+	public static List<Produit> chercherCinqProduits()
 		{
 		/*----- Ouverture de la session -----*/
 		try (Session session = HibernateUtil.getSessionFactory().getCurrentSession())

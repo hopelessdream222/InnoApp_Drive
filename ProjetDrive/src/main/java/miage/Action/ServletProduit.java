@@ -1,39 +1,27 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package miage.Action;
+package miage.action;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- *
- * @author ccc
- */
-public class ServletProduit extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
+/**
+ * Cette servlet retourne un flux XML.
+ */
+public class ServletProduit extends HttpServlet
+{
+	@Override
+	protected void doGet (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+		{
+		/*----- Type de la réponse -----*/
+		response.setContentType("application/xml;charset=UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		try (PrintWriter out = response.getWriter())
+			{
 			/*----- Ecriture de la page XML -----*/
 			out.println("<?xml version=\"1.0\"?>");
 			out.println("<liste_produit>");
@@ -41,57 +29,19 @@ public class ServletProduit extends HttpServlet {
 			//String nom = request.getParameter("nomauteur");
 			try {
 				/*----- Lecture de liste de mots dans la BD -----*/
-				List<miage.metier.Produit>  listeP = miage.dao.TestHibernate.chercherCinqProduits ();
+				List<miage.metier.Produit>  listeP = miage.dao.TestHibernate.chercherCinqProduits();
 				for (miage.metier.Produit p: listeP)
-                                       out.println("<libelleP>" + p.getLibelleP() + "</libelleP> <photoP>" + p.getPhotoP() + "</photoP>");
+                                      out.println("<libelleP>" + p.getLibelleP() + "</libelleP>");
+                                //out.println("<libelleP>" + p.getLibelleP() + "</libelleP> <photoP>" + p.getPhotoP() + "</photoP>");
 				}
-                        
-			catch (Exception ex)
-				{
-				out.println("<photo>Erreur - " + ex.getMessage() + "</photo>");
+			catch (Exception ex){
+				out.println("<libelle>Erreur - " + ex.getMessage() + "</libelle>");
 				}
-
 			out.println("</liste_produit>");
 			}
-    }
+		}
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
+	@Override
+	protected void doPost (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException { doGet(request, response); }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
-}
+} /*----- Fin de la servlet ServletAuteur -----*/

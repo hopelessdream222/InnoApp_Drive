@@ -1,7 +1,8 @@
-miage\Action\ServletProduit.class
 miage\dao\nbDde.class
 miage\metier\Fournisseur.class
+miage\metier\Panier.class
 miage\metier\LigneCommandeId.class
+miage\action\ServletProduit.class
 miage\metier\Stocker.class
 miage\metier\PanierId.class
 miage\metier\FournirId.class

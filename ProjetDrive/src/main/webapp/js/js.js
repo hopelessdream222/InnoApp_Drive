@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-function afficheXM ()
+function afficheXML()
 	{
 	// Objet XMLHttpRequest.
 	var xhr = new XMLHttpRequest();
@@ -17,20 +17,20 @@ function afficheXM ()
 		if (xhr.status === 200)
 			{
 			// Elément html que l'on va mettre à jour.
-			var elt = document.getElementById("tt_zone");
+			var elt = document.getElementById("listeP");
                         var res = xhr.responseXML.getElementsByTagName("libelleP");
                         var text="";			
                         for(var i=0;i<res.length;i++){
-                            text+="<p>"+res[i].firstChild.nodeValue+"</p>";
+                            text+=res[i].firstChild.nodeValue;
                         }
-			elt.innerHTML = xhr.responseText;
+			elt.innerHTML = text;
 			}
 		};
-	
 	// Envoie de la requête.
 	xhr.send();
 	}
-    document.addEventListener("DOMContentLoaded", () => {
+        
+document.addEventListener("DOMContentLoaded", () => {
 	document.getElementById("bt_zone").addEventListener("click",afficheXML);
-    });
+});
 
