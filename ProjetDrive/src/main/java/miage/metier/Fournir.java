@@ -1,4 +1,4 @@
-
+//.
 package miage.metier;
 
 import java.io.Serializable;
@@ -20,7 +20,7 @@ public class Fournir implements Serializable{
     private int qteFP;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dateF;
-    
+     
     @ManyToOne
     @JoinColumn(name="idP",insertable=false,updatable=false)
     private Produit produits;
