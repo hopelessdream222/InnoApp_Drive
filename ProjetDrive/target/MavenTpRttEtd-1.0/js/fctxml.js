@@ -88,9 +88,16 @@ function testEncodeUrl ()
 	xhr.send(param);
 	}
 
+<<<<<<< HEAD
 
 function afficheDetail ()
 	{
+=======
+window.onload=afficheDetail();
+function afficheDetail ()
+	{
+            alert("123");
+>>>>>>> ZHOU
 	// Objet XMLHttpRequest.
 	var xhr = new XMLHttpRequest();
 
@@ -98,6 +105,7 @@ function afficheDetail ()
 	xhr.open("GET","ServletDetailProd");
 
 	// On précise ce que l'on va faire quand on aura reçu la réponse du serveur.
+<<<<<<< HEAD
 	xhr.onload = function()
 		{
 		// Si la requête http s'est bien passée.
@@ -109,6 +117,19 @@ function afficheDetail ()
                     elt.innerHTML = xhr.responseText;
                     }
 		};
+=======
+	xhr.onload = function(){
+            // Si la requête http s'est bien passée.
+            if (xhr.status === 200){  
+                for(var i=2; i<=5;i++){
+                    // Elément html que l'on va mettre à jour.
+                    var elt = document.getElementById("image"+i);
+                    elt.innerHTML = "<img src='"+xhr.responseXML.getElementsByTagName("src")[0].firstChild.nodeValue+"'>";
+                    document.getElementById("image"+i+"_prodId").innerHTML=xhr.responseXML.getElementsByTagName("idProd")[0].firstChild.nodeValue;
+                }
+            }
+        };
+>>>>>>> ZHOU
 	
 	// Envoie de la requête.
 	xhr.send();
