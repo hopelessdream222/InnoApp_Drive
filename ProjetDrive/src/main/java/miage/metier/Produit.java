@@ -61,4 +61,5 @@ public class Produit {
     //@MapKeyJoinColumn(name = "IdP")
     private Map<Magasin, Map<Fournisseur,Fournir>> fournirs=new HashMap(0);
        
+    
 }
