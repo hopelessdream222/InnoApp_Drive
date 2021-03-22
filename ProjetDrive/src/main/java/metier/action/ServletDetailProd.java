@@ -49,7 +49,9 @@ public class ServletDetailProd extends HttpServlet {
             ArrayList<Produit> lProduits = ;
 
             for (Produit produit : lProduits){
-                    out.println("<idProd>" + produit + "</idProd>");
+                    out.println("<idProd>" + produit.getIdP() + "</idProd>");
+                    produit.getPhotoP()
+                    out.print("<idPhoto>"+ produit.getPhotoP() + "</idPhoto>");
             }
             out.println("</liste_produit>");
         }
