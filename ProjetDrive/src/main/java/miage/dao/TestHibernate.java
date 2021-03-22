@@ -30,7 +30,7 @@ public class TestHibernate
 	 */
 
 	/*----- Création et enregistrement d'employés -----*/
-	public static void enrgEmployes ()
+	public static void chercherCinqProduits ()
 		{
 		/*----- Ouverture de la session -----*/
 		try (Session session = HibernateUtil.getSessionFactory().getCurrentSession())
@@ -47,7 +47,7 @@ public class TestHibernate
 	 */
 	public static void main(String[] args) 
 		{
-                   TestHibernate.enrgEmployes();
+                   TestHibernate.chercherCinqProduits();
 		/*----- Exit -----*/
 		System.exit(0);
 		}
