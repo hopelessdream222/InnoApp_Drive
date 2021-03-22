@@ -67,17 +67,17 @@ public class TestHibernate
                         }
                         fos.close();
                         inputStream.close();
-                    }                   
+                    }
                 // ...
                 t.commit(); // Commit et flush automatique de la session.
                 }
         }
-        
-        
+
+
 	/**
 	 * Programme de test.
 	 */
-	public static void main(String[] args) throws IOException, FileNotFoundException, SQLException 
+	public static void main(String[] args) throws IOException, FileNotFoundException, SQLException
 		{
                    TestHibernate.chercherCinqProduits();
                     //TestHibernate.loadPhotos();

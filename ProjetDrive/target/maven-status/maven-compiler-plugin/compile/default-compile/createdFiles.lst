@@ -1,3 +1,4 @@
+miage\Action\ServletProduit.class
 miage\dao\nbDde.class
 miage\metier\Fournisseur.class
 miage\metier\LigneCommandeId.class
