@@ -32,6 +32,68 @@ public class Rayon {
     // relation <Situer>
     @OneToMany(mappedBy = "rayonCat", cascade= CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Categorie> categories = new HashSet<>(0);
+
+    public Rayon() {
+    }
+
+    public Rayon(String libelleRay) {
+        this.libelleRay = libelleRay;
+    }
+
+    public int getIdRay() {
+        return idRay;
+    }
+
+    public void setIdRay(int idRay) {
+        this.idRay = idRay;
+    }
+
+    public String getLibelleRay() {
+        return libelleRay;
+    }
+
+    public void setLibelleRay(String libelleRay) {
+        this.libelleRay = libelleRay;
+    }
+
+    public Set<Categorie> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Set<Categorie> categories) {
+        this.categories = categories;
+    }
+
+    @Override
+    public String toString() {
+        return "Rayon{" + "idRay=" + idRay + ", libelleRay=" + libelleRay + ", categories=" + categories + '}';
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 97 * hash + this.idRay;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Rayon other = (Rayon) obj;
+        if (this.idRay != other.idRay) {
+            return false;
+        }
+        return true;
+    }
+    
     
    
     

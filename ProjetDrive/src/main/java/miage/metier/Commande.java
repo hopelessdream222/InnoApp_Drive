@@ -45,6 +45,89 @@ public class Commande {
     @ManyToOne(fetch =FetchType.EAGER)  
     @JoinColumn(name = "idMag")
     private Magasin magasinCmd;
+
+    public Commande() {
+    }
+    
+    
+    public Commande(Date datecmd, Client clientCmd, Magasin magasinCmd) {
+        this.datecmd = datecmd;
+        this.clientCmd = clientCmd;
+        this.magasinCmd = magasinCmd;
+    }
+
+    public int getIdCmd() {
+        return idCmd;
+    }
+
+    public void setIdCmd(int idCmd) {
+        this.idCmd = idCmd;
+    }
+
+    public Date getDatecmd() {
+        return datecmd;
+    }
+
+    public void setDatecmd(Date datecmd) {
+        this.datecmd = datecmd;
+    }
+
+    public Map<Produit, LigneCommande> getLignecommandes() {
+        return lignecommandes;
+    }
+
+    public void setLignecommandes(Map<Produit, LigneCommande> lignecommandes) {
+        this.lignecommandes = lignecommandes;
+    }
+
+    public Client getClientCmd() {
+        return clientCmd;
+    }
+
+    public void setClientCmd(Client clientCmd) {
+        this.clientCmd = clientCmd;
+    }
+
+    public Magasin getMagasinCmd() {
+        return magasinCmd;
+    }
+
+    public void setMagasinCmd(Magasin magasinCmd) {
+        this.magasinCmd = magasinCmd;
+    }
+
+    @Override
+    public String toString() {
+        return "Commande{" + "idCmd=" + idCmd + ", datecmd=" + datecmd + ", lignecommandes=" + lignecommandes + ", clientCmd=" + clientCmd + ", magasinCmd=" + magasinCmd + '}';
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 59 * hash + this.idCmd;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Commande other = (Commande) obj;
+        if (this.idCmd != other.idCmd) {
+            return false;
+        }
+        return true;
+    }
+    
+    
+    
     
     
     
