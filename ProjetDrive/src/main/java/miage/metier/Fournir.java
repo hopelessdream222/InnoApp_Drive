@@ -1,4 +1,4 @@
-//.
+//...
 package miage.metier;
 
 import java.io.Serializable;
