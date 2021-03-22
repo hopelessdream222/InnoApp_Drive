@@ -30,15 +30,19 @@ public class TestHibernate
 	 */
 
 	/*----- Création et enregistrement d'employés -----*/
-	public static void chercherCinqProduits ()
+	public static List<Produit> chercherCinqProduits ()
 		{
 		/*----- Ouverture de la session -----*/
 		try (Session session = HibernateUtil.getSessionFactory().getCurrentSession())
 			{
 			/*----- Ouverture d'une transaction -----*/
 			Transaction t = session.beginTransaction();
-			// ...
-                        t.commit(); // Commit et flush automatique de la session.
+                        //List<Produit> liste = session.createQuery("select new miage.metier.Produit(libelleP,prixUnitaireP,prixKGP,nutriScoreP,photoP,labelP,formatP,conditionnementP,categorieP) from Produit where idP<=5").list();
+                        List<Produit> liste = session.createQuery("from Produit where idP<=5").list();
+                        //for(Produit p:liste)
+                           //System.out.println("Produit: "+p.getLibelleP()+"photo:"+p.getPhotoP());        
+                       // t.commit(); // Commit et flush automatique de la session.
+                       return liste;
 			}
 		}
 
