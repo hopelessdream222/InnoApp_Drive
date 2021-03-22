@@ -35,6 +35,105 @@ public class Client {
     // relation <Passer>
     @OneToMany(mappedBy = "clientCmd", cascade= CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Commande> commandes = new HashSet<>(0);
+
+    public Client() {
+    }
+    
+    public Client(String nomCli, String prenomCli, String emailCli, String telCli, String pointCli) {
+        this.nomCli = nomCli;
+        this.prenomCli = prenomCli;
+        this.emailCli = emailCli;
+        this.telCli = telCli;
+        this.pointCli = pointCli;
+    }
+
+    public int getIdCli() {
+        return idCli;
+    }
+
+    public void setIdCli(int idCli) {
+        this.idCli = idCli;
+    }
+
+    public String getNomCli() {
+        return nomCli;
+    }
+
+    public void setNomCli(String nomCli) {
+        this.nomCli = nomCli;
+    }
+
+    public String getPrenomCli() {
+        return prenomCli;
+    }
+
+    public void setPrenomCli(String prenomCli) {
+        this.prenomCli = prenomCli;
+    }
+
+    public String getEmailCli() {
+        return emailCli;
+    }
+
+    public void setEmailCli(String emailCli) {
+        this.emailCli = emailCli;
+    }
+
+    public String getTelCli() {
+        return telCli;
+    }
+
+    public void setTelCli(String telCli) {
+        this.telCli = telCli;
+    }
+
+    public String getPointCli() {
+        return pointCli;
+    }
+
+    public void setPointCli(String pointCli) {
+        this.pointCli = pointCli;
+    }
+
+    public Set<Commande> getCommandes() {
+        return commandes;
+    }
+
+    public void setCommandes(Set<Commande> commandes) {
+        this.commandes = commandes;
+    }
+
+    @Override
+    public String toString() {
+        return "Client{" + "idCli=" + idCli + ", nomCli=" + nomCli + ", prenomCli=" + prenomCli + ", emailCli=" + emailCli + ", telCli=" + telCli + ", pointCli=" + pointCli + ", commandes=" + commandes + '}';
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 37 * hash + this.idCli;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Client other = (Client) obj;
+        if (this.idCli != other.idCli) {
+            return false;
+        }
+        return true;
+    }
+    
+    
     
     
 }
