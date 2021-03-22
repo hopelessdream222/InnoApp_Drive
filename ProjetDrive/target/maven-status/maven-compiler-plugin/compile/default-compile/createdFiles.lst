@@ -1,7 +1,9 @@
+miage\Action\ServletProduit.class
 miage\dao\nbDde.class
 miage\metier\Fournisseur.class
 miage\metier\LigneCommandeId.class
 miage\metier\Stocker.class
+miage\metier\PanierId.class
 miage\metier\FournirId.class
 miage\dao\TestHibernate.class
 miage\metier\Client.class
