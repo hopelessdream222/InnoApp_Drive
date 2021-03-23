@@ -34,7 +34,15 @@ function afficherMag (){
     }
     
 function choisirMag(){
-    var idMag = this.getElementById("idMag").value;
+    var radio = document.getElementsByName("magasin");
+    var idMag = 0;
+    for(j=0; j<radio.length;j++){
+        if(radio[j].checked){
+            idMag = radio[j].value;          
+        }
+    }
+    
+    alert(idMag);
     // Objet XMLHttpRequest.
     var xhr = new XMLHttpRequest();
 

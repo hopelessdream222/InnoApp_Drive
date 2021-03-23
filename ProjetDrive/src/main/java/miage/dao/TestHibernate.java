@@ -113,7 +113,7 @@ public class TestHibernate
 		{
                     //System.out.println(TestHibernate.chercherCinqProduits());
                     //TestHibernate.loadPhotos();
-                    System.out.println(TestHibernate.obtenirMagasins());
+                   TestHibernate.obtenirMagasins();
 		/*----- Exit -----*/
 		System.exit(0);
 		}
