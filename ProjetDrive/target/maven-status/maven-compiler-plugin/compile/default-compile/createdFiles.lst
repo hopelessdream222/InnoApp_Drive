@@ -1,12 +1,13 @@
 miage\dao\nbDde.class
+metier\action\ServletChoisirMagasin.class
+miage\metier\Comporter.class
 miage\metier\Fournisseur.class
 miage\metier\Panier.class
+metier\action\ServletConnexion.class
 miage\metier\LigneCommandeId.class
 miage\metier\Stocker.class
-miage\metier\PanierId.class
 miage\metier\FournirId.class
 miage\dao\TestHibernate.class
-metier\action\ServletLirePanier.class
 miage\metier\Client.class
 miage\metier\Fournir.class
 miage\metier\StockerId.class
@@ -16,6 +17,7 @@ miage\dao\HibernateUtil.class
 miage\metier\Magasin.class
 miage\metier\Categorie.class
 miage\metier\LigneCommande.class
+miage\metier\ComporterId.class
 miage\metier\Produit.class
-metier\action\ServletAjouterPanier.class
+metier\action\ServletAfficherMagasins.class
 miage\metier\Commande.class

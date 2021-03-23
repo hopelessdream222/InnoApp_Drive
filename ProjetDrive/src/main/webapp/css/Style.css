@@ -32,11 +32,11 @@ body {
 	float: left;
 	width: 50%;
 	height: 300px;
-	background-color: red;
+	background-color: gray;
 	margin-bottom:1%;
 }
 .right{
-	background-color: orange;
+	background-color: DarkSeaGreen1;
 	margin-left: 310px;
 	height: 300px;
 	margin-bottom:1%;
@@ -48,7 +48,12 @@ body {
 	height: 300px;
 	margin-bottom:1%;
 }
-
+.magasin{   
+        border-style: solid;
+        border-color: black;
+        background-color: pink;
+        margin-bottom:2%; 
+}
 
 
 /*

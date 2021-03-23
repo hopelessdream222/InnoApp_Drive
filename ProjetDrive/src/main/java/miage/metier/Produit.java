@@ -5,7 +5,6 @@
  */
 package miage.metier;
 
-import java.io.Serializable;
 import java.sql.Blob;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,8 +25,8 @@ import javax.persistence.OneToMany;
  * @author ccc
  */
 
-@Entity
-public class Produit{
+@Entity (name="Produit")
+public class Produit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="idP")
@@ -61,16 +60,6 @@ public class Produit{
     @OneToMany(mappedBy = "produits",cascade=CascadeType.ALL)
     @MapKeyJoinColumn(name = "IdP")
     private Map<Panier, Comporter> comportements=new HashMap(0);
-    
-    // Relation <Panier>
-    //@OneToMany(mappedBy = "produits",cascade=CascadeType.ALL)
-    //@MapKeyJoinColumn(name = "IdP")
-    //private Map<Client, Panier> paniers=new HashMap(0);
-    
-    // Relation <Fournir>
-    //@OneToMany(mappedBy = "produits",cascade=CascadeType.ALL)
-    //@MapKeyJoinColumn(name = "IdP")
-    //private Map<Magasin, Map<Fournisseur,Fournir>> fournirs=new HashMap(0);
 
     public Produit() {
     }
@@ -184,11 +173,19 @@ public class Produit{
         this.stockages = stockages;
     }
 
-    @Override
-    public String toString() {
-        return "Produit{" + "idP=" + idP + ", libelleP=" + libelleP + ", prixUnitaireP=" + prixUnitaireP + ", prixKGP=" + prixKGP + ", nutriScoreP=" + nutriScoreP + ", photoP=" + photoP + ", labelP=" + labelP + ", formatP=" + formatP + ", conditionnementP=" + conditionnementP + ", categorieP=" + categorieP + ", ligneCommandes=" + ligneCommandes + ", stockages=" + stockages + '}';
+    public Map<Panier, Comporter> getComportements() {
+        return comportements;
     }
 
+    public void setComportements(Map<Panier, Comporter> comportements) {
+        this.comportements = comportements;
+    }
+
+    @Override
+    public String toString() {
+        return "libelle:" + libelleP + ", prix Unitaire:" + prixUnitaireP + ", prix/kg:" + prixKGP + ", nutri Score:" + nutriScoreP;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 7;
@@ -216,4 +213,5 @@ public class Produit{
     
     
        
+    
 }

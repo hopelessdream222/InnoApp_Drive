@@ -5,9 +5,7 @@
  */
 package miage.metier;
 
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -17,10 +15,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.MapKeyJoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 
 /**
  *
@@ -35,28 +31,46 @@ public class Client {
     private String nomCli;
     private String prenomCli;
     private String emailCli;
+    private String mdpCli;
     private String telCli;
     private String pointCli;
-    private String mdpCli;
     
     // relation <Passer>
     @OneToMany(mappedBy = "clientCmd", cascade= CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Commande> commandes = new HashSet<>(0);
-    
-    // relation <Posseder>
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="panier_fk")
     private Panier panier;
-
+        
     public Client() {
     }
     
-    public Client(String nomCli, String prenomCli, String emailCli, String telCli, String pointCli) {
+    public Client(String nomCli, String prenomCli, String emailCli,String mdpCli, String telCli, String pointCli) {
         this.nomCli = nomCli;
         this.prenomCli = prenomCli;
         this.emailCli = emailCli;
+        this.mdpCli=mdpCli;
         this.telCli = telCli;
         this.pointCli = pointCli;
+    }
+
+    public Client(int idCli, String nomCli, String prenomCli, String emailCli, String mdpCli, String telCli, String pointCli) {
+        this.idCli = idCli;
+        this.nomCli = nomCli;
+        this.prenomCli = prenomCli;
+        this.emailCli = emailCli;
+        this.mdpCli = mdpCli;
+        this.telCli = telCli;
+        this.pointCli = pointCli;
+    }
+
+    public String getMdpCli() {
+        return mdpCli;
+    }
+
+    public void setMdpCli(String mdpCli) {
+        this.mdpCli = mdpCli;
     }
 
     public int getIdCli() {
@@ -107,15 +121,6 @@ public class Client {
         this.pointCli = pointCli;
     }
 
-    public String getMdpCli() {
-        return mdpCli;
-    }
-
-    public void setMdpCli(String mdpCli) {
-        this.mdpCli = mdpCli;
-    }
-    
-
     public Set<Commande> getCommandes() {
         return commandes;
     }
@@ -124,9 +129,17 @@ public class Client {
         this.commandes = commandes;
     }
 
+    public Panier getPanier() {
+        return panier;
+    }
+
+    public void setPanier(Panier panier) {
+        this.panier = panier;
+    }
+
     @Override
     public String toString() {
-        return "Client{" + "idCli=" + idCli + ", nomCli=" + nomCli + ", prenomCli=" + prenomCli + ", emailCli=" + emailCli + ", telCli=" + telCli + ", pointCli=" + pointCli + ", commandes=" + commandes + '}';
+        return "Client{" + "idCli=" + idCli + ", nomCli=" + nomCli + ", prenomCli=" + prenomCli + ", emailCli=" + emailCli + ", mdpCli=" + mdpCli + ", telCli=" + telCli + ", pointCli=" + pointCli + '}';
     }
 
     @Override
