@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import static miage.dao.TestHibernate.chercherCinqProduits;
 import miage.metier.Client;
 import miage.metier.Produit;
 
@@ -39,9 +38,9 @@ public class ServletConnexion extends HttpServlet {
         String id = request.getParameter("id");
         String mdp = request.getParameter("mdp");
         //Appeler la method avec id et mdp
-        Client client= null;
-        
-        if(client==null){
+        Client client= miage.dao.TestHibernate.clientConnecter(id,mdp);
+        System.out.println("---------"+client);
+        if(client.getEmailCli()==null){
             /*----- Type de la réponse -----*/
             response.setContentType("application/xml;charset=UTF-8");
             response.setCharacterEncoding("UTF-8");
@@ -49,9 +48,13 @@ public class ServletConnexion extends HttpServlet {
                 /*----- Ecriture de la page XML -----*/
                 //Si on trouve pas de client, on fait une response de "echec"
                 out.println("<?xml version=\"1.0\"?>");
-                out.println("<responseConnection>echec</responseCoonection>");
+                out.println("<responseConnection>");
+                out.println("<res>echec</res>");
+                out.println("</responseConnection>");
+                System.out.println("---echec---");
             }
         }else{
+            System.out.println("---reussi---");
             HttpSession s = request.getSession();
             s.setAttribute("client", client);
             /*----- Type de la réponse -----*/
@@ -61,7 +64,7 @@ public class ServletConnexion extends HttpServlet {
                 /*----- Ecriture de la page XML -----*/
                 //Si on trouve pas de client, on fait une response de "echec"
                 out.println("<?xml version=\"1.0\"?>");
-                out.println("<responseConnection>reussi</responseCoonection>");
+                out.println("<responseConnection><res>reussi</res></responseConnection>");
             }
             //A completer -- navigation vers la page accueil
             //request.getRequestDispatcher("Accueil").forward(request,response);
@@ -77,5 +80,9 @@ public class ServletConnexion extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    private Client clientConnecter() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
 }

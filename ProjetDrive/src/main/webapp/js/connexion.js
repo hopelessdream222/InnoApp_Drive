@@ -11,6 +11,7 @@ function seConnecter ()
         
         var id = document.getElementById("identifiant").value;
         var mdp = document.getElementById("mdp").value;
+        alert(id);
 	// Requête au serveur avec les paramètres éventuels.
 	xhr.open("GET","ServletConnexion?id="+id+"&mdp="+mdp);
 
@@ -18,7 +19,7 @@ function seConnecter ()
 	xhr.onload = function(){
             // Si la requête http s'est bien passée.
             if (xhr.status === 200){
-                var response= xhr.responseXML.getElementsByTagName("responseConnection")[0].firstChild.nodeValue;
+                var response= xhr.responseXML.getElementsByTagName("res")[0].firstChild.nodeValue;
                 if(response==="reussi"){
                     alert("bon id ou mdp!");
                 }else{
