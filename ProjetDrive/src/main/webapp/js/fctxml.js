@@ -101,13 +101,22 @@ function afficheDetail ()
 	xhr.onload = function(){
             // Si la requête http s'est bien passée.
             if (xhr.status === 200){  
+                alert("reussi");
                 for(var i=2; i<=5;i++){
                     // Elément html que l'on va mettre à jour.
                     var elt = document.getElementById("image"+i);
                     elt.innerHTML = "<img src='"+xhr.responseXML.getElementsByTagName("src")[i-2].firstChild.nodeValue+"' width=200px hight=150px><div>"+xhr.responseXML.getElementsByTagName("libProd")[i-2].firstChild.nodeValue+"</div>";
                     //alert("<img src='"+xhr.responseXML.getElementsByTagName("src")[i-2].firstChild.nodeValue+"'>");
                     document.getElementById("image"+i+"_prodId").innerHTML=xhr.responseXML.getElementsByTagName("idProd")[i-2].firstChild.nodeValue;
+                    alert("reussi"+i);
                 }
+//                if(xhr.responseXML.getElementsByTagName("client")[0]===null){
+//                    
+//                }else{
+//                    var elt2 = document.getElementById("connexion");
+//                    elt2.insertAdjacentHTML("afterbegin",xhr.responseXML.getElementsByTagName("client")[0].firstChild.nodeValue);
+//                }
+                
             }
         };
 	
@@ -122,6 +131,5 @@ function afficheDetail ()
 document.addEventListener("DOMContentLoaded", () => {
 
 	document.getElementById("btn_image2_voirDetail").addEventListener("click",afficheXML);
-	document.getElementById("bt_Url").addEventListener("click",testEncodeUrl);
 
 });
