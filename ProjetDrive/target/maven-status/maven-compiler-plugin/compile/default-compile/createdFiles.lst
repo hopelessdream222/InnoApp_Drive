@@ -10,6 +10,7 @@ miage\metier\Client.class
 miage\metier\Fournir.class
 miage\metier\StockerId.class
 miage\metier\Rayon.class
+metier\action\ServletDetailProd.class
 miage\dao\HibernateUtil.class
 miage\metier\Magasin.class
 miage\metier\Categorie.class
