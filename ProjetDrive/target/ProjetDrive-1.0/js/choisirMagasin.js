@@ -1,7 +1,5 @@
-
-window.onload=afficherMagasins();
-
-function afficherMagasins (){
+window.onload = afficherMag();
+function afficherMag (){
     // Objet XMLHttpRequest.
     var xhr = new XMLHttpRequest();
 
@@ -18,7 +16,7 @@ function afficherMagasins (){
            var tabDetail = xhr.responseXML.getElementsByTagName("detailMag");
 
            for(var i=0; i<tabId.length; i++){
-               elt.insertAdjacentHTML("beforeend",tabId[i].firstChild.values()+"<br/>"+tabDetail[i].firstChild.value());
+               elt.insertAdjacentHTML("beforeend","<div name=mag ><span id=idMag>"+tabId[i].firstChild.values()+"</span>"+tabDetail[i].firstChild.value())+"</div>";
            }
         }
     };
@@ -26,7 +24,29 @@ function afficherMagasins (){
     // Envoie de la requête.
     xhr.send();
     }
+    
+function choisirMag(){
+    var idMag = this.
+    // Objet XMLHttpRequest.
+    var xhr = new XMLHttpRequest();
 
+    // Requête au serveur avec les paramètres éventuels.
+    xhr.open("GET","ServletChoisirMagasin?idMag="+idMag);
+
+    // On précise ce que l'on va faire quand on aura reçu la réponse du serveur.
+    xhr.onload = function(){
+        // Si la requête http s'est bien passée.
+        if (xhr.status === 200){  
+           var elt = document.getElementById("lstMagasin");
+
+           var tabId = xhr.responseXML.getElementsByTagName("idMag");
+           var tabDetail = xhr.responseXML.getElementsByTagName("detailMag");
+
+           for(var i=0; i<tabId.length; i++){
+               elt.insertAdjacentHTML("beforeend","<div name=mag>"+tabId[i].firstChild.nodeValue+"<br/>"+tabDetail[i].firstChild.nodeValue)+"</div>";
+           }
+        }
+    };
 
 
 /**
@@ -34,7 +54,5 @@ function afficherMagasins (){
  */
 document.addEventListener("DOMContentLoaded", () => {
 
-	document.getElementById("btn_image2_voirDetail").addEventListener("click",afficheXML);
-	document.getElementById("bt_Url").addEventListener("click",testEncodeUrl);
-
+	document.getElementsByName("mag").addEventListener("click",choisirMag);
 });
