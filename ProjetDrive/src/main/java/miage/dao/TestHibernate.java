@@ -13,7 +13,9 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import miage.metier.Client;
+import miage.metier.Magasin;
 import miage.metier.Produit;
+import org.hibernate.LazyInitializationException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -51,60 +53,67 @@ public class TestHibernate
         }
     }
 
-        public static void loadPhotos () throws FileNotFoundException, IOException, SQLException
-        {
-        /*----- Ouverture de la session -----*/
-        try (Session session = HibernateUtil.getSessionFactory().getCurrentSession())
-                {
-                /*----- Ouverture d'une transaction -----*/
-                Transaction t = session.beginTransaction();
-                    List<Produit> liste = session.createQuery("from Produit").list();
-                    for (Produit p : liste)
-                    {
-                        InputStream inputStream = p.getPhotoP().getBinaryStream();
-                        FileOutputStream fos = new FileOutputStream("src\\main\\webapp\\image\\"+p.getIdP()+".jpg");
-                        byte[] b = new byte[1024];
-                        int len = -1;
-                        while ((len = inputStream.read(b)) != -1) {
-                            fos.write(b, 0, len);
-                        }
-                        fos.close();
-                        inputStream.close();
-                    }
-                // ...
-                t.commit(); // Commit et flush automatique de la session.
-                }
-        }
-        
-        public static Client clientConnecter(String email, String mdp) {
-        Client c=new Client();
+    public static void loadPhotos() throws FileNotFoundException, IOException, SQLException {
         /*----- Ouverture de la session -----*/
         try ( Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
             /*----- Ouverture d'une transaction -----*/
             Transaction t = session.beginTransaction();
-            Query query=session.createQuery("select new miage.metier.Client(c.idCli,c.nomCli,c.prenomCli,c.emailCli,c.mdpCli,c.telCli,c.pointCli) "+
-                                            "from Client c "+
-                                             "where c.emailCli=:mail");
-            query.setParameter("mail",email);
-            List<Client> rlt=query.list();
-            if (rlt.size()!=0){
-                String mdpcli=rlt.get(0).getMdpCli();
-                if (mdpcli.equals(mdp)){
-                    c=rlt.get(0);
+            List<Produit> liste = session.createQuery("from Produit").list();
+            for (Produit p : liste) {
+                InputStream inputStream = p.getPhotoP().getBinaryStream();
+                FileOutputStream fos = new FileOutputStream("src\\main\\webapp\\image\\" + p.getIdP() + ".jpg");
+                byte[] b = new byte[1024];
+                int len = -1;
+                while ((len = inputStream.read(b)) != -1) {
+                    fos.write(b, 0, len);
                 }
-            } 
-            t.commit(); // Commit et flush automatique de la session.      
+                fos.close();
+                inputStream.close();
+            }
+        }
+    }
+
+    public static Client clientConnecter(String email, String mdp) {
+        Client c = new Client();
+        /*----- Ouverture de la session -----*/
+        try ( Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
+            /*----- Ouverture d'une transaction -----*/
+            Transaction t = session.beginTransaction();
+            Query query = session.createQuery("select new miage.metier.Client(c.idCli,c.nomCli,c.prenomCli,c.emailCli,c.mdpCli,c.telCli,c.pointCli) "
+                    + "from Client c "
+                    + "where c.emailCli=:mail");
+            query.setParameter("mail", email);
+            List<Client> rlt = query.list();
+            if (rlt.size() != 0) {
+                String mdpcli = rlt.get(0).getMdpCli();
+                if (mdpcli.equals(mdp)) {
+                    c = rlt.get(0);
+                }
+            }     
         }
         return c;
     }
 
+        
+    public static List<Magasin> obtenirMagasins() throws LazyInitializationException
+    {
+        /*----- Ouverture de la session -----*/
+         try ( Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
+            /*----- Ouverture d'une transaction -----*/
+            Transaction t = session.beginTransaction();
+            List<Magasin> liste = session.createQuery("from Magasin").list();  
+            return liste;
+            }
+    }
+        
 	/**
 	 * Programme de test.
 	 */
-	public static void main(String[] args) throws IOException, FileNotFoundException, SQLException
+	public static void main(String[] args) throws IOException, FileNotFoundException, SQLException, LazyInitializationException
 		{
-                   TestHibernate.chercherCinqProduits();
+                    //System.out.println(TestHibernate.chercherCinqProduits());
                     //TestHibernate.loadPhotos();
+                    System.out.println(TestHibernate.obtenirMagasins());
 		/*----- Exit -----*/
 		System.exit(0);
 		}

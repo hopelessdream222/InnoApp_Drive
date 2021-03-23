@@ -1,4 +1,5 @@
 miage\dao\nbDde.class
+metier\action\ServletChoisirMagasin.class
 miage\metier\Fournisseur.class
 metier\action\ServletConnexion.class
 miage\metier\LigneCommandeId.class
@@ -16,4 +17,5 @@ miage\metier\Magasin.class
 miage\metier\Categorie.class
 miage\metier\LigneCommande.class
 miage\metier\Produit.class
+metier\action\ServletAfficherMagasins.class
 miage\metier\Commande.class
