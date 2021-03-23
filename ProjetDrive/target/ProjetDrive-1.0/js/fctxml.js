@@ -91,7 +91,6 @@ function testEncodeUrl ()
 window.onload=afficheDetail();
 function afficheDetail ()
 	{
-            alert("123");
 	// Objet XMLHttpRequest.
 	var xhr = new XMLHttpRequest();
 
@@ -108,6 +107,7 @@ function afficheDetail ()
                     elt.innerHTML = "<img src='"+xhr.responseXML.getElementsByTagName("src")[0].firstChild.nodeValue+"'>";
                     document.getElementById("image"+i+"_prodId").innerHTML=xhr.responseXML.getElementsByTagName("idProd")[0].firstChild.nodeValue;
                 }
+   
             }
         };
 	
