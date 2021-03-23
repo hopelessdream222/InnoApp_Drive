@@ -9,10 +9,12 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import static miage.dao.TestHibernate.chercherCinqProduits;
 import miage.metier.Produit;
 
 /**
@@ -46,14 +48,14 @@ public class ServletDetailProd extends HttpServlet {
 
             /*----- Lecture de liste de mots dans la BD -----*/
             //Appeler la fonction dans DAO
-//            ArrayList<Produit> lProduits = ;
-                    out.println("<src>image/Ajax.jpg</src>");
-                    out.println("<idProd>1</idProd>");
+            List<Produit> lProduits = chercherCinqProduits();
+                    //out.println("<src>image/Ajax.jpg</src>");
+                   // out.println("<idProd>1</idProd>");
                     
-//            for (Produit produit : lProduits){
-//                out.println("<src>image/" + produit.getIdP() +".jpg</src><idProd>" + produit.getIdP() + "</idProd>");
-//                
-//            }
+            for (Produit produit : lProduits){
+                out.println("<src>image/" + produit.getIdP() +".jpg</src>");
+                
+            }
             out.println("</liste_produit>");
         }
     } 
