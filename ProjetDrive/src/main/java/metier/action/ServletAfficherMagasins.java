@@ -44,11 +44,8 @@ public class ServletAfficherMagasins extends HttpServlet {
             //Appeler la fonction dans DAO
             ArrayList<Magasin> lstMagasin = (ArrayList<Magasin>)miage.dao.TestHibernate.obtenirMagasins();
             for(Magasin mag : lstMagasin){
-                out.println("<nomMag>"+mag.getNomMag()+"</nomMag>");
-                out.println("<AdresseMag>"+mag.getAdresseMag()+"</AdresseMag>");
-                out.println("<cpMag>"+mag.getCpMagasin()+"</cpMag>");
-                out.println("<villeMag>"+mag.getVilleMag()+"</villeMag>");
-                out.println("<telMag>"+mag.getVilleMag()+"</telMag>");
+                out.println("<idMag>"+mag.getIdMag()+"</idMag>");
+                out.println("<detailMag>"+mag.getNomMag()+"</detailMag>");
                
             }
 //            for (Produit produit : lProduits){

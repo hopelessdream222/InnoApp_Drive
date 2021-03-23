@@ -12,15 +12,14 @@ function afficherMagasins (){
     xhr.onload = function(){
         // Si la requête http s'est bien passée.
         if (xhr.status === 200){  
+           var elt = document.getElementById("lstMagasin");
            
-            
-//            for(var i=2; i<=5;i++){
-//                // Elément html que l'on va mettre à jour.
-//                var elt = document.getElementById("image"+i);
-//                elt.innerHTML = "<img src='"+xhr.responseXML.getElementsByTagName("src")[0].firstChild.nodeValue+"'>";
-//                document.getElementById("image"+i+"_prodId").innerHTML=xhr.responseXML.getElementsByTagName("idProd")[0].firstChild.nodeValue;
-//            }
+           var tabId = xhr.responseXML.getElementsByTagName("idMag");
+           var tabDetail = xhr.responseXML.getElementsByTagName("detailMag");
 
+           for(var i=0; i<tabId.length; i++){
+               elt.insertAdjacentHTML("beforeend",tabId[i].firstChild.values()+"<br/>"+tabDetail[i].firstChild.value());
+           }
         }
     };
 	
