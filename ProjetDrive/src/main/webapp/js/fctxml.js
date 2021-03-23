@@ -106,7 +106,7 @@ function afficheDetail ()
                     var elt = document.getElementById("image"+i);
                     elt.innerHTML = "<img src='"+xhr.responseXML.getElementsByTagName("src")[i-2].firstChild.nodeValue+"' width=200px hight=150px><div>"+xhr.responseXML.getElementsByTagName("libProd")[i-2].firstChild.nodeValue+"</div>";
                     //alert("<img src='"+xhr.responseXML.getElementsByTagName("src")[i-2].firstChild.nodeValue+"'>");
-                    //document.getElementById("image"+i+"_prodId").innerHTML=xhr.responseXML.getElementsByTagName("idProd")[i-2].firstChild.nodeValue;
+                    document.getElementById("image"+i+"_prodId").innerHTML=xhr.responseXML.getElementsByTagName("idProd")[i-2].firstChild.nodeValue;
                 }
             }
         };

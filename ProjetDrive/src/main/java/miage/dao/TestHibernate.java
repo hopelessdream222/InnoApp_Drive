@@ -42,7 +42,7 @@ public class TestHibernate
             /*----- Ouverture d'une transaction -----*/
             Transaction t = session.beginTransaction();
             //List<Produit> liste = session.createQuery("select new miage.metier.Produit(libelleP,prixUnitaireP,prixKGP,nutriScoreP,photoP,labelP,formatP,conditionnementP,categorieP) from Produit where idP<=5").list();
-            List<Produit> liste = session.createQuery("from Produit where idP<=5").list();
+            List<Produit> liste = session.createQuery("from Produit where idP>=3 and idP<=6").list();
             //for(Produit p:liste)
             //System.out.println("Produit: "+p.getLibelleP()+"photo:"+p.getPhotoP());        
             // t.commit(); // Commit et flush automatique de la session.

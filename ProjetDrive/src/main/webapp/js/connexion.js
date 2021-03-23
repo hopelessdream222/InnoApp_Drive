@@ -15,17 +15,17 @@ function seConnecter ()
 	xhr.open("GET","ServletConnexion?id="+id+"&mdp="+mdp);
 
 	// On précise ce que l'on va faire quand on aura reçu la réponse du serveur.
-	xhr.onload = function()
-		{
-		// Si la requête http s'est bien passée.
-		if (xhr.status === 200)
-                    {
-                        
-                    // Elément html que l'on va mettre à jour.
-                    var elt = document.getElementById("image2_prodId");
-                    elt.innerHTML = xhr.responseText;
-                    }
-		};
+	xhr.onload = function(){
+            // Si la requête http s'est bien passée.
+            if (xhr.status === 200){
+                var response= xhr.responseXML.getElementsByTagName("responseConnection")[0].firstChild.nodeValue;
+                if(response==="reussi"){
+                    alert("bon id ou mdp!");
+                }else{
+                    alert("Mauvais id ou mdp!");
+                }
+            }
+	};
 	
 	// Envoie de la requête.
 	xhr.send();
