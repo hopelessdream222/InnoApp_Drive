@@ -53,7 +53,7 @@ public class ServletDetailProd extends HttpServlet {
                    // out.println("<idProd>1</idProd>");
                     
             for (Produit produit : lProduits){
-                out.println("<src>image/" + produit.getIdP() +".jpg</src>");
+                out.println("<src>image/" + produit.getIdP() +".jpg</src><idProd>"+ produit.getIdP() +"</idProd><libProd>"+produit.toString()+"</libProd>");
                 
             }
             out.println("</liste_produit>");
