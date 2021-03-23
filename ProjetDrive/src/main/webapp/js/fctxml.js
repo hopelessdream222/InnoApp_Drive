@@ -91,9 +91,9 @@ function testEncodeUrl ()
 window.onload=afficheDetail();
 function afficheDetail ()
 	{
+           //alert("123");
 	// Objet XMLHttpRequest.
 	var xhr = new XMLHttpRequest();
-
 	// Requête au serveur avec les paramètres éventuels.
 	xhr.open("GET","ServletDetailProd");
 
@@ -104,10 +104,10 @@ function afficheDetail ()
                 for(var i=2; i<=5;i++){
                     // Elément html que l'on va mettre à jour.
                     var elt = document.getElementById("image"+i);
-                    elt.innerHTML = "<img src='"+xhr.responseXML.getElementsByTagName("src")[0].firstChild.nodeValue+"'>";
-                    document.getElementById("image"+i+"_prodId").innerHTML=xhr.responseXML.getElementsByTagName("idProd")[0].firstChild.nodeValue;
+                    elt.innerHTML = "<img src='"+xhr.responseXML.getElementsByTagName("src")[i-2].firstChild.nodeValue+"' width=200px hight=150px><div>"+xhr.responseXML.getElementsByTagName("libProd")[i-2].firstChild.nodeValue+"</div>";
+                    //alert("<img src='"+xhr.responseXML.getElementsByTagName("src")[i-2].firstChild.nodeValue+"'>");
+                    document.getElementById("image"+i+"_prodId").innerHTML=xhr.responseXML.getElementsByTagName("idProd")[i-2].firstChild.nodeValue;
                 }
-   
             }
         };
 	
