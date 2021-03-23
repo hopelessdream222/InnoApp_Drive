@@ -57,12 +57,13 @@ public class ServletDetailProd extends HttpServlet {
                 out.println("<src>image/" + produit.getIdP() +".jpg</src><idProd>"+ produit.getIdP() +"</idProd><libProd>"+produit.toString()+"</libProd>");                
             }
             
-            if(s.getAttribute("client")==null){
-                System.out.println("-------");
-            }else{
+            if(s.getAttribute("client")!=null){
                 Client client = (Client)s.getAttribute("client");
-                out.println("<cilent>"+client.getNomCli()+"</client>");
-                System.out.println("****************"+client.getNomCli());
+                out.println("<client>"+client.getEmailCli()+"</client>");
+                //System.out.println("****************"+client.getNomCli());
+            }else{
+                //System.out.println("-------");
+                //System.out.println("****************"+client.getNomCli());
             }
             
             out.println("</liste_produit>");
