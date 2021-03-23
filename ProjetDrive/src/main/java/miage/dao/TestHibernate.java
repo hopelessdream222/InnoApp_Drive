@@ -12,6 +12,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import miage.metier.Client;
 import miage.metier.Produit;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -42,7 +43,7 @@ public class TestHibernate
             /*----- Ouverture d'une transaction -----*/
             Transaction t = session.beginTransaction();
             //List<Produit> liste = session.createQuery("select new miage.metier.Produit(libelleP,prixUnitaireP,prixKGP,nutriScoreP,photoP,labelP,formatP,conditionnementP,categorieP) from Produit where idP<=5").list();
-            List<Produit> liste = session.createQuery("from Produit where idP<=5").list();
+            List<Produit> liste = session.createQuery("from Produit where idP<=6 and idP>=3").list();
             //for(Produit p:liste)
             //System.out.println("Produit: "+p.getLibelleP()+"photo:"+p.getPhotoP());        
             // t.commit(); // Commit et flush automatique de la session.
@@ -75,14 +76,33 @@ public class TestHibernate
                 }
         }
 
-
+    public static Client clientConnecter(String email, String mdp) {
+        Client c=new Client();
+        /*----- Ouverture de la session -----*/
+        try ( Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
+            /*----- Ouverture d'une transaction -----*/
+            Transaction t = session.beginTransaction();
+            Query query=session.createQuery("select new miage.metier.Client(c.idCli,c.nomCli,c.prenomCli,c.emailCli,c.mdpCli,c.telCli,c.pointCli) "+
+                                            "from Client c "+
+                                             "where c.emailCli=:mail");
+            query.setParameter("mail",email);
+            List<Client> rlt=query.list();
+            String mdpcli=rlt.get(0).getMdpCli();
+            if (mdpcli.equals(mdp)){
+                c=rlt.get(0);
+            }
+            t.commit(); // Commit et flush automatique de la session.      
+        }
+        return c;
+    }
 	/**
 	 * Programme de test.
 	 */
 	public static void main(String[] args) throws IOException, FileNotFoundException, SQLException
 		{
-                   TestHibernate.chercherCinqProduits();
+                   //TestHibernate.chercherCinqProduits();
                     //TestHibernate.loadPhotos();
+                    System.out.println(TestHibernate.clientConnecter("jules@gmail.com", "1"));
 		/*----- Exit -----*/
 		System.exit(0);
 		}

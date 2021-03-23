@@ -175,7 +175,7 @@ public class Produit {
 
     @Override
     public String toString() {
-        return "Produit{" + "idP=" + idP + ", libelleP=" + libelleP + ", prixUnitaireP=" + prixUnitaireP + ", prixKGP=" + prixKGP + ", nutriScoreP=" + nutriScoreP + ", photoP=" + photoP + ", labelP=" + labelP + ", formatP=" + formatP + ", conditionnementP=" + conditionnementP + ", categorieP=" + categorieP + ", ligneCommandes=" + ligneCommandes + ", stockages=" + stockages + '}';
+        return "libelle:" + libelleP + ", prix Unitaire:" + prixUnitaireP + ", prix/kg:" + prixKGP + ", nutri Score:" + nutriScoreP;
     }
 
     @Override
