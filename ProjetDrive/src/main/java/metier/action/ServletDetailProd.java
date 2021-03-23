@@ -14,7 +14,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import static miage.dao.TestHibernate.chercherCinqProduits;
+import miage.metier.Client;
 import miage.metier.Produit;
 
 /**
@@ -43,15 +45,25 @@ public class ServletDetailProd extends HttpServlet {
             out.println("<?xml version=\"1.0\"?>");
             out.println("<liste_produit>");
 
-            /*----- Récupération des paramètres -----*/
-//            String nom = request.getParameter("nomauteur");
-
+            /*----- Récupération le session de client -----*/
+            HttpSession s = request.getSession();
+            
+            
             /*----- Lecture de liste de mots dans la BD -----*/
             //Appeler la fonction dans DAO
             List<Produit> lProduits = chercherCinqProduits();
                     
             for (Produit produit : lProduits){
                 out.println("<src>image/" + produit.getIdP() +".jpg</src><idProd>"+ produit.getIdP() +"</idProd><libProd>"+produit.toString()+"</libProd>");                
+            }
+            
+            if(s.getAttribute("client")!=null){
+                Client client = (Client)s.getAttribute("client");
+                out.println("<client>"+client.getEmailCli()+"</client>");
+                //System.out.println("****************"+client.getNomCli());
+            }else{
+                //System.out.println("-------");
+                //System.out.println("****************"+client.getNomCli());
             }
             
             out.println("</liste_produit>");

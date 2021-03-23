@@ -65,9 +65,8 @@ public class ServletConnexion extends HttpServlet {
                 //Si on trouve pas de client, on fait une response de "echec"
                 out.println("<?xml version=\"1.0\"?>");
                 out.println("<responseConnection><res>reussi</res></responseConnection>");
+                
             }
-            //A completer -- navigation vers la page accueil
-            //request.getRequestDispatcher("Accueil").forward(request,response);
         }
     }
 
