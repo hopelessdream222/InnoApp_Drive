@@ -23,21 +23,35 @@ import org.hibernate.query.Query;
  * Hibernate.
  */
 public class TestHibernate{
+	/**
+	 * Constante.
+	 */
 
-        /**
-         * Retourner une liste de magasins
-         */
-        public static List<Magasin> obtenirMagasins (){
+	/*----- Format de date -----*/
+	private static final SimpleDateFormat DF = new SimpleDateFormat("dd-MM-yyyy");
+
+
+	/**
+	 * Création, enregistrement et lecture d'objets.
+	 */
+
+	/*----- Création et enregistrement d'employés -----*/
+    public static List<Produit> chercherCinqProduits() {
         /*----- Ouverture de la session -----*/
-         try ( Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
+        try ( Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
             /*----- Ouverture d'une transaction -----*/
             Transaction t = session.beginTransaction();
-            List<Magasin> liste = session.createQuery("from Magasin").list();                
+            //List<Produit> liste = session.createQuery("select new miage.metier.Produit(libelleP,prixUnitaireP,prixKGP,nutriScoreP,photoP,labelP,formatP,conditionnementP,categorieP) from Produit where idP<=5").list();
+            List<Produit> liste = session.createQuery("from Produit where idP<=5").list();
+            //for(Produit p:liste)
+            //System.out.println("Produit: "+p.getLibelleP()+"photo:"+p.getPhotoP());        
+            // t.commit(); // Commit et flush automatique de la session.
             return liste;
-            }
         }
-        
-        public static void loadPhotos () throws FileNotFoundException, IOException, SQLException{
+    }
+
+        public static void loadPhotos () throws FileNotFoundException, IOException, SQLException
+        {
         /*----- Ouverture de la session -----*/
         try (Session session = HibernateUtil.getSessionFactory().getCurrentSession())
                 {
@@ -60,21 +74,29 @@ public class TestHibernate{
                 t.commit(); // Commit et flush automatique de la session.
                 }
         }
-
+        public static List<Magasin> obtenirMagasins (){
+        /*----- Ouverture de la session -----*/
+         try ( Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
+            /*----- Ouverture d'une transaction -----*/
+            Transaction t = session.beginTransaction();
+            List<Magasin> liste = session.createQuery("from Magasin").list();                
+            return liste;
+            }
+        }
 
 	/**
 	 * Programme de test.
 	 */
-        public static void main(String[] args) {
-            //for(Magasin mag : TestHibernate.obtenirMagasins()){
-                        //System.out.println("--"+mag.getNomMag()+"--");
-                    //}
-            System.out.println("-------------aaaaaaaaaaaaaaaaa");
-                    //obtenirMagasins ();
+	public static void main(String[] args) throws IOException, FileNotFoundException, SQLException
+		{
+                    System.out.println("&&&&&&&&&&&&&&&");
                     //TestHibernate.loadPhotos();
 		/*----- Exit -----*/
 		System.exit(0);
-    }
-	
+		}
+
+
+
 
 } /*----- Fin de la classe TestHibernate -----*/
+
