@@ -87,10 +87,12 @@ public class TestHibernate
                                              "where c.emailCli=:mail");
             query.setParameter("mail",email);
             List<Client> rlt=query.list();
-            String mdpcli=rlt.get(0).getMdpCli();
-            if (mdpcli.equals(mdp)){
-                c=rlt.get(0);
-            }
+            if (rlt.size()!=0){
+                String mdpcli=rlt.get(0).getMdpCli();
+                if (mdpcli.equals(mdp)){
+                    c=rlt.get(0);
+                }
+            } 
             t.commit(); // Commit et flush automatique de la session.      
         }
         return c;
@@ -102,7 +104,7 @@ public class TestHibernate
 		{
                    //TestHibernate.chercherCinqProduits();
                     //TestHibernate.loadPhotos();
-                    System.out.println(TestHibernate.clientConnecter("jules@gmail.com", "1"));
+                    //TestHibernate.clientConnecter("jules@gmail.com", "1");
 		/*----- Exit -----*/
 		System.exit(0);
 		}
