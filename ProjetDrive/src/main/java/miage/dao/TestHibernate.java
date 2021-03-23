@@ -12,10 +12,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import miage.metier.Categorie;
 import miage.metier.Client;
 import miage.metier.Magasin;
 import miage.metier.Produit;
+import miage.metier.Rayon;
 import org.hibernate.LazyInitializationException;
+import org.hibernate.QueryException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -34,11 +37,6 @@ public class TestHibernate
 	private static final SimpleDateFormat DF = new SimpleDateFormat("dd-MM-yyyy");
 
 
-	/**
-	 * Création, enregistrement et lecture d'objets.
-	 */
-
-	/*----- Création et enregistrement d'employés -----*/
     public static List<Produit> chercherCinqProduits() {
         /*----- Ouverture de la session -----*/
         try ( Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
@@ -46,9 +44,6 @@ public class TestHibernate
             Transaction t = session.beginTransaction();
             //List<Produit> liste = session.createQuery("select new miage.metier.Produit(libelleP,prixUnitaireP,prixKGP,nutriScoreP,photoP,labelP,formatP,conditionnementP,categorieP) from Produit where idP<=5").list();
             List<Produit> liste = session.createQuery("from Produit where idP>=3 and idP<=6").list();
-            //for(Produit p:liste)
-            //System.out.println("Produit: "+p.getLibelleP()+"photo:"+p.getPhotoP());        
-            // t.commit(); // Commit et flush automatique de la session.
             return liste;
         }
     }
@@ -79,9 +74,8 @@ public class TestHibernate
         try ( Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
             /*----- Ouverture d'une transaction -----*/
             Transaction t = session.beginTransaction();
-            Query query = session.createQuery("select new miage.metier.Client(c.idCli,c.nomCli,c.prenomCli,c.emailCli,c.mdpCli,c.telCli,c.pointCli) "
-                    + "from Client c "
-                    + "where c.emailCli=:mail");
+            Query query = session.createQuery( "from Client "
+                    + "where emailCli=:mail");
             query.setParameter("mail", email);
             List<Client> rlt = query.list();
             if (rlt.size() != 0) {
@@ -93,9 +87,30 @@ public class TestHibernate
         }
         return c;
     }
+    
+    public static List<Produit> searchProduits(String mot) 
+    {
+        List<Produit> liste1 = null;
+        /*----- Ouverture de la session -----*/
+        try ( Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
+            /*----- Ouverture d'une transaction -----*/
+            Transaction t = session.beginTransaction();
+            Query query = session.createQuery("select new miage.metier.Produit(p.idP,p.libelleP,p.prixUnitaireP,p.prixKGP,p.nutriScoreP,p.photoP,p.labelP,p.formatP,p.conditionnementP) "
+                    +"from Produit p "
+                    + "where p.libelleP like :m");
+            query.setParameter("m","%"+ mot + "%");
+            List<Produit> liste2 = query.list();
+            if (liste2.size() != 0) {
+                for (Produit pro : liste2) {
+                    liste1.add(pro);
+                }
+            }
+        }
+        return liste1;
+    }
 
         
-    public static List<Magasin> obtenirMagasins() throws LazyInitializationException
+    public static List<Magasin> obtenirMagasins()
     {
         /*----- Ouverture de la session -----*/
          try ( Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
@@ -105,15 +120,28 @@ public class TestHibernate
             return liste;
             }
     }
+    
+    public static List<Rayon> obtenirRayons() {
+        /*----- Ouverture de la session -----*/
+        try ( Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
+            /*----- Ouverture d'une transaction -----*/
+            Transaction t = session.beginTransaction();
+            List<Rayon> liste = session.createQuery("from Rayon").list();
+            return liste;
+        }
+    }
         
 	/**
 	 * Programme de test.
 	 */
-	public static void main(String[] args) throws IOException, FileNotFoundException, SQLException, LazyInitializationException
+	public static void main(String[] args) throws IOException, FileNotFoundException, SQLException
 		{
-                    //System.out.println(TestHibernate.chercherCinqProduits());
+                    //TestHibernate.chercherCinqProduits();
                     //TestHibernate.loadPhotos();
-                   TestHibernate.obtenirMagasins();
+                    //System.out.println(TestHibernate.obtenirMagasins());
+                    //System.out.println(TestHibernate.obtenirRayons());
+                    //System.out.println(TestHibernate.clientConnecter("jules@gmail.com", "123"));
+                    System.out.println(TestHibernate.searchProduits("Citrons"));
 		/*----- Exit -----*/
 		System.exit(0);
 		}

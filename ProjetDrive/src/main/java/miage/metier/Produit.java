@@ -5,6 +5,7 @@
  */
 package miage.metier;
 
+import java.io.Serializable;
 import java.sql.Blob;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,7 +27,7 @@ import javax.persistence.OneToMany;
  */
 
 @Entity (name="Produit")
-public class Produit {
+public class Produit implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="idP")
@@ -63,7 +64,18 @@ public class Produit {
 
     public Produit() {
     }
-    
+
+    public Produit(int idP, String libelleP, float prixUnitaireP, float prixKGP, String nutriScoreP, Blob photoP, String labelP, String formatP, String conditionnementP) {
+        this.idP = idP;
+        this.libelleP = libelleP;
+        this.prixUnitaireP = prixUnitaireP;
+        this.prixKGP = prixKGP;
+        this.nutriScoreP = nutriScoreP;
+        this.photoP = photoP;
+        this.labelP = labelP;
+        this.formatP = formatP;
+        this.conditionnementP = conditionnementP;
+    }
 
     public Produit(String libelleP, float prixUnitaireP, float prixKGP, String nutriScoreP, Blob photoP, String labelP, String formatP, String conditionnementP, Categorie categorieP) {
         this.libelleP = libelleP;

@@ -5,6 +5,7 @@
  */
 package miage.metier;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,7 +26,7 @@ import javax.persistence.OneToMany;
  * @author ccc
  */
 @Entity
-public class Commande {
+public class Commande implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)  
     private int idCmd;

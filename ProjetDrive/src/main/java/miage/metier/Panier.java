@@ -5,6 +5,7 @@
  */
 package miage.metier;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -25,7 +26,7 @@ import javax.persistence.OneToOne;
  * @author ccc
  */
 @Entity(name="Panier")
-public class Panier {
+public class Panier implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="idPan")    
