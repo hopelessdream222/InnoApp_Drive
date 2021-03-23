@@ -13,12 +13,8 @@
         <servlet-class>metier.action.ServletConnexion</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ServletAfficherMagasins</servlet-name>
-        <servlet-class>metier.action.ServletAfficherMagasins</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ServletChoisirMagasin</servlet-name>
-        <servlet-class>metier.action.ServletChoisirMagasin</servlet-class>
+        <servlet-name>Connexion</servlet-name>
+        <jsp-file>/ajax/connexion.html</jsp-file>
     </servlet>
     <servlet>
         <servlet-name>ServletAfficherMagasins</servlet-name>
@@ -45,12 +41,8 @@
         <url-pattern>/ServletConnexion</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ServletAfficherMagasins</servlet-name>
-        <url-pattern>/ServletAfficherMagasins</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ServletChoisirMagasin</servlet-name>
-        <url-pattern>/ServletChoisirMagasin</url-pattern>
+        <servlet-name>Connexion</servlet-name>
+        <url-pattern>/Connexion</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ServletAfficherMagasins</servlet-name>

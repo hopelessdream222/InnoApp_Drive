@@ -56,10 +56,10 @@ public class Produit {
     @MapKeyJoinColumn(name = "IdP")
     private Map<Magasin, Stocker> stockages=new HashMap(0);
     
-    // Relation <Fournir>
-    //@OneToMany(mappedBy = "produits",cascade=CascadeType.ALL)
-    //@MapKeyJoinColumn(name = "IdP")
-    //private Map<Magasin, Map<Fournisseur,Fournir>> fournirs=new HashMap(0);
+    // Relation <Comporter>
+    @OneToMany(mappedBy = "produits",cascade=CascadeType.ALL)
+    @MapKeyJoinColumn(name = "IdP")
+    private Map<Panier, Comporter> comportements=new HashMap(0);
 
     public Produit() {
     }
@@ -171,6 +171,14 @@ public class Produit {
 
     public void setStockages(Map<Magasin, Stocker> stockages) {
         this.stockages = stockages;
+    }
+
+    public Map<Panier, Comporter> getComportements() {
+        return comportements;
+    }
+
+    public void setComportements(Map<Panier, Comporter> comportements) {
+        this.comportements = comportements;
     }
 
     @Override

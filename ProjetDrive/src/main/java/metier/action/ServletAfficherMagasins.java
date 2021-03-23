@@ -48,8 +48,8 @@ public class ServletAfficherMagasins extends HttpServlet {
             for(Magasin mag : lstMagasin){
                 out.println("<idMag>"+mag.getIdMag()+"</idMag><nomMag>"+mag.getNomMag()+"</nomMag><adrMag>"+
                    mag.getAdresseMag()+"</adrMag><cpMag>"+mag.getCpMagasin()+","+mag.getVilleMag()+
-                   "</cpMag><telMag>"+mag.getTelMag()+"</telMag>");
-
+                   "</cpMag><telMag>"+mag.getTelMag()+"</telMag>"); 
+                
             }
             out.println("</liste_magasin>");
         }

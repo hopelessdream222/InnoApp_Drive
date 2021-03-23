@@ -14,7 +14,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -37,6 +39,10 @@ public class Client {
     @OneToMany(mappedBy = "clientCmd", cascade= CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Commande> commandes = new HashSet<>(0);
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="panier_fk")
+    private Panier panier;
+        
     public Client() {
     }
     
@@ -121,6 +127,14 @@ public class Client {
 
     public void setCommandes(Set<Commande> commandes) {
         this.commandes = commandes;
+    }
+
+    public Panier getPanier() {
+        return panier;
+    }
+
+    public void setPanier(Panier panier) {
+        this.panier = panier;
     }
 
     @Override
