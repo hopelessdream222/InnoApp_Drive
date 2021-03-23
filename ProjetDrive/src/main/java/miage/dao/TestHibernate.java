@@ -2,10 +2,12 @@ package miage.dao;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import miage.metier.Panier;
 import miage.metier.Produit;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -69,5 +71,30 @@ public class TestHibernate
 			System.out.println("");
 			}
 		}
+
+        public static void lirePanier(int idCli)
+        {
+           try (Session session = HibernateUtil.getSessionFactory().getCurrentSession())
+               {
+                  session.beginTransaction();
+                  Panier pan=session.get(Panier.class,idCli);  //load也可以
+                  System.out.print("----->Panier");
+                  System.out.print(pan.getProduits().getIdP()+" "+pan.getQtePP());
+               }
+        }
+        
+        public static void addDdeEmploye(long id_emp,String jour_dde,int nb,String jour_deb) throws ParseException
+       {
+            try (Session session = HibernateUtil.getSessionFactory().getCurrentSession())
+               {
+                   Transaction t = session.beginTransaction();
+                   
+                   //Employe e = session.get(Employe.class,id_emp);
+                   //Demande d = new Demande(DF.parse(jour_dde),nb,DF.parse(jour_deb),e);
+                   //e.getDemandes().add(d);
+                   
+                   t.commit();
+               }
+       }
 
 } /*----- Fin de la classe TestHibernate -----*/

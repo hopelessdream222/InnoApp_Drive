@@ -5,6 +5,7 @@
  */
 package miage.metier;
 
+import java.io.Serializable;
 import java.sql.Blob;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,8 +26,8 @@ import javax.persistence.OneToMany;
  * @author ccc
  */
 
-@Entity (name="Produit")
-public class Produit {
+@Entity
+public class Produit{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="idP")
@@ -56,6 +57,16 @@ public class Produit {
     @MapKeyJoinColumn(name = "IdP")
     private Map<Magasin, Stocker> stockages=new HashMap(0);
     
+    // Relation <Comporter>
+    @OneToMany(mappedBy = "produits",cascade=CascadeType.ALL)
+    @MapKeyJoinColumn(name = "IdP")
+    private Map<Panier, Comporter> comportements=new HashMap(0);
+    
+    // Relation <Panier>
+    //@OneToMany(mappedBy = "produits",cascade=CascadeType.ALL)
+    //@MapKeyJoinColumn(name = "IdP")
+    //private Map<Client, Panier> paniers=new HashMap(0);
+    
     // Relation <Fournir>
     //@OneToMany(mappedBy = "produits",cascade=CascadeType.ALL)
     //@MapKeyJoinColumn(name = "IdP")
@@ -63,6 +74,7 @@ public class Produit {
 
     public Produit() {
     }
+    
 
     public Produit(String libelleP, float prixUnitaireP, float prixKGP, String nutriScoreP, Blob photoP, String labelP, String formatP, String conditionnementP, Categorie categorieP) {
         this.libelleP = libelleP;

@@ -5,7 +5,9 @@
  */
 package miage.metier;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -14,7 +16,11 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapKeyJoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 
 /**
  *
@@ -31,10 +37,16 @@ public class Client {
     private String emailCli;
     private String telCli;
     private String pointCli;
+    private String mdpCli;
     
     // relation <Passer>
     @OneToMany(mappedBy = "clientCmd", cascade= CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Commande> commandes = new HashSet<>(0);
+    
+    // relation <Posseder>
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="panier_fk")
+    private Panier panier;
 
     public Client() {
     }
@@ -94,6 +106,15 @@ public class Client {
     public void setPointCli(String pointCli) {
         this.pointCli = pointCli;
     }
+
+    public String getMdpCli() {
+        return mdpCli;
+    }
+
+    public void setMdpCli(String mdpCli) {
+        this.mdpCli = mdpCli;
+    }
+    
 
     public Set<Commande> getCommandes() {
         return commandes;
