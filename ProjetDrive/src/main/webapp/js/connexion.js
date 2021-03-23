@@ -1,0 +1,44 @@
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+function seConnecter ()
+	{
+	// Objet XMLHttpRequest.
+	var xhr = new XMLHttpRequest();
+        
+        var id = document.getElementById("identifiant").value;
+        var mdp = document.getElementById("mdp").value;
+	// Requête au serveur avec les paramètres éventuels.
+	xhr.open("GET","ServletConnexion?id="+id+"&mdp="+mdp);
+
+	// On précise ce que l'on va faire quand on aura reçu la réponse du serveur.
+	xhr.onload = function()
+		{
+		// Si la requête http s'est bien passée.
+		if (xhr.status === 200)
+                    {
+                        
+                    // Elément html que l'on va mettre à jour.
+                    var elt = document.getElementById("image2_prodId");
+                    elt.innerHTML = xhr.responseText;
+                    }
+		};
+	
+	// Envoie de la requête.
+	xhr.send();
+	}
+
+
+/**
+ * Lancement après le chargement du DOM.
+ */
+document.addEventListener("DOMContentLoaded", () => {
+
+	document.getElementById("btnConnexion").addEventListener("click",seConnecter);
+	
+});
+
+

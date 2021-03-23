@@ -9,8 +9,8 @@
         <jsp-file>/ajax/Accueil.html</jsp-file>
     </servlet>
     <servlet>
-        <servlet-name>VoirDetail</servlet-name>
-        <jsp-file>/ajax/VoirDetail.html</jsp-file>
+        <servlet-name>ServletConnexion</servlet-name>
+        <servlet-class>metier.action.ServletConnexion</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ServletDetailProd</servlet-name>
@@ -21,8 +21,8 @@
         <url-pattern>/Accueil</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>VoirDetail</servlet-name>
-        <url-pattern>/VoirDetail</url-pattern>
+        <servlet-name>ServletConnexion</servlet-name>
+        <url-pattern>/ServletConnexion</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
