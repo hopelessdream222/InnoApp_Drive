@@ -43,7 +43,7 @@ public class TestHibernate
             /*----- Ouverture d'une transaction -----*/
             Transaction t = session.beginTransaction();
             //List<Produit> liste = session.createQuery("select new miage.metier.Produit(libelleP,prixUnitaireP,prixKGP,nutriScoreP,photoP,labelP,formatP,conditionnementP,categorieP) from Produit where idP<=5").list();
-            List<Produit> liste = session.createQuery("from Produit where idP<=6 and idP>=3").list();
+            List<Produit> liste = session.createQuery("from Produit where idP>=3 and idP<=6").list();
             //for(Produit p:liste)
             //System.out.println("Produit: "+p.getLibelleP()+"photo:"+p.getPhotoP());        
             // t.commit(); // Commit et flush automatique de la session.
@@ -75,8 +75,8 @@ public class TestHibernate
                 t.commit(); // Commit et flush automatique de la session.
                 }
         }
-
-    public static Client clientConnecter(String email, String mdp) {
+        
+        public static Client clientConnecter(String email, String mdp) {
         Client c=new Client();
         /*----- Ouverture de la session -----*/
         try ( Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
@@ -97,14 +97,14 @@ public class TestHibernate
         }
         return c;
     }
+
 	/**
 	 * Programme de test.
 	 */
 	public static void main(String[] args) throws IOException, FileNotFoundException, SQLException
 		{
-                   //TestHibernate.chercherCinqProduits();
+                   TestHibernate.chercherCinqProduits();
                     //TestHibernate.loadPhotos();
-                    //TestHibernate.clientConnecter("jules@gmail.com", "1");
 		/*----- Exit -----*/
 		System.exit(0);
 		}

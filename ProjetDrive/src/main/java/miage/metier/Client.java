@@ -40,7 +40,7 @@ public class Client {
     public Client() {
     }
     
-    public Client(String nomCli, String prenomCli, String emailCli, String mdpCli, String telCli, String pointCli) {
+    public Client(String nomCli, String prenomCli, String emailCli,String mdpCli, String telCli, String pointCli) {
         this.nomCli = nomCli;
         this.prenomCli = prenomCli;
         this.emailCli = emailCli;
@@ -57,6 +57,14 @@ public class Client {
         this.mdpCli = mdpCli;
         this.telCli = telCli;
         this.pointCli = pointCli;
+    }
+
+    public String getMdpCli() {
+        return mdpCli;
+    }
+
+    public void setMdpCli(String mdpCli) {
+        this.mdpCli = mdpCli;
     }
 
     public int getIdCli() {
@@ -105,14 +113,6 @@ public class Client {
 
     public void setPointCli(String pointCli) {
         this.pointCli = pointCli;
-    }
-
-    public String getMdpCli() {
-        return mdpCli;
-    }
-
-    public void setMdpCli(String mdpCli) {
-        this.mdpCli = mdpCli;
     }
 
     public Set<Commande> getCommandes() {

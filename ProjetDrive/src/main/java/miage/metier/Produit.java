@@ -177,7 +177,7 @@ public class Produit {
     public String toString() {
         return "libelle:" + libelleP + ", prix Unitaire:" + prixUnitaireP + ", prix/kg:" + prixKGP + ", nutri Score:" + nutriScoreP;
     }
-
+    
     @Override
     public int hashCode() {
         int hash = 7;

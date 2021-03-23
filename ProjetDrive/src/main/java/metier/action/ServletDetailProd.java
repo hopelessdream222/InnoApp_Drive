@@ -49,12 +49,11 @@ public class ServletDetailProd extends HttpServlet {
             /*----- Lecture de liste de mots dans la BD -----*/
             //Appeler la fonction dans DAO
             List<Produit> lProduits = chercherCinqProduits();
-                    //out.println("<src>image/Ajax.jpg</src>");
-                   // out.println("<idProd>1</idProd>");
                     
             for (Produit produit : lProduits){
-                out.println("<src>image/" + produit.getIdP() +".jpg</src>"+"<libelle>"+produit.toString()+"</libelle>");
+                out.println("<src>image/" + produit.getIdP() +".jpg</src><idProd>"+ produit.getIdP() +"</idProd><libProd>"+produit.toString()+"</libProd>");                
             }
+            
             out.println("</liste_produit>");
         }
     } 
