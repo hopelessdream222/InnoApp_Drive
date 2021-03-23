@@ -48,7 +48,12 @@ body {
 	height: 300px;
 	margin-bottom:1%;
 }
-
+.magasin{   
+        border-style: solid;
+        border-color: black;
+        background-color: pink;
+        margin-bottom:2%; 
+}
 
 /*
 form {

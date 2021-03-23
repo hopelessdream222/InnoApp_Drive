@@ -8,6 +8,7 @@ package metier.action;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -42,28 +43,19 @@ public class ServletAfficherMagasins extends HttpServlet {
 
             /*----- Lecture de liste de mots dans la BD -----*/
             //Appeler la fonction dans DAO
-            ArrayList<Magasin> lstMagasin = (ArrayList<Magasin>)miage.dao.TestHibernate.obtenirMagasins();
+            List<Magasin> lstMagasin = miage.dao.TestHibernate.obtenirMagasins();
+            System.out.println("66666"+lstMagasin);
             for(Magasin mag : lstMagasin){
-                out.println("<idMag>"+mag.getIdMag()+"</idMag>");
-                out.println("<detailMag>"+mag.toString()+"</detailMag>");
-               
+                out.println("<idMag>"+mag.getIdMag()+"</idMag><nomMag>"+mag.getNomMag()+"</nomMag><adrMag>"+
+                   mag.getAdresseMag()+"</adrMag><cpMag>"+mag.getCpMagasin()+","+mag.getVilleMag()+
+                   "</cpMag><telMag>"+mag.getTelMag()+"</telMag>");
+
             }
-//            for (Produit produit : lProduits){
-//                out.println("<src>image/" + produit.getIdP() +".jpg</src><idProd>" + produit.getIdP() + "</idProd>");
-//                
-//            }
-            out.println("</liste_produit>");
+            out.println("</liste_magasin>");
         }
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

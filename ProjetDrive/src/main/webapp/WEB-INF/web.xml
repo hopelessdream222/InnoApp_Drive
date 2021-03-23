@@ -20,6 +20,18 @@
         <servlet-name>ServletChoisirMagasin</servlet-name>
         <servlet-class>metier.action.ServletChoisirMagasin</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ServletAfficherMagasins</servlet-name>
+        <servlet-class>metier.action.ServletAfficherMagasins</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServletChoisirMagasin</servlet-name>
+        <servlet-class>metier.action.ServletChoisirMagasin</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ChoisirMagasin</servlet-name>
+        <jsp-file>/ajax/ChoisirMagasin.html</jsp-file>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ServletDetailProd</servlet-name>
         <url-pattern>/ServletDetailProd</url-pattern>
@@ -39,6 +51,18 @@
     <servlet-mapping>
         <servlet-name>ServletChoisirMagasin</servlet-name>
         <url-pattern>/ServletChoisirMagasin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletAfficherMagasins</servlet-name>
+        <url-pattern>/ServletAfficherMagasins</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletChoisirMagasin</servlet-name>
+        <url-pattern>/ServletChoisirMagasin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChoisirMagasin</servlet-name>
+        <url-pattern>/ChoisirMagasin</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -55,6 +55,15 @@ public class Magasin {
         this.telMag = telMag;
     }
 
+    public Magasin(int idMag, String nomMag, String adresseMag, String villeMag, String cpMagasin, String telMag) {
+        this.idMag = idMag;
+        this.nomMag = nomMag;
+        this.adresseMag = adresseMag;
+        this.villeMag = villeMag;
+        this.cpMagasin = cpMagasin;
+        this.telMag = telMag;
+    }
+
     public int getIdMag() {
         return idMag;
     }
@@ -121,7 +130,7 @@ public class Magasin {
 
     @Override
     public String toString() {
-        return nomMag + "/n" + adresseMag + "/n" + cpMagasin +", "+ villeMag + "/n" + telMag;
+        return nomMag + "\n" + adresseMag + "\n" + cpMagasin +", "+ villeMag + "\n" + telMag;
     }
 
     @Override
