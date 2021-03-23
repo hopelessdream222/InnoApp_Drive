@@ -43,9 +43,14 @@ public class ServletAfficherMagasins extends HttpServlet {
             /*----- Lecture de liste de mots dans la BD -----*/
             //Appeler la fonction dans DAO
             ArrayList<Magasin> lstMagasin = (ArrayList<Magasin>)miage.dao.TestHibernate.obtenirMagasins();
-            out.println("<src>image/1.jpg</src>");
-            out.println("<idProd>1</idProd>");
-                    
+            for(Magasin mag : lstMagasin){
+                out.println("<nomMag>"+mag.getNomMag()+"</nomMag>");
+                out.println("<AdresseMag>"+mag.getAdresseMag()+"</AdresseMag>");
+                out.println("<cpMag>"+mag.getCpMagasin()+"</cpMag>");
+                out.println("<villeMag>"+mag.getVilleMag()+"</villeMag>");
+                out.println("<telMag>"+mag.getVilleMag()+"</telMag>");
+               
+            }
 //            for (Produit produit : lProduits){
 //                out.println("<src>image/" + produit.getIdP() +".jpg</src><idProd>" + produit.getIdP() + "</idProd>");
 //                
