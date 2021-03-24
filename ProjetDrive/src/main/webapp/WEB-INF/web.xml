@@ -28,6 +28,18 @@
         <servlet-name>ChoisirMagasin</servlet-name>
         <jsp-file>/ajax/ChoisirMagasin.html</jsp-file>
     </servlet>
+    <servlet>
+        <servlet-name>Panier</servlet-name>
+        <jsp-file>/ajax/Panier.html</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>ServletAjouterPanier</servlet-name>
+        <servlet-class>metier.action.ServletAjouterPanier</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServletLirePanier</servlet-name>
+        <servlet-class>metier.action.ServletLirePanier</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ServletDetailProd</servlet-name>
         <url-pattern>/ServletDetailProd</url-pattern>
@@ -55,6 +67,18 @@
     <servlet-mapping>
         <servlet-name>ChoisirMagasin</servlet-name>
         <url-pattern>/ChoisirMagasin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Panier</servlet-name>
+        <url-pattern>/Panier</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletAjouterPanier</servlet-name>
+        <url-pattern>/ServletAjouterPanier</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletLirePanier</servlet-name>
+        <url-pattern>/ServletLirePanier</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -25,6 +25,11 @@ public class ComporterId implements Serializable{
     public ComporterId() {
     }
 
+    public ComporterId(int idP, int idPan) {
+        this.idP = idP;
+        this.idPan = idPan;
+    }
+    
     public int getIdP() {
         return idP;
     }

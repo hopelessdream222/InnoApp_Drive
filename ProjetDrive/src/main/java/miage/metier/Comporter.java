@@ -32,14 +32,17 @@ public class Comporter {
 
     public Comporter() {
     }
-    
-    
-    
-    public Comporter(int qtePP, Produit produits, Panier paniers) {
+
+    public Comporter(ComporterId comporterId, int qtePP, Produit produits, Panier paniers) {
+        this.comporterId = comporterId;
         this.qtePP = qtePP;
         this.produits = produits;
         this.paniers = paniers;
     }
+    
+    
+    
+
 
     public ComporterId getComporterId() {
         return comporterId;
