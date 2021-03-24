@@ -5,7 +5,7 @@ function afficherMag (){
 
     // Requête au serveur avec les paramètres éventuels.
     xhr.open("GET","ServletAfficherMagasins");
-
+    
     // On précise ce que l'on va faire quand on aura reçu la réponse du serveur.
     xhr.onload = function(){
         // Si la requête http s'est bien passée.
@@ -26,6 +26,15 @@ function afficherMag (){
                        "<input type='radio' name='magasin' id='"+id+"' value='"+id+"'/>"+
                        "<label for='"+id+"'>"+detail+"<label/></div><br/>");
            }
+           
+           if(xhr.responseXML.getElementsByTagName("client")[0]===null){  
+               
+            }else{
+                
+                var elt2 = document.getElementById("connexion");
+                elt2.innerHTML = xhr.responseXML.getElementsByTagName("client")[0].firstChild.nodeValue;
+                //elt2.insertAdjacentHTML("afterbegin",xhr.responseXML.getElementsByTagName("client")[0].firstChild.nodeValue);
+            }   
         }
     };
 	

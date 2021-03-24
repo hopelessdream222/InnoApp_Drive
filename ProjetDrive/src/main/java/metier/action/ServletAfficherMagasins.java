@@ -13,6 +13,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import miage.metier.Client;
 import miage.metier.Magasin;
 
 /**
@@ -51,6 +53,18 @@ public class ServletAfficherMagasins extends HttpServlet {
                    "</cpMag><telMag>"+mag.getTelMag()+"</telMag>"); 
                 
             }
+            
+            /*----- Récupération le session de client -----*/
+            HttpSession sessionClient = request.getSession();
+            if(sessionClient.getAttribute("client")!=null){
+                Client client = (Client)sessionClient.getAttribute("client");
+                out.println("<client>"+client.getEmailCli()+"</client>");
+                System.out.println("****************"+client.getNomCli());
+            }else{
+                //System.out.println("-------");
+                //System.out.println("****************"+client.getNomCli());
+            }
+            
             out.println("</liste_magasin>");
         }
     }
