@@ -29,24 +29,37 @@ body {
 }
 /*Mise en forme des images*/
 .left{
+        /*background-color: red;*/
 	float: left;
 	width: 50%;
 	height: 300px;
-	background-color: gray;
 	margin-bottom:1%;
+        text-align: center;
 }
 .right{
-	background-color: DarkSeaGreen1;
+       /* background-color: green;*/
 	margin-left: 310px;
 	height: 300px;
 	margin-bottom:1%;
+        text-align: center;
+}
+.images{
+        height: 250px;
+        width: 250px;
+        margin-top: 1%;
 }
 #image1{
-	background-color: pink;
-	float:up;
+	/*background-color: pink;*/
+	float: up;
 	width: 100%;
 	height: 300px;
 	margin-bottom:1%;
+        text-align: center;
+}
+#re{
+    height: 280px;
+    width: 90%;
+    
 }
 .magasin{   
         border-style: solid;
@@ -54,7 +67,9 @@ body {
         background-color: pink;
         margin-bottom:2%; 
 }
-
+.spanID{
+    display: none;
+}
 
 /*
 form {
