@@ -44,7 +44,7 @@ function afficheProds (){
             if(xhr.responseXML.getElementsByTagName("client")[0]===null){                    
             }else{
                 var elt2 = document.getElementById("connexion");
-                elt2.innerHTML = xhr.responseXML.getElementsByTagName("client")[0].firstChild.nodeValue;
+                elt2.innerHTML = "Bonjour, "+xhr.responseXML.getElementsByTagName("client")[0].firstChild.nodeValue;
                 //elt2.insertAdjacentHTML("afterbegin",xhr.responseXML.getElementsByTagName("client")[0].firstChild.nodeValue);
             }    
         };
