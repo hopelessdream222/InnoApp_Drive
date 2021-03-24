@@ -32,6 +32,16 @@
         <servlet-name>TestValiderPanier</servlet-name>
         <jsp-file>/ajax/TestValiderPanier.html</jsp-file>
     </servlet>
+            <servlet-name>ServletRechercheProd</servlet-name>
+        <servlet-class>metier.action.ServletRechercheProd</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProduitRecherche</servlet-name>
+        <jsp-file>/ajax/ProduitRecherche.html</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>ServletAffichageProd</servlet-name>
+        <servlet-class>metier.action.ServletAffichageProd</servlet-class>
     <servlet-mapping>
         <servlet-name>ServletDetailProd</servlet-name>
         <url-pattern>/ServletDetailProd</url-pattern>
@@ -63,6 +73,7 @@
     <servlet-mapping>
         <servlet-name>TestValiderPanier</servlet-name>
         <url-pattern>/TestValiderPanier</url-pattern>
+
     </servlet-mapping>
     <session-config>
         <session-timeout>

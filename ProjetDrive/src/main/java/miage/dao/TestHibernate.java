@@ -49,7 +49,7 @@ public class TestHibernate
             //List<Produit> liste = session.createQuery("select new miage.metier.Produit(libelleP,prixUnitaireP,prixKGP,nutriScoreP,photoP,labelP,formatP,conditionnementP,categorieP) from Produit where idP<=5").list();
             List<Produit> liste = session.createQuery("from Produit where idP>=3 and idP<=6").list();
             //for(Produit p:liste)
-            //System.out.println("Produit: "+p.getLibelleP()+"photo:"+p.getPhotoP());        
+            //System.out.println("Produit: "+p.getLibelleP()+"photo:"+p.getPhotoP());
             // t.commit(); // Commit et flush automatique de la session.
             return liste;
         }
@@ -91,19 +91,19 @@ public class TestHibernate
                 if (mdpcli.equals(mdp)) {
                     c = rlt.get(0);
                 }
-            }     
+            }
         }
         return c;
     }
 
-        
+
     public static List<Magasin> obtenirMagasins() throws LazyInitializationException
     {
         /*----- Ouverture de la session -----*/
          try ( Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
             /*----- Ouverture d'une transaction -----*/
             Transaction t = session.beginTransaction();
-            List<Magasin> liste = session.createQuery("from Magasin").list();  
+            List<Magasin> liste = session.createQuery("from Magasin").list();
             return liste;
             }
     }
@@ -115,7 +115,7 @@ public class TestHibernate
       /*----- Ouverture d'une transaction -----*/
       Transaction t = session.beginTransaction();
       List<Comporter> listeRes = new ArrayList();
-      List<Comporter> liste = session.createQuery("from Comporter").list(); 
+      List<Comporter> liste = session.createQuery("from Comporter").list();
       for (Comporter c : liste) {
           if(c.getPaniers().getIdPan()==idCli){
               listeRes.add(c);
@@ -123,7 +123,19 @@ public class TestHibernate
       }
       return listeRes;
       }
-     }    
+     }
+    
+    public static List<Produit> searchProduits(String mot){
+            /*----- Ouverture de la session -----*/
+            try ( Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
+                /*----- Ouverture d'une transaction -----*/
+                Transaction t = session.beginTransaction();
+                Query query = session.createQuery("from Produit where libelleP LIKE :m");
+                query.setParameter("m","%"+ mot + "%");
+                List<Produit> lp = query.list();
+                return lp;
+            }
+        }
 	/**
 	 * Programme de test.
 	 */

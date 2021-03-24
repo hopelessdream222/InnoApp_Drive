@@ -21,7 +21,7 @@ function afficheDetail (){
                 for(var i=2; i<=5;i++){
                     // Elément html que l'on va mettre à jour.
                     var elt = document.getElementById("image"+i);
-                    elt.innerHTML = "<img class = images src='"+xhr.responseXML.getElementsByTagName("src")[i-2].firstChild.nodeValue+"'><div>"+xhr.responseXML.getElementsByTagName("libProd")[i-2].firstChild.nodeValue+"</div>";
+                    elt.innerHTML = "<img src='"+xhr.responseXML.getElementsByTagName("src")[i-2].firstChild.nodeValue+"' width=200px hight=150px><div>"+xhr.responseXML.getElementsByTagName("libProd")[i-2].firstChild.nodeValue+"</div>";
                     //alert("<img src='"+xhr.responseXML.getElementsByTagName("src")[i-2].firstChild.nodeValue+"'>");
                     document.getElementById("image"+i+"_prodId").innerHTML=xhr.responseXML.getElementsByTagName("idProd")[i-2].firstChild.nodeValue;
                     //alert("reussi"+i);
@@ -40,11 +40,40 @@ function afficheDetail (){
 	}
 
 
+function rechercher (){
+         //alert("123");
+	// Objet XMLHttpRequest.
+	var xhr = new XMLHttpRequest();
+        var nomProd = document.getElementById("zonSaisi").value;
+        if(nomProd===""){
+            alert("Veuillez saisir un produit");
+        }else{
+            // Requête au serveur avec les paramètres éventuels.
+            xhr.open("GET","ServletRechercheProd?nomProd="+nomProd);
+
+            // On précise ce que l'on va faire quand on aura reçu la réponse du serveur.
+            xhr.onload = function(){
+                // Si la requête http s'est bien passée.
+                if (xhr.status === 200){  
+                    alert("200");
+                    if(xhr.responseXML.getElementsByTagName("res")[0].firstChild.nodeValue==="reussi"){
+                        alert("zhaodaole!");
+                        window.location.href="ProduitRecherche";
+                    }else{
+                        alert("meizhaodao!");
+                        document.getElementById("zonSaisi").innerHTML="";
+                    }               
+                }
+            };
+        }
+	// Envoie de la requête.
+	xhr.send();
+    }
 /**
  * Lancement après le chargement du DOM.
  */
 document.addEventListener("DOMContentLoaded", () => {
 
-	document.getElementById("btn_image2_voirDetail").addEventListener("click",afficheXML);
-
+	document.getElementById("btnRechercher").addEventListener("click",rechercher);
+        
 });
