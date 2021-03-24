@@ -1,11 +1,7 @@
 miage\dao\nbDde.class
-metier\action\ServletChoisirMagasin.class
+metier\action\ServletRechercheProd.class
 miage\metier\Comporter.class
 miage\metier\Panier.class
-metier\action\ServletAffichageProd.class
-metier\action\ServletRechercheProd.class
-miage\metier\Fournisseur.class
-metier\action\ServletConnexion.class
 miage\metier\LigneCommandeId.class
 miage\metier\Stocker.class
 miage\metier\PanierId.class
@@ -15,6 +11,7 @@ miage\metier\LigneCommande.class
 miage\metier\ComporterId.class
 metier\action\ServletAfficherMagasins.class
 miage\metier\Commande.class
+metier\action\ServletAffichageProd.class
 miage\metier\Fournisseur.class
 metier\action\ServletConnexion.class
 miage\metier\FournirId.class
@@ -24,5 +21,6 @@ miage\metier\Fournir.class
 miage\metier\Rayon.class
 metier\action\ServletDetailProd.class
 miage\metier\Magasin.class
+metier\action\ServletFinaliserPanier.class
 miage\metier\Categorie.class
 miage\metier\Produit.class

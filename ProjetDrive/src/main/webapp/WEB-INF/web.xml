@@ -17,11 +17,23 @@
         <jsp-file>/ajax/connexion.html</jsp-file>
     </servlet>
     <servlet>
+        <servlet-name>ServletRechercheProd</servlet-name>
+        <servlet-class>metier.action.ServletRechercheProd</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProduitRecherche</servlet-name>
+        <jsp-file>/ajax/ProduitRecherche.html</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>ServletAffichageProd</servlet-name>
+        <servlet-class>metier.action.ServletAffichageProd</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>ServletAfficherMagasins</servlet-name>
         <servlet-class>metier.action.ServletAfficherMagasins</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ServletChoisirMagasin</servlet-name>
+        <servlet-name>ServletFinaliserPanier</servlet-name>
         <servlet-class>metier.action.ServletFinaliserPanier</servlet-class>
     </servlet>
     <servlet>
@@ -32,16 +44,6 @@
         <servlet-name>TestValiderPanier</servlet-name>
         <jsp-file>/ajax/TestValiderPanier.html</jsp-file>
     </servlet>
-            <servlet-name>ServletRechercheProd</servlet-name>
-        <servlet-class>metier.action.ServletRechercheProd</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ProduitRecherche</servlet-name>
-        <jsp-file>/ajax/ProduitRecherche.html</jsp-file>
-    </servlet>
-    <servlet>
-        <servlet-name>ServletAffichageProd</servlet-name>
-        <servlet-class>metier.action.ServletAffichageProd</servlet-class>
     <servlet-mapping>
         <servlet-name>ServletDetailProd</servlet-name>
         <url-pattern>/ServletDetailProd</url-pattern>
@@ -59,12 +61,24 @@
         <url-pattern>/Connexion</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>ServletRechercheProd</servlet-name>
+        <url-pattern>/ServletRechercheProd</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProduitRecherche</servlet-name>
+        <url-pattern>/ProduitRecherche</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletAffichageProd</servlet-name>
+        <url-pattern>/ServletAffichageProd</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>ServletAfficherMagasins</servlet-name>
         <url-pattern>/ServletAfficherMagasins</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ServletChoisirMagasin</servlet-name>
-        <url-pattern>/ServletChoisirMagasin</url-pattern>
+        <servlet-name>ServletFinaliserPanier</servlet-name>
+        <url-pattern>/ServletFinaliserPanier</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ChoisirMagasin</servlet-name>
@@ -73,7 +87,6 @@
     <servlet-mapping>
         <servlet-name>TestValiderPanier</servlet-name>
         <url-pattern>/TestValiderPanier</url-pattern>
-
     </servlet-mapping>
     <session-config>
         <session-timeout>
