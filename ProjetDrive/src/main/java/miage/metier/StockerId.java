@@ -6,12 +6,12 @@ import javax.persistence.Embeddable;
 
 @Embeddable
 public class StockerId  implements Serializable{
-    // Proprietes
+    // proprietes
     @Column(name="idP")     
     private int idP;
     @Column(name="idMag")  
     private int idMag;
-    //constructeur
+    // constructeur
 
     public StockerId() {
     }

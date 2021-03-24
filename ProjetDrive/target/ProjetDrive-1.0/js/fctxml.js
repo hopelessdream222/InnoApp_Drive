@@ -16,7 +16,7 @@ function afficheDetail (){
 	// On précise ce que l'on va faire quand on aura reçu la réponse du serveur.
 	xhr.onload = function(){
             // Si la requête http s'est bien passée.
-            if (xhr.status === 200){  
+            if (xhr.status === 200){
                 alert("reussi");
                 for(var i=2; i<=5;i++){
                     // Elément html que l'on va mettre à jour.
@@ -26,19 +26,40 @@ function afficheDetail (){
                     document.getElementById("image"+i+"_prodId").innerHTML=xhr.responseXML.getElementsByTagName("idProd")[i-2].firstChild.nodeValue;
                     //alert("reussi"+i);
                 }
-                if(xhr.responseXML.getElementsByTagName("client")[0]===null){                    
+                if(xhr.responseXML.getElementsByTagName("client")[0]===null){
                 }else{
                     var elt2 = document.getElementById("connexion");
+
                     elt2.innerHTML = xhr.responseXML.getElementsByTagName("client")[0].firstChild.nodeValue;
                     //elt2.insertAdjacentHTML("afterbegin",xhr.responseXML.getElementsByTagName("client")[0].firstChild.nodeValue);
-                }                
+                }
             }
-        };
-	
+        }
+
 	// Envoie de la requête.
 	xhr.send();
 	}
 
+function ajouter() {
+    var result = confirm("Vous voulez l'ajouter au panier ?");
+    if (result) {
+	// Objet XMLHttpRequest.
+	var xhr = new XMLHttpRequest();
+	// Requête au serveur avec les paramètres éventuels.
+        var produitchoisi=event.srcElement.name;
+	xhr.open("GET","ServletAjouterPanier?idP="+document.getElementById(produitchoisi).innerText,true);
+
+	// On précise ce que l'on va faire quand on aura reçu la réponse du serveur.
+	xhr.onload = function(){
+            // Si la requête http s'est bien passée.
+         if (xhr.status === 200){
+                var result2 = alert("Le produit est bien ajoute dans le panier");
+            }
+        };
+    }
+    	// Envoie de la requête.
+	xhr.send();
+    }
 
 function rechercher (){
          //alert("123");
@@ -54,7 +75,7 @@ function rechercher (){
             // On précise ce que l'on va faire quand on aura reçu la réponse du serveur.
             xhr.onload = function(){
                 // Si la requête http s'est bien passée.
-                if (xhr.status === 200){  
+                if (xhr.status === 200){
                     alert("200");
                     if(xhr.responseXML.getElementsByTagName("res")[0].firstChild.nodeValue==="reussi"){
                         alert("zhaodaole!");
@@ -62,7 +83,7 @@ function rechercher (){
                     }else{
                         alert("meizhaodao!");
                         document.getElementById("zonSaisi").innerHTML="";
-                    }               
+                    }
                 }
             };
         }
@@ -74,6 +95,11 @@ function rechercher (){
  */
 document.addEventListener("DOMContentLoaded", () => {
 
-	document.getElementById("btnRechercher").addEventListener("click",rechercher);
-        
+	//document.getElementById("btn_image2_voirDetail").addEventListener("click",afficheXML);
+        document.getElementById("btnRechercher").addEventListener("click",rechercher);
+        document.getElementById("btn_image2_ajout").addEventListener("click",ajouter);
+        document.getElementById("btn_image3_ajout").addEventListener("click",ajouter);
+        document.getElementById("btn_image4_ajout").addEventListener("click",ajouter);
+        document.getElementById("btn_image5_ajout").addEventListener("click",ajouter);
+
 });

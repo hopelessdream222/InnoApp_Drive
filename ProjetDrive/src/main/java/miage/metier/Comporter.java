@@ -21,21 +21,20 @@ public class Comporter {
     @EmbeddedId
     private ComporterId comporterId;
     private int qtePP;
-    
+
     @ManyToOne
     @JoinColumn(name="idP",insertable=false,updatable=false)
     private Produit produits;
-    
+
     @ManyToOne
     @JoinColumn(name="idPan",insertable=false,updatable=false)
     private Panier paniers;
 
     public Comporter() {
     }
-    
-    
-    
-    public Comporter(int qtePP, Produit produits, Panier paniers) {
+
+    public Comporter(ComporterId comporterId, int qtePP, Produit produits, Panier paniers) {
+        this.comporterId = comporterId;
         this.qtePP = qtePP;
         this.produits = produits;
         this.paniers = paniers;
@@ -102,7 +101,7 @@ public class Comporter {
         }
         return true;
     }
-    
-    
-    
+
+
+
 }
