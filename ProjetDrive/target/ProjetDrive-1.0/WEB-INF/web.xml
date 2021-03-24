@@ -28,6 +28,10 @@
         <servlet-name>ChoisirMagasin</servlet-name>
         <jsp-file>/ajax/ChoisirMagasin.html</jsp-file>
     </servlet>
+    <servlet>
+        <servlet-name>TestValiderPanier</servlet-name>
+        <jsp-file>/ajax/TestValiderPanier.html</jsp-file>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ServletDetailProd</servlet-name>
         <url-pattern>/ServletDetailProd</url-pattern>
@@ -55,6 +59,10 @@
     <servlet-mapping>
         <servlet-name>ChoisirMagasin</servlet-name>
         <url-pattern>/ChoisirMagasin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TestValiderPanier</servlet-name>
+        <url-pattern>/TestValiderPanier</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
