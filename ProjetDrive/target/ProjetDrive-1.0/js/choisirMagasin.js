@@ -19,7 +19,7 @@ function afficherMag (){
            var tabTel = xhr.responseXML.getElementsByTagName("telMag");
            
            for(var i=0; i<tabId.length; i++){
-               var detail = tabNom[i].firstChild.nodeValue+"<br/>"+tabAdr[i].firstChild.nodeValue+"<br/>"+tabCp[i].firstChild.nodeValue+"<br/>"+tabTel[i].firstChild.nodeValue+"<br/>";
+               var detail = tabNom[i].firstChild.nodeValue+"<br/>"+tabAdr[i].firstChild.nodeValue+"<br/>"+tabCp[i].firstChild.nodeValue+"<br/>Tel: "+tabTel[i].firstChild.nodeValue+"<br/>";
                var id = tabId[i].firstChild.nodeValue;
                
                elt.insertAdjacentHTML("beforeend","<div class='magasin'>"+
