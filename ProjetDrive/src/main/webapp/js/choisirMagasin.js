@@ -47,7 +47,7 @@ function choisirMag(){
     var xhr = new XMLHttpRequest();
 
     // Requête au serveur avec les paramètres éventuels.
-    xhr.open("GET","ServletChoisirMagasin?idMag="+idMag);
+    xhr.open("GET","ServletFinaliserPanier?idMag="+idMag);
 
     // On précise ce que l'on va faire quand on aura reçu la réponse du serveur.
     xhr.onload = function(){

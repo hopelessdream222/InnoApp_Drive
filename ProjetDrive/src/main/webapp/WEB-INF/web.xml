@@ -22,7 +22,7 @@
     </servlet>
     <servlet>
         <servlet-name>ServletChoisirMagasin</servlet-name>
-        <servlet-class>metier.action.ServletChoisirMagasin</servlet-class>
+        <servlet-class>metier.action.ServletFinaliserPanier</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ChoisirMagasin</servlet-name>
