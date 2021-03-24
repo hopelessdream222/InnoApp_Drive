@@ -16,6 +16,18 @@
         <servlet-name>Connexion</servlet-name>
         <jsp-file>/ajax/connexion.html</jsp-file>
     </servlet>
+    <servlet>
+        <servlet-name>ServletRechercheProd</servlet-name>
+        <servlet-class>metier.action.ServletRechercheProd</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProduitRecherche</servlet-name>
+        <jsp-file>/ajax/ProduitRecherche.html</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>ServletAffichageProd</servlet-name>
+        <servlet-class>metier.action.ServletAffichageProd</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ServletDetailProd</servlet-name>
         <url-pattern>/ServletDetailProd</url-pattern>
@@ -31,6 +43,18 @@
     <servlet-mapping>
         <servlet-name>Connexion</servlet-name>
         <url-pattern>/Connexion</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletRechercheProd</servlet-name>
+        <url-pattern>/ServletRechercheProd</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProduitRecherche</servlet-name>
+        <url-pattern>/ProduitRecherche</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletAffichageProd</servlet-name>
+        <url-pattern>/ServletAffichageProd</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -97,7 +97,18 @@ public class TestHibernate
         }
         return c;
     }
-
+        
+        public static List<Produit> searchProduits(String mot){
+            /*----- Ouverture de la session -----*/
+            try ( Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
+                /*----- Ouverture d'une transaction -----*/
+                Transaction t = session.beginTransaction();
+                Query query = session.createQuery("from Produit where libelleP LIKE :m");
+                query.setParameter("m","%"+ mot + "%");
+                List<Produit> lp = query.list();
+                return lp;
+            }
+        }
 	/**
 	 * Programme de test.
 	 */
