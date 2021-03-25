@@ -13,10 +13,6 @@
         <servlet-class>metier.action.ServletConnexion</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>Connexion</servlet-name>
-        <jsp-file>/html/Connexion.html</jsp-file>
-    </servlet>
-    <servlet>
         <servlet-name>ServletRechercheProd</servlet-name>
         <servlet-class>metier.action.ServletRechercheProd</servlet-class>
     </servlet>
@@ -56,6 +52,10 @@
         <servlet-name>ServletLirePanier</servlet-name>
         <servlet-class>metier.action.ServletLirePanier</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Connexion</servlet-name>
+        <jsp-file>/html/Connexion.html</jsp-file>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ServletDetailProd</servlet-name>
         <url-pattern>/ServletDetailProd</url-pattern>
@@ -67,10 +67,6 @@
     <servlet-mapping>
         <servlet-name>ServletConnexion</servlet-name>
         <url-pattern>/ServletConnexion</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>Connexion</servlet-name>
-        <url-pattern>/Connexion</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ServletRechercheProd</servlet-name>
@@ -111,6 +107,10 @@
     <servlet-mapping>
         <servlet-name>ServletLirePanier</servlet-name>
         <url-pattern>/ServletLirePanier</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Connexion</servlet-name>
+        <url-pattern>/Connexion</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

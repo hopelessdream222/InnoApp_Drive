@@ -24,16 +24,15 @@ function afficheDetail (){
                     var elt = document.getElementById("image"+i);
                     elt.innerHTML = "<img src='"+xhr.responseXML.getElementsByTagName("src")[i-1].firstChild.nodeValue+"' width=200px hight=150px>"; 
                     elt.insertAdjacentHTML("afterend", "<h2>Prix/KG: "+xhr.responseXML.getElementsByTagName("prixKGProd")[i-1].firstChild.nodeValue+
-                                                        "€<br/>Prix Unitaire: "+xhr.responseXML.getElementsByTagName("prixUniteProd")[i-1].firstChild.nodeValue+"€</h2>"+
+                                                        "<br/>Prix Unitaire: "+xhr.responseXML.getElementsByTagName("prixUniteProd")[i-1].firstChild.nodeValue+"</h2>"+
                                                         "<div height='50px'><p>"+xhr.responseXML.getElementsByTagName("libProd")[i-1].firstChild.nodeValue+"</p></div>");
-                    //document.getElementById("image"+i+"_prodId").innerHTML=xhr.responseXML.getElementsByTagName("idProd")[i-1].firstChild.nodeValue;
-                }               
+                   }               
 
-                if(xhr.responseXML.getElementsByTagName("client")[0]===null){
-                }else{
+                if(xhr.responseXML.getElementsByTagName("client")[0].firstChild.nodeValue==="horsConnection"){
+                }
+                else{
                     var elt2 = document.getElementById("connexion");
-
-                    elt2.innerHTML = xhr.responseXML.getElementsByTagName("client")[0].firstChild.nodeValue;
+                    elt2.innerHTML = "Bienvenue! "+xhr.responseXML.getElementsByTagName("client")[0].firstChild.nodeValue;
                     //elt2.insertAdjacentHTML("afterbegin",xhr.responseXML.getElementsByTagName("client")[0].firstChild.nodeValue);
                 }
             }

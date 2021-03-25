@@ -65,6 +65,7 @@ public class ServletDetailProd extends HttpServlet {
             }else{
                 //System.out.println("-------");
                 //System.out.println("****************"+client.getNomCli());
+                out.println("<client>horsConnection</client>");
             }
             
             out.println("</liste_produit>");
