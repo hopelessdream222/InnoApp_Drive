@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import static miage.dao.TestHibernate.chercherCinqProduits;
 import miage.metier.Client;
 import miage.metier.Produit;
 
@@ -47,10 +46,14 @@ public class ServletDetailProd extends HttpServlet {
  
             /*----- Lecture de liste de mots dans la BD -----*/
             //Appeler la fonction dans DAO
-            List<Produit> lProduits = chercherCinqProduits();
+            List<Produit> lProduits = miage.dao.TestHibernate.chercherNeufProduits();
                     
             for (Produit produit : lProduits){
-                out.println("<src>image/" + produit.getIdP() +".jpg</src><idProd>"+ produit.getIdP() +"</idProd><libProd>"+produit.toString()+"</libProd>");                
+               out.println("<src>image/" + produit.getIdP() +".jpg</src><idProd>"+ produit.getIdP() +
+                        "</idProd><libProd>"+produit.getLibelleP()+"</libProd>"+
+                        "<formatProd>"+produit.getFormatP()+"</formatProd>"+
+                        "<prixKGProd>"+produit.getPrixKGP()+"</prixKGProd>"+
+                        "<prixUniteProd>"+produit.getPrixUnitaireP()+"</prixUniteProd>");                
             }
             
             /*----- Récupération le session de client -----*/

@@ -6,7 +6,7 @@
     </servlet>
     <servlet>
         <servlet-name>Accueil</servlet-name>
-        <jsp-file>/ajax/Accueil.html</jsp-file>
+        <jsp-file>/html/Accueil.html</jsp-file>
     </servlet>
     <servlet>
         <servlet-name>ServletConnexion</servlet-name>
@@ -14,7 +14,7 @@
     </servlet>
     <servlet>
         <servlet-name>Connexion</servlet-name>
-        <jsp-file>/ajax/connexion.html</jsp-file>
+        <jsp-file>/html/Connexion.html</jsp-file>
     </servlet>
     <servlet>
         <servlet-name>ServletRechercheProd</servlet-name>
@@ -22,7 +22,7 @@
     </servlet>
     <servlet>
         <servlet-name>ProduitRecherche</servlet-name>
-        <jsp-file>/ajax/ProduitRecherche.html</jsp-file>
+        <jsp-file>/html/ProduitRecherche.html</jsp-file>
     </servlet>
     <servlet>
         <servlet-name>ServletAffichageProd</servlet-name>
@@ -38,15 +38,15 @@
     </servlet>
     <servlet>
         <servlet-name>ChoisirMagasin</servlet-name>
-        <jsp-file>/ajax/ChoisirMagasin.html</jsp-file>
+        <jsp-file>/html/ChoisirMagasin.html</jsp-file>
     </servlet>
     <servlet>
         <servlet-name>TestValiderPanier</servlet-name>
-        <jsp-file>/ajax/TestValiderPanier.html</jsp-file>
+        <jsp-file>/html/TestValiderPanier.html</jsp-file>
     </servlet>
     <servlet>
         <servlet-name>Panier</servlet-name>
-        <jsp-file>/ajax/Panier.html</jsp-file>
+        <jsp-file>/html/Panier.html</jsp-file>
     </servlet>
     <servlet>
         <servlet-name>ServletAjouterPanier</servlet-name>
