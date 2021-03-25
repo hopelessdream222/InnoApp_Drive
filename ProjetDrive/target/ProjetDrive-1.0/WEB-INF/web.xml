@@ -56,6 +56,10 @@
         <servlet-name>Connexion</servlet-name>
         <jsp-file>/html/Connexion.html</jsp-file>
     </servlet>
+    <servlet>
+        <servlet-name>ServletRechercheCate</servlet-name>
+        <servlet-class>metier.action.ServletRechercheCate</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ServletDetailProd</servlet-name>
         <url-pattern>/ServletDetailProd</url-pattern>
@@ -111,6 +115,10 @@
     <servlet-mapping>
         <servlet-name>Connexion</servlet-name>
         <url-pattern>/Connexion</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletRechercheCate</servlet-name>
+        <url-pattern>/ServletRechercheCate</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

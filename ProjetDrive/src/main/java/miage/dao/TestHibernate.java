@@ -11,13 +11,16 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import miage.metier.Categorie;
 import miage.metier.Client;
 import miage.metier.Comporter;
 import miage.metier.ComporterId;
 import miage.metier.Magasin;
 import miage.metier.Produit;
+import miage.metier.Rayon;
 import org.hibernate.LazyInitializationException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -38,10 +41,10 @@ public class TestHibernate
 
 
 	/**
-	 * CrÃ©ation, enregistrement et lecture d'objets.
+	 * Création, enregistrement et lecture d'objets.
 	 */
 
-	/*----- CrÃ©ation et enregistrement d'employÃ©s -----*/
+	/*----- Création et enregistrement d'employés -----*/
     public static List<Produit> chercherNeufProduits() {
         /*----- Ouverture de la session -----*/
         try ( Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
@@ -151,22 +154,32 @@ public class TestHibernate
                 }
     }
 
-	/**
-	 * Affichage d'une liste de tableaux d'objets.
-	 */
-	private static void affichage (List l)
-		{
-		Iterator e = l.iterator();
-		while (e.hasNext())
-			{
-			Object[] tab_obj = ((Object[]) e.next());
-
-			for (Object obj : tab_obj)
-				System.out.print(obj + " ");
-
-			System.out.println("");
-			}
-		}
+    public static List<Rayon> obtenirRayons() {
+        /*----- Ouverture de la session -----*/
+        try ( Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
+            /*----- Ouverture d'une transaction -----*/
+            Transaction t = session.beginTransaction();
+            List<Rayon> liste = session.createQuery("from Rayon").list();
+            return liste;
+        }
+    }
+    
+    
+    public static List<Categorie> obtenirCategories(int id) {
+        /*----- Ouverture de la session -----*/
+        List<Categorie> lstCat=new ArrayList<>();
+        try ( Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
+            /*----- Ouverture d'une transaction -----*/
+            Transaction t = session.beginTransaction();
+             Rayon ray = session.get(Rayon.class, id);
+             Set<Categorie> lstC=ray.getCategories();
+             for(Categorie c:lstC){
+                 //System.out.println(c.getLibelleCat());
+                 lstCat.add(c);                 
+             }
+        }
+        return lstCat;
+    }
         	/**
 	 * Programme de test.
 	 */

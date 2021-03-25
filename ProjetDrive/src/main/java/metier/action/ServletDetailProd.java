@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import miage.metier.Client;
 import miage.metier.Produit;
+import miage.metier.Rayon;
 
 /**
  *
@@ -36,7 +37,7 @@ public class ServletDetailProd extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        /*----- Type de la rÃ©ponse -----*/
+        /*----- Type de la réponse -----*/
         response.setContentType("application/xml;charset=UTF-8");
         response.setCharacterEncoding("UTF-8");
         try (PrintWriter out = response.getWriter()){
@@ -55,8 +56,12 @@ public class ServletDetailProd extends HttpServlet {
                         "<prixKGProd>"+produit.getPrixKGP()+"</prixKGProd>"+
                         "<prixUniteProd>"+produit.getPrixUnitaireP()+"</prixUniteProd>");                
             }
+            List<Rayon> lRayons = miage.dao.TestHibernate.obtenirRayons();  
             
-            /*----- RÃ©cupÃ©ration le session de client -----*/
+            for (Rayon rayon : lRayons){
+                out.println("<rayonProd>" + rayon.getLibelleRay() +"</rayonProd><rayonId>" + rayon.getIdRay() +"</rayonId>");                
+            }
+            /*----- Récupération le session de client -----*/
             HttpSession s = request.getSession();
             if(s.getAttribute("client")!=null){
                 Client client = (Client)s.getAttribute("client");
