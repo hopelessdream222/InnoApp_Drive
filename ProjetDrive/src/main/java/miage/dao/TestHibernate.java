@@ -19,6 +19,7 @@ import miage.metier.Client;
 import miage.metier.Comporter;
 import miage.metier.ComporterId;
 import miage.metier.Magasin;
+import miage.metier.Panier;
 import miage.metier.Produit;
 import miage.metier.Rayon;
 import org.hibernate.LazyInitializationException;
@@ -121,7 +122,7 @@ public class TestHibernate
             return liste;
             }
     }
-    /*----- Chercher les produits dans le panier d'un client-----*/
+/*----- Chercher les produits dans le panier d'un client-----*/
     public static List<Comporter> chercherPanierClient(int idCli){ //Client client
      /*----- Ouverture de la session -----*/
      try (Session session = HibernateUtil.getSessionFactory().getCurrentSession())
@@ -135,7 +136,6 @@ public class TestHibernate
               listeRes.add(c);
           }
       }
-
       return listeRes;
       }
      }
@@ -153,7 +153,26 @@ public class TestHibernate
                 t.commit(); // Commit et flush automatique de la session.
                 }
     }
-
+     public static void supprimerProduitPanier(int idCli,int idP){
+         try (Session session = HibernateUtil.getSessionFactory().getCurrentSession())
+                {
+                /*----- Ouverture d'une transaction -----*/
+                Transaction t = session.beginTransaction();
+                Client c = session.get(Client.class,idCli);
+                Panier p = c.getPanier();
+                Set<Produit> produit = p.getComportements().keySet();
+                for(Produit pdt : produit)
+                    //System.out.println("-- " + pdt.getIdP());
+                    if (pdt.getIdP()==idP){
+                        //System.out.println("-- " + pdt.getIdP());                    
+                        Comporter c2= (Comporter)p.getComportements().get(pdt);
+                        //System.out.println("-- " + c2.getQtePP());
+                        c.getPanier().getComportements().remove(pdt);                        
+                        session.delete(c2);
+                        t.commit();
+               }
+                }
+    }
     public static List<Rayon> obtenirRayons() {
         /*----- Ouverture de la session -----*/
         try ( Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
@@ -183,17 +202,16 @@ public class TestHibernate
         	/**
 	 * Programme de test.
 	 */
-	public static void main(String[] args) throws IOException, FileNotFoundException, SQLException, LazyInitializationException
-		{
-                    //System.out.println(TestHibernate.chercherCinqProduits());
-                    //TestHibernate.loadPhotos();
-                   //TestHibernate.obtenirMagasins();
-                    //chercherCinqProduits();
-               for (miage.metier.Comporter c: chercherPanierClient(1))
-                    System.out.println("comportement:" +c.getPaniers().getIdPan());
-		//insertProduitPanier();
-                    /*----- Exit -----*/
-		System.exit(0);
-		}
+	public static void main(String[] args) throws IOException, FileNotFoundException, SQLException, LazyInitializationException{
+                //System.out.println(TestHibernate.chercherCinqProduits());
+                //TestHibernate.loadPhotos();
+               //TestHibernate.obtenirMagasins();
+                //chercherCinqProduits();
+           for (miage.metier.Comporter c: chercherPanierClient(1))
+                System.out.println("comportement:" +c.getPaniers().getIdPan());
+            //insertProduitPanier();
+                /*----- Exit -----*/
+            System.exit(0);
+            }
 
 } /*----- Fin de la classe TestHibernate -----*/

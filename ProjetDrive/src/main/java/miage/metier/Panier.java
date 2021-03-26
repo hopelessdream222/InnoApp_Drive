@@ -31,14 +31,13 @@ public class Panier {
     @Column(name="idPan")    
     private int idPan;
 
-    
     // relation <Posseder>
     @OneToOne(mappedBy = "panier")
     private Client clientPan;
     
     // Relation <Comporter>
     @OneToMany(mappedBy = "paniers",cascade=CascadeType.ALL)
-    @MapKeyJoinColumn(name = "IdPan")
+    @MapKeyJoinColumn(name = "idP")
     private Map<Produit, Comporter> comportements=new HashMap(0);
 
     public Panier() {

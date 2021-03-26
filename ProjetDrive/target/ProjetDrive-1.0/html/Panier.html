@@ -2,9 +2,9 @@
     <head>
         <meta charset="utf-8">
         <title>Mon Panier</title>
-        <link rel="stylesheet" type="text/css" href="css/Panier.css"/>  
-        <!--<script type="text/javascript" src="newjavascript.js"></script>-->
-        <script type="text/javascript" src="jsFonctionnel/lirePanier.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/Panier.css"/>
+
+
     </head>
     <body>
         <form action="ChoisirMagasin">
@@ -14,7 +14,7 @@
                         <h2 style="font-size: 30px;">Mon Panier</h2>
                     </div>
                     <div class="topbar-info" id="J_userInfo">
-                        <!--<a class="link" href="!!!!!!!!!!!!">Se connecter</a>-->
+                        <a href="Connexion">Se Connecter</a>
                         
                     </div>
                 </div>
@@ -34,9 +34,11 @@
 
             </div>
             <div id="sum_area">
-                <div id="pay"><button>Valider</button></div>
+                <input id="pay" type="submit" value="Valider"/>
+
                 <div id="pay_amout">Sous-total : <span id="price_num">0</span> euro</div>
             </div>
+            <script type="text/javascript" src="jsFonctionnel/lirePanier.js"></script>
             </form>
         </body>
 </html>

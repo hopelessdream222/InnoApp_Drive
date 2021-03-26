@@ -39,27 +39,39 @@ public class Produit {
     private String labelP;
     private String formatP;
     private String conditionnementP;
+    private String tailleReferenceP;
+    private String compositionP;
 
     
-    // relation <Appartenir>
+    // Relation <Appartenir>
     @ManyToOne(fetch =FetchType.EAGER) 
     @JoinColumn(name = "idCat")
     private Categorie categorieP;
     
     // Relation <LigneCommande>
     @OneToMany(mappedBy = "produits",cascade=CascadeType.ALL)
-    @MapKeyJoinColumn(name = "IdP")
+    @MapKeyJoinColumn(name = "idCmd")
     private Map<Commande, LigneCommande> ligneCommandes=new HashMap(0);
     
     // Relation <Stocker>
     @OneToMany(mappedBy = "produits",cascade=CascadeType.ALL)
-    @MapKeyJoinColumn(name = "IdP")
+    @MapKeyJoinColumn(name = "idMag")
     private Map<Magasin, Stocker> stockages=new HashMap(0);
     
     // Relation <Comporter>
     @OneToMany(mappedBy = "produits",cascade=CascadeType.ALL)
-    @MapKeyJoinColumn(name = "IdP")
+    @MapKeyJoinColumn(name = "idPan")
     private Map<Panier, Comporter> comportements=new HashMap(0);
+    
+    // Relation <Promouvoir>
+    @ManyToOne(fetch =FetchType.EAGER)
+    @JoinColumn(name = "idProm")
+    private Promotion Prom;
+    
+    // Relation <Composer>
+    @ManyToOne(fetch =FetchType.EAGER)
+    @JoinColumn(name = "idIng")
+    private Ingredient ingredient;
 
     public Produit() {
     }

@@ -60,6 +60,10 @@
         <servlet-name>ServletRechercheCate</servlet-name>
         <servlet-class>metier.action.ServletRechercheCate</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ServletSupprimerProdPanier</servlet-name>
+        <servlet-class>metier.action.ServletSupprimerProdPanier</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ServletDetailProd</servlet-name>
         <url-pattern>/ServletDetailProd</url-pattern>
@@ -119,6 +123,10 @@
     <servlet-mapping>
         <servlet-name>ServletRechercheCate</servlet-name>
         <url-pattern>/ServletRechercheCate</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletSupprimerProdPanier</servlet-name>
+        <url-pattern>/ServletSupprimerProdPanier</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

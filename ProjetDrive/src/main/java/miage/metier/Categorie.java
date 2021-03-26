@@ -32,14 +32,16 @@ public class Categorie {
     private String libelleCat;
     
     // relation <Situer>
-    @ManyToOne(fetch =FetchType.EAGER)  // comparaison avec LAZY
+    @ManyToOne(fetch =FetchType.EAGER)
     @JoinColumn(name = "idRay")
     private Rayon rayonCat;
     
     // relation <Appartenir>
     @OneToMany(mappedBy = "categorieP", cascade= CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Produit> produits = new HashSet<>(0);
+    
 
+    
     public Categorie() {
     }
     

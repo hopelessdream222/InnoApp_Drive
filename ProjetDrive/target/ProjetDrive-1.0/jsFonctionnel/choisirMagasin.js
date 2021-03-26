@@ -31,8 +31,8 @@ function afficherMag (){
                
             }else{
                 
-                var elt2 = document.getElementById("connexion");
-                elt2.innerHTML = "Bonjour, "+xhr.responseXML.getElementsByTagName("client")[0].firstChild.nodeValue;
+                var elt2 = document.getElementById("J_userInfo");
+                elt2.innerHTML = "Bienvenue! "+xhr.responseXML.getElementsByTagName("client")[0].firstChild.nodeValue;
                 //elt2.insertAdjacentHTML("afterbegin",xhr.responseXML.getElementsByTagName("client")[0].firstChild.nodeValue);
             }   
         }
@@ -73,7 +73,7 @@ function choisirMag(){
  * Lancement après le chargement du DOM.
  */
 document.addEventListener("DOMContentLoaded", () => {
-
-    document.getElementById("btnChoisirMag").addEventListener("click",choisirMag);
+  
+    document.getElementById("pay").addEventListener("click",choisirMag);
 });
 

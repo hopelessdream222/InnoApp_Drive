@@ -29,7 +29,7 @@ public class Rayon {
     private int idRay;
     private String libelleRay;
     
-    // relation <Situer>
+    // Relation <Situer>
     @OneToMany(mappedBy = "rayonCat", cascade= CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Categorie> categories = new HashSet<>(0);
 

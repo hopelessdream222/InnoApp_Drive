@@ -12,6 +12,7 @@ miage\metier\ComporterId.class
 metier\action\ServletAjouterPanier.class
 metier\action\ServletAfficherMagasins.class
 miage\metier\Commande.class
+metier\action\ServletSupprimerProdPanier.class
 metier\action\ServletAffichageProd.class
 miage\metier\Fournisseur.class
 metier\action\ServletConnexion.class
@@ -21,6 +22,7 @@ miage\metier\Client.class
 miage\metier\Fournir.class
 miage\metier\Rayon.class
 metier\action\ServletDetailProd.class
+metier\action\ServletRechercheCate.class
 miage\metier\Magasin.class
 metier\action\ServletFinaliserPanier.class
 miage\metier\Categorie.class

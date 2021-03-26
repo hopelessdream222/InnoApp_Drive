@@ -41,8 +41,13 @@ public class Magasin {
     
     // Relation <Stocker>
     @OneToMany(mappedBy = "magasins",cascade=CascadeType.ALL)
-    @MapKeyJoinColumn(name = "IdMag")
+    @MapKeyJoinColumn(name = "idP")
     private Map<Produit, Stocker> stockages=new HashMap(0);
+    
+    // Relation <Disponibilite>
+    @OneToMany(mappedBy = "magasins",cascade=CascadeType.ALL)
+    @MapKeyJoinColumn(name = "idCren")
+    private Map<Creneau, Disponibilite> creneaux=new HashMap(0);
 
     public Magasin() {
     }
@@ -127,6 +132,15 @@ public class Magasin {
     public void setStockages(Map<Produit, Stocker> stockages) {
         this.stockages = stockages;
     }
+
+    public Map<Creneau, Disponibilite> getCreneaux() {
+        return creneaux;
+    }
+
+    public void setCreneaux(Map<Creneau, Disponibilite> creneaux) {
+        this.creneaux = creneaux;
+    }
+    
 
     @Override
     public String toString() {

@@ -27,7 +27,7 @@ public class ServletLirePanier extends HttpServlet {
 @Override
 	protected void doGet (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 		{		
-		/*----- Type de la réponse -----*/
+		/*----- Type de la r�ponse -----*/
 		response.setContentType("application/xml;charset=UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		try (PrintWriter out = response.getWriter())
@@ -36,17 +36,16 @@ public class ServletLirePanier extends HttpServlet {
 			out.println("<?xml version=\"1.0\"?>");
 			out.println("<liste_comporter>");
 
-			/*----- Récupération des paramètres -----*/
-			//int idCli = 2;
-                        /*----- Récupération le session de client -----*/
+                        /*----- R�cup�ration le session de client -----*/
                         HttpSession s = request.getSession();
                         Client client = (Client)s.getAttribute("client");
                         int idCli = client.getIdCli();
                         /*----- Lecture de liste de mots dans la BD -----*/
+                        
                         List<Comporter> lComporter = TestHibernate.chercherPanierClient(idCli);
 
                         for (Comporter comporter : lComporter)
-                            out.println("<src>image/" + comporter.getProduits().getIdP() +".jpg</src><libelleP>"+comporter.getProduits().getLibelleP()+"</libelleP><PrixUnitaireP>"+comporter.getProduits().getPrixUnitaireP()+"</PrixUnitaireP><Qte>"+comporter.getQtePP()+"</Qte><emailCli>"+client.getEmailCli()+"</emailCli>");			
+                            out.println("<src>image/" + comporter.getProduits().getIdP() +".jpg</src><libelleP>"+comporter.getProduits().getLibelleP()+"</libelleP><PrixUnitaireP>"+comporter.getProduits().getPrixUnitaireP()+"</PrixUnitaireP><Qte>"+comporter.getQtePP()+"</Qte><emailCli>"+client.getEmailCli()+"</emailCli><idP>"+comporter.getProduits().getIdP()+"</idP>");			
                         
                         out.println("</liste_comporter>");	
 			}

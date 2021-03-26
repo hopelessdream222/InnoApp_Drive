@@ -7,7 +7,9 @@ package miage.metier;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -32,7 +34,7 @@ public class Commande {
     
     // Relation <LigneCommande>
     @OneToMany(mappedBy = "commandes",cascade=CascadeType.ALL)
-    @MapKeyJoinColumn(name = "IdCmd")
+    @MapKeyJoinColumn(name = "idP")
     private Map<Produit, LigneCommande> lignecommandes=new HashMap(0);
     
     // relation <Passer>
@@ -44,6 +46,11 @@ public class Commande {
     @ManyToOne(fetch =FetchType.EAGER)  
     @JoinColumn(name = "idMag")
     private Magasin magasinCmd;
+    
+    // relation <ChoisirCren>
+    @ManyToOne(fetch =FetchType.EAGER)
+    @JoinColumn(name = "idCren")
+    private Creneau creneauCmd;
 
     public Commande() {
     }
@@ -95,6 +102,14 @@ public class Commande {
         this.magasinCmd = magasinCmd;
     }
 
+    public Creneau getCreneauCmd() {
+        return creneauCmd;
+    }
+
+    public void setCreneauCmd(Creneau creneauCmd) {
+        this.creneauCmd = creneauCmd;
+    }
+    
     @Override
     public String toString() {
         return "Commande{" + "idCmd=" + idCmd + ", datecmd=" + datecmd + ", lignecommandes=" + lignecommandes + ", clientCmd=" + clientCmd + ", magasinCmd=" + magasinCmd + '}';
