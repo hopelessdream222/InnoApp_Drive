@@ -35,6 +35,11 @@ public class ServletRechercheCate extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+                /*
+         * To change this license header, choose License Headers in Project Properties.
+         * To change this template file, choose Tools | Templates
+         * and open the template in the editor.
+         */
         int rayon = Integer.parseInt(request.getParameter("rayon"));
         //nomProd fangjinqu
         List<Categorie> lCategories = miage.dao.TestHibernate.obtenirCategories(rayon);
@@ -48,7 +53,7 @@ public class ServletRechercheCate extends HttpServlet {
             out.println("<?xml version=\"1.0\"?>");
             out.println("<responseRecherche><res>reussi</res>");
             for (Categorie categorie : lCategories){
-                out.println("<categorie>" + categorie.getLibelleCat() +"</categorie>");                
+                out.println("<categorie>" + categorie.getLibelleCat() +"</categorie><categorieId>" + categorie.getIdCat() +"</categorieId>");                
             }
             out.println("</responseRecherche>");
 

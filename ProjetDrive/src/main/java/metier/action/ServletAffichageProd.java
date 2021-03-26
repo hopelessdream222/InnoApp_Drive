@@ -33,21 +33,14 @@ public class ServletAffichageProd extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        String nomProd = "";
-        /*----- Récupération le session de client -----*/
-        HttpSession s = request.getSession();
-        if(s.getAttribute("nomProd")!=null){
-            nomProd = (String)s.getAttribute("nomProd");               
-        }else{
-            nomProd = (String)s.getAttribute("nomProd");
-        }
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+        String nomProd = request.getParameter("nomProd");
+
         //nomProd fangjinqu
         List<Produit> lProduits = miage.dao.TestHibernate.searchProduits(nomProd);
 
-        if(lProduits==null){
-            /*----- Type de la réponse -----*/
+        if(lProduits.size()==0){
+            /*----- Type de la r�ponse -----*/
             response.setContentType("application/xml;charset=UTF-8");
             response.setCharacterEncoding("UTF-8");
             try (PrintWriter out = response.getWriter()){
@@ -58,22 +51,12 @@ public class ServletAffichageProd extends HttpServlet {
                 out.println("<res>echec</res>");
                 
                 System.out.println("---echec---");
-                /*----- Récupération le session de client -----*/
-                HttpSession sessionClient = request.getSession();
-                if(sessionClient.getAttribute("client")!=null){
-                    Client client = (Client)sessionClient.getAttribute("client");
-                    out.println("<client>"+client.getEmailCli()+"</client>");
-                    //System.out.println("****************"+client.getNomCli());
-                }else{
-                    //System.out.println("-------");
-                    //System.out.println("****************"+client.getNomCli());
-                }
                 out.println("</responseRecherche>");
             }
         }else{
             System.out.println("---reussi---");
             
-            /*----- Type de la réponse -----*/
+            /*----- Type de la r�ponse -----*/
             response.setContentType("application/xml;charset=UTF-8");
             response.setCharacterEncoding("UTF-8");
             try (PrintWriter out = response.getWriter()){
@@ -82,17 +65,11 @@ public class ServletAffichageProd extends HttpServlet {
                 out.println("<?xml version=\"1.0\"?>");
                 out.println("<responseRecherche><res>reussi</res>");
                 for (Produit produit : lProduits){
-                    out.println("<src>image/" + produit.getIdP() +".jpg</src><idProd>"+ produit.getIdP() +"</idProd><libProd>"+produit.toString()+"</libProd>");                
-                }
-                /*----- Récupération le session de client -----*/
-                HttpSession sessionClient = request.getSession();
-                if(sessionClient.getAttribute("client")!=null){
-                    Client client = (Client)sessionClient.getAttribute("client");
-                    out.println("<client>"+client.getEmailCli()+"</client>");
-                    //System.out.println("****************"+client.getNomCli());
-                }else{
-                    //System.out.println("-------");
-                    //System.out.println("****************"+client.getNomCli());
+                   out.println("<src>image/" + produit.getIdP() +".jpg</src><idProd>"+ produit.getIdP() +
+                        "</idProd><libProd>"+produit.getLibelleP()+"</libProd>"+
+                        "<formatProd>"+produit.getFormatP()+"</formatProd>"+
+                        "<prixKGProd>"+produit.getPrixKGP()+"</prixKGProd>"+
+                        "<prixUniteProd>"+produit.getPrixUnitaireP()+"</prixUniteProd>");                  
                 }
                 out.println("</responseRecherche>");
                 

@@ -198,6 +198,21 @@ public class TestHibernate
              }
         }
         return lstCat;
+    }   
+    public static List<Produit> obtenirProduits(int id) {
+        /*----- Ouverture de la session -----*/
+        List<Produit> lstP=new ArrayList<>();
+        try ( Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
+            /*----- Ouverture d'une transaction -----*/
+             Transaction t = session.beginTransaction();
+             Categorie c=session.get(Categorie.class, id);
+             Set<Produit> prods=c.getProduits();
+             for(Produit p:prods){
+                 System.out.println(p.getLibelleP());
+                 lstP.add(p);                 
+             }
+        }
+        return lstP;
     }
         	/**
 	 * Programme de test.

@@ -1,3 +1,4 @@
+C:\Users\ymfig\OneDrive\??\GitHub\Projet_Drive_2\InnoApp_Drive\ProjetDrive\src\main\java\miage\metier\Promotion.java
 C:\Users\ymfig\OneDrive\??\GitHub\Projet_Drive_2\InnoApp_Drive\ProjetDrive\src\main\java\miage\metier\Rayon.java
 C:\Users\ymfig\OneDrive\??\GitHub\Projet_Drive_2\InnoApp_Drive\ProjetDrive\src\main\java\miage\metier\LigneCommandeId.java
 C:\Users\ymfig\OneDrive\??\GitHub\Projet_Drive_2\InnoApp_Drive\ProjetDrive\src\main\java\miage\metier\Comporter.java
@@ -5,6 +6,7 @@ C:\Users\ymfig\OneDrive\??\GitHub\Projet_Drive_2\InnoApp_Drive\ProjetDrive\src\m
 C:\Users\ymfig\OneDrive\??\GitHub\Projet_Drive_2\InnoApp_Drive\ProjetDrive\src\main\java\miage\metier\Stocker.java
 C:\Users\ymfig\OneDrive\??\GitHub\Projet_Drive_2\InnoApp_Drive\ProjetDrive\src\main\java\metier\action\ServletAfficherMagasins.java
 C:\Users\ymfig\OneDrive\??\GitHub\Projet_Drive_2\InnoApp_Drive\ProjetDrive\src\main\java\miage\metier\Categorie.java
+C:\Users\ymfig\OneDrive\??\GitHub\Projet_Drive_2\InnoApp_Drive\ProjetDrive\src\main\java\miage\metier\Necessiter.java
 C:\Users\ymfig\OneDrive\??\GitHub\Projet_Drive_2\InnoApp_Drive\ProjetDrive\src\main\java\metier\action\ServletRechercheCate.java
 C:\Users\ymfig\OneDrive\??\GitHub\Projet_Drive_2\InnoApp_Drive\ProjetDrive\src\main\java\metier\action\ServletDetailProd.java
 C:\Users\ymfig\OneDrive\??\GitHub\Projet_Drive_2\InnoApp_Drive\ProjetDrive\src\main\java\miage\dao\nbDde.java
@@ -12,6 +14,7 @@ C:\Users\ymfig\OneDrive\??\GitHub\Projet_Drive_2\InnoApp_Drive\ProjetDrive\src\m
 C:\Users\ymfig\OneDrive\??\GitHub\Projet_Drive_2\InnoApp_Drive\ProjetDrive\src\main\java\metier\action\ServletFinaliserPanier.java
 C:\Users\ymfig\OneDrive\??\GitHub\Projet_Drive_2\InnoApp_Drive\ProjetDrive\src\main\java\miage\metier\Magasin.java
 C:\Users\ymfig\OneDrive\??\GitHub\Projet_Drive_2\InnoApp_Drive\ProjetDrive\src\main\java\miage\dao\HibernateUtil.java
+C:\Users\ymfig\OneDrive\??\GitHub\Projet_Drive_2\InnoApp_Drive\ProjetDrive\src\main\java\miage\metier\Disponibilite.java
 C:\Users\ymfig\OneDrive\??\GitHub\Projet_Drive_2\InnoApp_Drive\ProjetDrive\src\main\java\miage\metier\Fournir.java
 C:\Users\ymfig\OneDrive\??\GitHub\Projet_Drive_2\InnoApp_Drive\ProjetDrive\src\main\java\metier\action\ServletRechercheProd.java
 C:\Users\ymfig\OneDrive\??\GitHub\Projet_Drive_2\InnoApp_Drive\ProjetDrive\src\main\java\miage\metier\Produit.java
@@ -21,9 +24,15 @@ C:\Users\ymfig\OneDrive\??\GitHub\Projet_Drive_2\InnoApp_Drive\ProjetDrive\src\m
 C:\Users\ymfig\OneDrive\??\GitHub\Projet_Drive_2\InnoApp_Drive\ProjetDrive\src\main\java\metier\action\ServletAjouterPanier.java
 C:\Users\ymfig\OneDrive\??\GitHub\Projet_Drive_2\InnoApp_Drive\ProjetDrive\src\main\java\metier\action\ServletAffichageProd.java
 C:\Users\ymfig\OneDrive\??\GitHub\Projet_Drive_2\InnoApp_Drive\ProjetDrive\src\main\java\metier\action\ServletSupprimerProdPanier.java
+C:\Users\ymfig\OneDrive\??\GitHub\Projet_Drive_2\InnoApp_Drive\ProjetDrive\src\main\java\miage\metier\NecessiterId.java
 C:\Users\ymfig\OneDrive\??\GitHub\Projet_Drive_2\InnoApp_Drive\ProjetDrive\src\main\java\miage\dao\TestHibernate.java
 C:\Users\ymfig\OneDrive\??\GitHub\Projet_Drive_2\InnoApp_Drive\ProjetDrive\src\main\java\miage\metier\Commande.java
 C:\Users\ymfig\OneDrive\??\GitHub\Projet_Drive_2\InnoApp_Drive\ProjetDrive\src\main\java\metier\action\ServletLirePanier.java
+C:\Users\ymfig\OneDrive\??\GitHub\Projet_Drive_2\InnoApp_Drive\ProjetDrive\src\main\java\miage\metier\Ingredient.java
 C:\Users\ymfig\OneDrive\??\GitHub\Projet_Drive_2\InnoApp_Drive\ProjetDrive\src\main\java\miage\metier\FournirId.java
 C:\Users\ymfig\OneDrive\??\GitHub\Projet_Drive_2\InnoApp_Drive\ProjetDrive\src\main\java\metier\action\ServletConnexion.java
+C:\Users\ymfig\OneDrive\??\GitHub\Projet_Drive_2\InnoApp_Drive\ProjetDrive\src\main\java\metier\action\ServletRechercheProdUnCate.java
+C:\Users\ymfig\OneDrive\??\GitHub\Projet_Drive_2\InnoApp_Drive\ProjetDrive\src\main\java\miage\metier\DisponibiliteId.java
 C:\Users\ymfig\OneDrive\??\GitHub\Projet_Drive_2\InnoApp_Drive\ProjetDrive\src\main\java\miage\metier\StockerId.java
+C:\Users\ymfig\OneDrive\??\GitHub\Projet_Drive_2\InnoApp_Drive\ProjetDrive\src\main\java\miage\metier\Recette.java
+C:\Users\ymfig\OneDrive\??\GitHub\Projet_Drive_2\InnoApp_Drive\ProjetDrive\src\main\java\miage\metier\Creneau.java

@@ -64,6 +64,14 @@
         <servlet-name>ServletSupprimerProdPanier</servlet-name>
         <servlet-class>metier.action.ServletSupprimerProdPanier</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ServletRechercheProdUnCate</servlet-name>
+        <servlet-class>metier.action.ServletRechercheProdUnCate</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DetailProd</servlet-name>
+        <jsp-file>/html/DetailProd.html</jsp-file>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ServletDetailProd</servlet-name>
         <url-pattern>/ServletDetailProd</url-pattern>
@@ -127,6 +135,14 @@
     <servlet-mapping>
         <servlet-name>ServletSupprimerProdPanier</servlet-name>
         <url-pattern>/ServletSupprimerProdPanier</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletRechercheProdUnCate</servlet-name>
+        <url-pattern>/ServletRechercheProdUnCate</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DetailProd</servlet-name>
+        <url-pattern>/DetailProd</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
