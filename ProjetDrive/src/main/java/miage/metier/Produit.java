@@ -35,6 +35,38 @@ public class Produit {
     private float prixUnitaireP;
     private float prixKGP;
     private String nutriScoreP;
+
+    public String getTailleReferenceP() {
+        return tailleReferenceP;
+    }
+
+    public void setTailleReferenceP(String tailleReferenceP) {
+        this.tailleReferenceP = tailleReferenceP;
+    }
+
+    public String getCompositionP() {
+        return compositionP;
+    }
+
+    public void setCompositionP(String compositionP) {
+        this.compositionP = compositionP;
+    }
+
+    public Promotion getProm() {
+        return Prom;
+    }
+
+    public void setProm(Promotion Prom) {
+        this.Prom = Prom;
+    }
+
+    public Ingredient getIngredient() {
+        return ingredient;
+    }
+
+    public void setIngredient(Ingredient ingredient) {
+        this.ingredient = ingredient;
+    }
     private Blob photoP;
     private String labelP;
     private String formatP;

@@ -139,7 +139,7 @@ public class TestHibernate
       return listeRes;
       }
      }
-    public static void insertProduitPanier(int idCli,int idP){
+    public static void insertProduitPanier(int idCli,int idP,int qte){
     try (Session session = HibernateUtil.getSessionFactory().getCurrentSession())
                 {
                 /*----- Ouverture d'une transaction -----*/
@@ -148,11 +148,36 @@ public class TestHibernate
                 Produit p1 = session.get(Produit.class,idP);
                 Client c1 = session.get(Client.class, idCli);
                 ComporterId comporterid= new ComporterId(idP,idCli); // idp;idPan
-                Comporter comportement = new Comporter(comporterid,1,p1,c1.getPanier());
+                Comporter comportement = new Comporter(comporterid,qte,p1,c1.getPanier());
                 session.save(comportement);
                 t.commit(); // Commit et flush automatique de la session.
                 }
     }
+    
+    public static Produit loadProduit(int id) {
+        /*----- Ouverture de la session -----*/
+        try ( Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
+            /*----- Ouverture d'une transaction -----*/
+            session.beginTransaction();
+            Produit p = session.get(Produit.class, id);
+            //System.out.println("Produit---- " + p.getCategorieP());
+            return p;
+        }
+    }
+    
+    public static List<String> afficherLabels(String str) {
+        List<String> lstLables = new ArrayList<>();
+        if(!str.isEmpty()){
+            String[] lab = str.split(",");
+            for (String a : lab) {
+                //System.out.println(a);
+                lstLables.add(a); 
+            }
+        }
+        System.out.println(lstLables.size());
+        return lstLables;
+    }
+    
      public static void supprimerProduitPanier(int idCli,int idP){
          try (Session session = HibernateUtil.getSessionFactory().getCurrentSession())
                 {
@@ -222,9 +247,10 @@ public class TestHibernate
                 //TestHibernate.loadPhotos();
                //TestHibernate.obtenirMagasins();
                 //chercherCinqProduits();
-           for (miage.metier.Comporter c: chercherPanierClient(1))
-                System.out.println("comportement:" +c.getPaniers().getIdPan());
+//           for (miage.metier.Comporter c: chercherPanierClient(1))
+//                System.out.println("comportement:" +c.getPaniers().getIdPan());
             //insertProduitPanier();
+            TestHibernate.afficherLabels("");
                 /*----- Exit -----*/
             System.exit(0);
             }

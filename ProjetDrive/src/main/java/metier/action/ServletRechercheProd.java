@@ -36,57 +36,46 @@ public class ServletRechercheProd extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        String nomProd = request.getParameter("nomProd");
+        int idProd = Integer.parseInt(request.getParameter("idProd"));
         //nomProd fangjinqu
-        List<Produit> lProduits = miage.dao.TestHibernate.searchProduits(nomProd);
+        Produit produit = miage.dao.TestHibernate.loadProduit(idProd);
         //System.out.println(lProduits.get(0).getLibelleP());
-        /*----- Type de la réponse -----*/
+        /*----- Type de la r�ponse -----*/
         response.setContentType("application/xml;charset=UTF-8");
         response.setCharacterEncoding("UTF-8");
-        if(lProduits.size()==0){
-            System.out.println("---echec---");
-            
-            try (PrintWriter out = response.getWriter()){
-                /*----- Ecriture de la page XML -----*/
-                //Si on trouve pas de client, on fait une response de "echec"
-                out.println("<?xml version=\"1.0\"?>");
-                out.println("<responseRecherche>");
-                out.println("<res>echec</res>");  
-                /*----- Récupération le session de client -----*/
-                HttpSession sessionClient = request.getSession();
-                if(sessionClient.getAttribute("client")!=null){
-                    Client client = (Client)sessionClient.getAttribute("client");
-                    out.println("<client>"+client.getEmailCli()+"</client>");
-                    //System.out.println("****************"+client.getNomCli());
-                }else{
-                    //System.out.println("-------");
-                    //System.out.println("****************"+client.getNomCli());
+        List<String> labels = miage.dao.TestHibernate.afficherLabels(produit.getLabelP());
+        
+        try (PrintWriter out = response.getWriter()){
+            /*----- Ecriture de la page XML -----*/
+            //Si on trouve pas de client, on fait une response de "echec"
+            out.println("<?xml version=\"1.0\"?>");
+            out.println("<responseRecherche>");
+            out.println("<src>image/" + produit.getIdP() +".jpg</src>"+
+                        "<idProd>"+ produit.getIdP() +"</idProd>"+
+                        "<libProd>"+produit.getLibelleP()+"</libProd>"+
+                        "<formatProd>"+produit.getFormatP()+"</formatProd>"+
+                        "<condProd>"+produit.getConditionnementP()+"</condProd>"+
+                        "<compositionProd>"+produit.getCompositionP()+"</compositionProd>"+
+                        "<tailleProd>"+produit.getTailleReferenceP()+"</tailleProd>"+
+                        "<promotionProd>"+produit.getProm().getPourcentageProm()+"</promotionProd>"+
+                        "<prixKGProd>"+produit.getPrixKGP()+"</prixKGProd>"+
+                        "<prixUniteProd>"+produit.getPrixUnitaireP()+"</prixUniteProd>");
+            if(labels.size() == 0){
+                out.println("<srcLabel>nonlabel</srcLabel>"); 
+                System.out.println("mei you label");
+            }else{
+                for (String label : labels){
+                    out.println("<srcLabel>image/labelscore/" + label +".jpg</srcLabel>");             
                 }
-                out.println("</responseRecherche>");             
             }
-        }else{
-            HttpSession s = request.getSession();
-            s.setAttribute("nomProd", nomProd);
-            System.out.println("---reussi---");       
-            try (PrintWriter out = response.getWriter()){
-                /*----- Ecriture de la page XML -----*/
-                //Si on trouve pas de client, on fait une response de "echec"
-                out.println("<?xml version=\"1.0\"?>");
-                out.println("<responseRecherche>");
-                out.println("<res>reussi</res>");  
-                /*----- Récupération le session de client -----*/
-                HttpSession sessionClient = request.getSession();
-                if(sessionClient.getAttribute("client")!=null){
-                    Client client = (Client)sessionClient.getAttribute("client");
-                    out.println("<client>"+client.getEmailCli()+"</client>");
-                    //System.out.println("****************"+client.getNomCli());
-                }else{
-                    //System.out.println("-------");
-                    //System.out.println("****************"+client.getNomCli());
-                }
-                out.println("</responseRecherche>");                 
+            if(produit.getNutriScoreP()==""){
+                out.println("<srcNutriScore>nonNS</srcNutriScore>");
+            }else{
+                out.println("<srcNutriScore>image/labelscore/" + produit.getNutriScoreP() +".jpg</srcNutriScore>");
             }
+            out.println("</responseRecherche>");                 
         }
+        
     }
 
     /**
