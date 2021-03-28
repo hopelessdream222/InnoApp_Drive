@@ -32,6 +32,8 @@ public class Ingredient {
     private String libelleIng;
     private String UnitedMesureIng;
     
+    
+    
    // Relation <Composer>
     @OneToMany(mappedBy = "ingredient", cascade= CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Produit> produits = new HashSet<>(0);
@@ -39,12 +41,12 @@ public class Ingredient {
     
     // Relation <Necessiter>
     @OneToMany(mappedBy = "ingredient",cascade=CascadeType.ALL)
-    @MapKeyJoinColumn(name = "IdIng")
+    @MapKeyJoinColumn(name = "IdRect")
     private Map<Recette, Necessiter> necessiters=new HashMap(0);
 
     public Ingredient() {
-    }
-
+    } 
+    
     public Ingredient(String libelleIng, String UnitedMesureIng) {
         this.libelleIng = libelleIng;
         this.UnitedMesureIng = UnitedMesureIng;

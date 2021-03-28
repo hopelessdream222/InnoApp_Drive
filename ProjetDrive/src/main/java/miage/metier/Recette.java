@@ -27,11 +27,71 @@ public class Recette {
     @Column(name="idRect")        
     private int idRect;
     private String libelleRect;
-    
+
+    public Recette() {
+    }
+
+    public Recette(String libelleRect) {
+        this.libelleRect = libelleRect;
+    }   
+     
     // Relation <Necessiter>
     @OneToMany(mappedBy = "recette",cascade=CascadeType.ALL)
-    @MapKeyJoinColumn(name = "IdRect")
+    @MapKeyJoinColumn(name = "IdIng")
     private Map<Ingredient, Necessiter> necessiters=new HashMap(0);
     
+    public int getIdRect() {
+        return idRect;
+    }
+
+    public void setIdRect(int idRect) {
+        this.idRect = idRect;
+    }
+
+    public String getLibelleRect() {
+        return libelleRect;
+    }
+
+    public void setLibelleRect(String libelleRect) {
+        this.libelleRect = libelleRect;
+    }
+
+    public Map<Ingredient, Necessiter> getNecessiters() {
+        return necessiters;
+    }
+
+    public void setNecessiters(Map<Ingredient, Necessiter> necessiters) {
+        this.necessiters = necessiters;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 47 * hash + this.idRect;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Recette other = (Recette) obj;
+        if (this.idRect != other.idRect) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Recette{" + "idRect=" + idRect + ", libelleRect=" + libelleRect + '}';
+    }
     
 }

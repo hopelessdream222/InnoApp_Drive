@@ -61,15 +61,43 @@ function afficheDetail() {
 
             }
             console.log("reussi------");
-//                var elt4 = document.getElementsByName("lien");
-//                for(j=0; j<elt4.length; j++){
-//                    elt4[j].addEventListener("click",afficherCategories);                               
-//                }   
+            
+            var elt4 = document.getElementById("recette_accueil");
+            var elt5 = document.getElementById("recette_accueil_2");
+            elt4.innerHTML="";
+            elt5.innerHTML="";
+            for (var y = 0; y < xhr.responseXML.getElementsByTagName("recetteId").length; y++) {
+                // Elément html que l'on va mettre à jour.
+                var recetteId = xhr.responseXML.getElementsByTagName("recetteId")[y].firstChild.nodeValue;
+                var recetteSrc = xhr.responseXML.getElementsByTagName("recetteSrc")[y].firstChild.nodeValue;
+                var recetteLib = xhr.responseXML.getElementsByTagName("recetteNom")[y].firstChild.nodeValue;
+                //elt3.insertAdjacentHTML("beforeend","<div name='lien' id='"+ xhr.responseXML.getElementsByTagName("rayonProd")[x].firstChild.nodeValue +"'>"+xhr.responseXML.getElementsByTagName("rayonProd")[x].firstChild.nodeValue+"</div><br/>");
+                var text2 = creerModuleRecette(recetteId, recetteSrc, recetteLib) ;
+                elt4.insertAdjacentHTML("beforeend", text2);
+                elt5.insertAdjacentHTML("beforeend", text2);
+            }         
+            
         }
     };
 
     // Envoie de la requête.
     xhr.send();
+}
+
+function creerModuleRecette(recetteId, recetteSrc, recetteLib) {
+    return ("<div class='col-sm-4'>"
+                +"<div class='product-image-wrapper'>"
+                    +"<div class='single-products'>"
+                        +"<div class='productinfo text-center'>"
+                            +"<img src='"+recetteSrc+"' alt='' />"
+                            +"<div>"+recetteId+"</div>"
+                            +"<p>"+recetteLib+"</p>"
+                            +"<a href='#' class='btn btn-default add-to-cart'><i class='fa fa-shopping-cart'></i>Voir detail</a>"
+                        +"</div>"
+
+                    +"</div>"
+                +"</div>"
+            +"</div>");
 }
 
 function creerModuleProduit(i, src, prixUniteProd, libProd, idProd) {
