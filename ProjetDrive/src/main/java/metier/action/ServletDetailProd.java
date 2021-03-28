@@ -18,6 +18,7 @@ import javax.servlet.http.HttpSession;
 import miage.metier.Client;
 import miage.metier.Produit;
 import miage.metier.Rayon;
+import miage.metier.Recette;
 
 /**
  *
@@ -73,6 +74,14 @@ public class ServletDetailProd extends HttpServlet {
                 //System.out.println("****************"+client.getNomCli());
                 out.println("<client>horsConnection</client>");
             }
+            
+            List<Recette> lRecettes = miage.dao.TestHibernate.obtenirRecettes();  
+            
+            for (Recette recette : lRecettes){
+                out.println("<recetteId>" + recette.getIdRect() +"</recetteId><recetteNom>" + recette.getLibelleRect() +"</recetteNom><recetteSrc>image/recettes/" + recette.getIdRect() +".jpg</recetteSrc>");                
+                System.out.println("recette"+recette.getIdRect());
+            }
+            
             
             out.println("</liste_produit>");
         }

@@ -22,6 +22,7 @@ import miage.metier.Magasin;
 import miage.metier.Panier;
 import miage.metier.Produit;
 import miage.metier.Rayon;
+import miage.metier.Recette;
 import org.hibernate.LazyInitializationException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -239,6 +240,25 @@ public class TestHibernate
         }
         return lstP;
     }
+    
+    public static List<Recette> obtenirRecettes() {
+        /*----- Ouverture de la session -----*/
+        List<Recette> lstRec=new ArrayList<>();
+        /*----- Ouverture de la session -----*/
+        try ( Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
+            /*----- Ouverture d'une transaction -----*/
+            Transaction t = session.beginTransaction();
+            List<Recette> liste = session.createQuery("from Recette").list();
+            for (int i = 0; i < liste.size(); i++) {
+                Recette r = session.get(Recette.class, liste.get(i).getIdRect());
+                System.out.println("Recette: " + r.getIdRect());
+                lstRec.add(r);
+            }
+        }
+         return lstRec;
+    }
+    
+    
         	/**
 	 * Programme de test.
 	 */
@@ -247,10 +267,9 @@ public class TestHibernate
                 //TestHibernate.loadPhotos();
                //TestHibernate.obtenirMagasins();
                 //chercherCinqProduits();
-//           for (miage.metier.Comporter c: chercherPanierClient(1))
-//                System.out.println("comportement:" +c.getPaniers().getIdPan());
             //insertProduitPanier();
-            TestHibernate.afficherLabels("");
+            //TestHibernate.afficherLabels("");
+            TestHibernate.obtenirRecettes();
                 /*----- Exit -----*/
             System.exit(0);
             }

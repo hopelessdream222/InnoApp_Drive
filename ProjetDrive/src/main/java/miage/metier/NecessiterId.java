@@ -48,7 +48,8 @@ public class NecessiterId implements Serializable{
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 79 * hash + this.idP;
+        hash = 53 * hash + this.idP;
+        hash = 53 * hash + this.idRect;
         return hash;
     }
 
@@ -67,9 +68,11 @@ public class NecessiterId implements Serializable{
         if (this.idP != other.idP) {
             return false;
         }
+        if (this.idRect != other.idRect) {
+            return false;
+        }
         return true;
-    }
-    
+    }   
     
     
     
