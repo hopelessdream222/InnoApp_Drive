@@ -334,6 +334,7 @@ function plusDetail() {
 
 }
 
+
 /**
  * Lancement après le chargement du DOM.
  */
