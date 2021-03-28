@@ -63,22 +63,7 @@ public class TestHibernate
             return liste;
         }
     }
-    public static List<Produit> chercherPromsProduits() {
-        List<Produit> lstP=new ArrayList<>();
-        /*----- Ouverture de la session -----*/
-        try (Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
-            /*----- Ouverture d'une transaction -----*/
-            Transaction t = session.beginTransaction();
-            //List<Produit> liste = session.createQuery("select new miage.metier.Produit(libelleP,prixUnitaireP,prixKGP,nutriScoreP,photoP,labelP,formatP,conditionnementP,categorieP) from Produit where idP<=5").list();
-            List<Produit> liste = session.createQuery("from Produit where idProm=5 or idProm=4").list();
-            for(Produit pr:liste){
-                Produit p = session.get(Produit.class, pr.getIdP());
-                lstP.add(p);       
-                System.out.println(p.getProm().getIdProm());
-            } 
-        }
-        return lstP;
-    }
+
       public static List<Produit> searchProduits(String mot){
             /*----- Ouverture de la session -----*/
             try ( Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {

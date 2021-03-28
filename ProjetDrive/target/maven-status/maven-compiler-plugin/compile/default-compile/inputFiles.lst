@@ -13,6 +13,7 @@ C:\Users\ymfig\OneDrive\??\GitHub\Projet_Drive_2\InnoApp_Drive\ProjetDrive\src\m
 C:\Users\ymfig\OneDrive\??\GitHub\Projet_Drive_2\InnoApp_Drive\ProjetDrive\src\main\java\miage\metier\Fournisseur.java
 C:\Users\ymfig\OneDrive\??\GitHub\Projet_Drive_2\InnoApp_Drive\ProjetDrive\src\main\java\metier\action\ServletFinaliserPanier.java
 C:\Users\ymfig\OneDrive\??\GitHub\Projet_Drive_2\InnoApp_Drive\ProjetDrive\src\main\java\miage\metier\Magasin.java
+C:\Users\ymfig\OneDrive\??\GitHub\Projet_Drive_2\InnoApp_Drive\ProjetDrive\src\main\java\metier\action\ServletDetailRecette.java
 C:\Users\ymfig\OneDrive\??\GitHub\Projet_Drive_2\InnoApp_Drive\ProjetDrive\src\main\java\miage\dao\HibernateUtil.java
 C:\Users\ymfig\OneDrive\??\GitHub\Projet_Drive_2\InnoApp_Drive\ProjetDrive\src\main\java\miage\metier\Disponibilite.java
 C:\Users\ymfig\OneDrive\??\GitHub\Projet_Drive_2\InnoApp_Drive\ProjetDrive\src\main\java\miage\metier\Fournir.java
@@ -21,6 +22,7 @@ C:\Users\ymfig\OneDrive\??\GitHub\Projet_Drive_2\InnoApp_Drive\ProjetDrive\src\m
 C:\Users\ymfig\OneDrive\??\GitHub\Projet_Drive_2\InnoApp_Drive\ProjetDrive\src\main\java\miage\metier\LigneCommande.java
 C:\Users\ymfig\OneDrive\??\GitHub\Projet_Drive_2\InnoApp_Drive\ProjetDrive\src\main\java\miage\metier\Client.java
 C:\Users\ymfig\OneDrive\??\GitHub\Projet_Drive_2\InnoApp_Drive\ProjetDrive\src\main\java\miage\metier\ComporterId.java
+C:\Users\ymfig\OneDrive\??\GitHub\Projet_Drive_2\InnoApp_Drive\ProjetDrive\src\main\java\metier\action\ServletChoisirRecette.java
 C:\Users\ymfig\OneDrive\??\GitHub\Projet_Drive_2\InnoApp_Drive\ProjetDrive\src\main\java\metier\action\ServletAjouterPanier.java
 C:\Users\ymfig\OneDrive\??\GitHub\Projet_Drive_2\InnoApp_Drive\ProjetDrive\src\main\java\metier\action\ServletAffichageProd.java
 C:\Users\ymfig\OneDrive\??\GitHub\Projet_Drive_2\InnoApp_Drive\ProjetDrive\src\main\java\metier\action\ServletSupprimerProdPanier.java
