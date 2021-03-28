@@ -33,8 +33,7 @@ public class ServletRechercheProd extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
         
         int idProd = Integer.parseInt(request.getParameter("idProd"));
         //nomProd fangjinqu
@@ -66,19 +65,15 @@ public class ServletRechercheProd extends HttpServlet {
             //taille
             System.out.println("taille:"+produit.getTailleReferenceP());
             if(produit.getTailleReferenceP() == null){
-                System.out.println("taille null");
                 out.println("<tailleProd>nontaille</tailleProd>");
             }else{
-                System.out.println("taille you");
                 out.println("<tailleProd>"+produit.getTailleReferenceP()+"</tailleProd>");
             }
             //promotion
             //System.out.println("promo:"+produit.getProm().toString());
             if(produit.getProm() == null){
-                System.out.println("promo null");
                 out.println("<promotionProd>nonpromotion</promotionProd>");
             }else{
-                System.out.println("pourcent:"+produit.getProm().getPourcentageProm());
                 out.println("<promotionProd>"+produit.getProm().getPourcentageProm()+"</promotionProd>");
             }
 

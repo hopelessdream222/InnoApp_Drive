@@ -2519,5 +2519,9 @@ h2.title {
 .contact-info .social-networks ul li a:hover{
   color: #FE980F;
 }
-
+.promo{
+    font-style:bold;
+    background-color:orange;
+    color:white;
+}
 
