@@ -23,7 +23,7 @@ function seConnecter ()
                 
                 var response= xhr.responseXML.getElementsByTagName("res")[0].firstChild.nodeValue;
                 if(response==="reussi"){
-                    alert("bon id ou mdp!");
+                    //alert("bon id ou mdp!");
                     window.location.href="Accueil";
                 }else{
                     alert("Mauvais id ou mdp!");

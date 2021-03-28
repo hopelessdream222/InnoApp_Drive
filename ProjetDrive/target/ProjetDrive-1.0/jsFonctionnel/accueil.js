@@ -75,8 +75,7 @@ function afficheDetail() {
                 var text2 = creerModuleRecette(recetteId, recetteSrc, recetteLib) ;
                 elt4.insertAdjacentHTML("beforeend", text2);
                 elt5.insertAdjacentHTML("beforeend", text2);
-            }         
-            
+            }           
         }
     };
 
@@ -92,7 +91,7 @@ function creerModuleRecette(recetteId, recetteSrc, recetteLib) {
                             +"<img src='"+recetteSrc+"' alt='' />"
                             +"<div>"+recetteId+"</div>"
                             +"<p>"+recetteLib+"</p>"
-                            +"<a href='#' class='btn btn-default add-to-cart'><i class='fa fa-shopping-cart'></i>Voir detail</a>"
+                            +"<a href='#' class='btn btn-default add-to-cart' name='" + recetteId + "' id='btn_voir_detail" + recetteId + "'><i class='fa fa-plus-square'></i>Voir detail</a>"
                         +"</div>"
 
                     +"</div>"
@@ -194,6 +193,21 @@ function afficherProduits() {
                 document.getElementById("btn_ajouter" + idProd).addEventListener("click", ajouter);
                 document.getElementById("btn_detail"+idProd).addEventListener("click", plusDetail);
             }
+            
+            var elt4 = document.getElementById("recette_accueil");
+            var elt5 = document.getElementById("recette_accueil_2");
+            elt4.innerHTML="";
+            elt5.innerHTML="";
+            for (var y = 0; y < xhr.responseXML.getElementsByTagName("recetteId").length; y++) {
+                // Elément html que l'on va mettre à jour.
+                var recetteId = xhr.responseXML.getElementsByTagName("recetteId")[y].firstChild.nodeValue;
+                var recetteSrc = xhr.responseXML.getElementsByTagName("recetteSrc")[y].firstChild.nodeValue;
+                var recetteLib = xhr.responseXML.getElementsByTagName("recetteNom")[y].firstChild.nodeValue;
+                //elt3.insertAdjacentHTML("beforeend","<div name='lien' id='"+ xhr.responseXML.getElementsByTagName("rayonProd")[x].firstChild.nodeValue +"'>"+xhr.responseXML.getElementsByTagName("rayonProd")[x].firstChild.nodeValue+"</div><br/>");
+                var text2 = creerModuleRecette(recetteId, recetteSrc, recetteLib) ;
+                elt4.insertAdjacentHTML("beforeend", text2);
+                elt5.insertAdjacentHTML("beforeend", text2);
+            }
 
         }
     };
@@ -206,6 +220,7 @@ function ajouter(q) {
     if(q=== undefined){
         q = 1;
     }
+    console.log("qqqqqqqqqqq"+q);
     var result = confirm("Vous voulez l'ajouter au panier ?");
     
     if (result) {
@@ -214,7 +229,7 @@ function ajouter(q) {
         // Requête au serveur avec les paramètres éventuels.
         var produitchoisi = event.srcElement.name;
         
-        alert("produit" + produitchoisi);
+        console.log("produit" + produitchoisi);
        
         xhr.open("GET", "ServletAjouterPanier?idP=" + produitchoisi + "&qte=" + q, true);
 
@@ -268,8 +283,24 @@ function rechercher() {
                         document.getElementById("btn_ajouter" + idProd).addEventListener("click", ajouter);
                         document.getElementById("btn_detail"+idProd).addEventListener("click", plusDetail);
                     }
+                    
+                    var elt4 = document.getElementById("recette_accueil");
+                    var elt5 = document.getElementById("recette_accueil_2");
+                    elt4.innerHTML="";
+                    elt5.innerHTML="";
+                    for (var y = 0; y < xhr.responseXML.getElementsByTagName("recetteId").length; y++) {
+                        // Elément html que l'on va mettre à jour.
+                        var recetteId = xhr.responseXML.getElementsByTagName("recetteId")[y].firstChild.nodeValue;
+                        var recetteSrc = xhr.responseXML.getElementsByTagName("recetteSrc")[y].firstChild.nodeValue;
+                        var recetteLib = xhr.responseXML.getElementsByTagName("recetteNom")[y].firstChild.nodeValue;
+                        //elt3.insertAdjacentHTML("beforeend","<div name='lien' id='"+ xhr.responseXML.getElementsByTagName("rayonProd")[x].firstChild.nodeValue +"'>"+xhr.responseXML.getElementsByTagName("rayonProd")[x].firstChild.nodeValue+"</div><br/>");
+                        var text2 = creerModuleRecette(recetteId, recetteSrc, recetteLib) ;
+                        elt4.insertAdjacentHTML("beforeend", text2);
+                        elt5.insertAdjacentHTML("beforeend", text2);
+                    }
+                    
                 } else {
-                    console.log("Trouvé pas!");
+                    alert("Oups! Aucun résultat! ");
                     document.getElementById("zonSaisi").innerHTML = "";
                     elt2.innerText = "";
                 }
