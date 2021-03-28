@@ -18,8 +18,7 @@ function afficheDetail() {
         if (xhr.status === 200) {
             console.log("reussi");
             var elt = document.getElementById("prod_ou_sonDetail");
-            elt.innerHTML = "<div class='features_items'><!--features_items-->"+
-                            "<h2 class='title text-center' id='nosProds'>NOS PRODUITS</h2>"+
+            elt.innerHTML = "<h2 class='title text-center' id='nosProds'>NOS PRODUITS</h2>"+
                             "<div id='produitsTous'>";
             for (var i = 1; i <= xhr.responseXML.getElementsByTagName("src").length; i++) {
                 var src = xhr.responseXML.getElementsByTagName("src")[i - 1].firstChild.nodeValue;
@@ -30,7 +29,7 @@ function afficheDetail() {
                 // Elément html que l'on va mettre à jour.
                 elt.insertAdjacentHTML("beforeend",text);
             }
-            elt.insertAdjacentHTML("beforeend","</div></div>");
+            elt.insertAdjacentHTML("beforeend","</div>");
             for (var i = 1; i <= xhr.responseXML.getElementsByTagName("src").length; i++) {
                 var idProd = xhr.responseXML.getElementsByTagName("idProd")[i - 1].firstChild.nodeValue;
                 document.getElementById("btn_ajouter" + idProd).addEventListener("click", ajouter);
@@ -147,8 +146,7 @@ function afficherProduits() {
         // Si la requête http s'est bien passée.
         if (xhr.status === 200) {
             var elt2 = document.getElementById("prod_ou_sonDetail");
-            elt2.innerHTML = "<div class='features_items'><!--features_items-->"+
-                            "<h2 class='title text-center' id='nosProds'>NOS PRODUITS</h2>"+
+            elt2.innerHTML = "<h2 class='title text-center' id='nosProds'>NOS PRODUITS</h2>"+
                             "<div id='produitsTous'>";
             //var elt = document.getElementById("nosProds");
             for (var i = 1; i <= xhr.responseXML.getElementsByTagName("src").length; i++) {
@@ -160,7 +158,7 @@ function afficherProduits() {
                 // Elément html que l'on va mettre à jour.
                 elt2.insertAdjacentHTML("beforeend", text);
             }
-            elt2.insertAdjacentHTML("beforeend","</div></div>");
+            elt2.insertAdjacentHTML("beforeend","</div>");
             for (var i = 1; i <= xhr.responseXML.getElementsByTagName("src").length; i++) {
                 var idProd = xhr.responseXML.getElementsByTagName("idProd")[i - 1].firstChild.nodeValue;
                 document.getElementById("btn_ajouter" + idProd).addEventListener("click", ajouter);
@@ -217,9 +215,8 @@ function rechercher() {
                     alert("zhaodaole!");
                     //Modification page
                     var elt2 = document.getElementById("prod_ou_sonDetail");
-                    elt2.innerHTML = "<div class='features_items'><!--features_items-->"+
-                            "<h2 class='title text-center' id='nosProds'>NOS PRODUITS</h2>"+
-                            "<div id='produitsTous'>";
+                    elt2.innerHTML = "<h2 class='title text-center' id='nosProds'>NOS PRODUITS</h2>"+
+                                "<div id='produitsTous'>";
                     //var elt = document.getElementById("nosProds");
                     for (var i = 1; i <= xhr.responseXML.getElementsByTagName("src").length; i++) {
                         var src = xhr.responseXML.getElementsByTagName("src")[i - 1].firstChild.nodeValue;
@@ -230,7 +227,7 @@ function rechercher() {
                         // Elément html que l'on va mettre à jour.
                         elt2.insertAdjacentHTML("beforeend", text);
                     }
-                    elt2.insertAdjacentHTML("beforeend","</div></div>");
+                    elt2.insertAdjacentHTML("beforeend","</div>");
                     for (var i = 0; i < xhr.responseXML.getElementsByTagName("src").length; i++) {
                         var idProd = xhr.responseXML.getElementsByTagName("idProd")[i].firstChild.nodeValue;
                         document.getElementById("btn_ajouter" + idProd).addEventListener("click", ajouter);
