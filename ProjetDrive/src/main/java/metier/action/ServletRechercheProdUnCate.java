@@ -31,9 +31,9 @@ public class ServletRechercheProdUnCate extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
         int idCate = Integer.parseInt(request.getParameter("cateId"));
+        System.out.println("cate id:"+idCate);
         /*----- Type de la réponse -----*/
         response.setContentType("application/xml;charset=UTF-8");
         response.setCharacterEncoding("UTF-8");

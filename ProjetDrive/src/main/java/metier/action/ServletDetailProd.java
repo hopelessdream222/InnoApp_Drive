@@ -48,8 +48,9 @@ public class ServletDetailProd extends HttpServlet {
             /*----- Lecture de liste de mots dans la BD -----*/
             //Appeler la fonction dans DAO
             List<Produit> lProduits = miage.dao.TestHibernate.chercherNeufProduits();
-                    
+            System.out.println("lstp:"+lProduits);        
             for (Produit produit : lProduits){
+                System.out.println("for :"+produit.toString());
                out.println("<src>image/" + produit.getIdP() +".jpg</src><idProd>"+ produit.getIdP() +
                         "</idProd><libProd>"+produit.getLibelleP()+"</libProd>"+
                         "<formatProd>"+produit.getFormatP()+"</formatProd>"+

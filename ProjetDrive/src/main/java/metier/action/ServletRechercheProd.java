@@ -53,22 +53,62 @@ public class ServletRechercheProd extends HttpServlet {
             out.println("<src>image/" + produit.getIdP() +".jpg</src>"+
                         "<idProd>"+ produit.getIdP() +"</idProd>"+
                         "<libProd>"+produit.getLibelleP()+"</libProd>"+
-                        "<formatProd>"+produit.getFormatP()+"</formatProd>"+
-                        "<condProd>"+produit.getConditionnementP()+"</condProd>"+
-                        "<compositionProd>"+produit.getCompositionP()+"</compositionProd>"+
-                        "<tailleProd>"+produit.getTailleReferenceP()+"</tailleProd>"+
-                        "<promotionProd>"+produit.getProm().getPourcentageProm()+"</promotionProd>"+
                         "<prixKGProd>"+produit.getPrixKGP()+"</prixKGProd>"+
                         "<prixUniteProd>"+produit.getPrixUnitaireP()+"</prixUniteProd>");
+            //composition
+            System.out.println("composition:"+produit.getCompositionP());
+            if(produit.getCompositionP() == null){
+                out.println("<compositionProd>noncomposition</compositionProd>");
+                System.out.println("compo null");
+            }else{
+                out.println("<compositionProd>"+produit.getCompositionP()+"</compositionProd>");
+            }
+            //taille
+            System.out.println("taille:"+produit.getTailleReferenceP());
+            if(produit.getTailleReferenceP() == null){
+                System.out.println("taille null");
+                out.println("<tailleProd>nontaille</tailleProd>");
+            }else{
+                System.out.println("taille you");
+                out.println("<tailleProd>"+produit.getTailleReferenceP()+"</tailleProd>");
+            }
+            //promotion
+            //System.out.println("promo:"+produit.getProm().toString());
+            if(produit.getProm() == null){
+                System.out.println("promo null");
+                out.println("<promotionProd>nonpromotion</promotionProd>");
+            }else{
+                System.out.println("pourcent:"+produit.getProm().getPourcentageProm());
+                out.println("<promotionProd>"+produit.getProm().getPourcentageProm()+"</promotionProd>");
+            }
+
+            //Conditionnement
+            System.out.println("cond:"+produit.getConditionnementP());
+            if(produit.getConditionnementP() == null){
+                out.println("<condProd>noncoditionnement</condProd>");
+            }else{
+                out.println("<condProd>"+produit.getConditionnementP()+"</condProd>");
+            }
+            //format
+            if(produit.getFormatP() == null){
+                out.println("<formatProd>nonformat</formatProd>");
+            }else{
+                out.println("<formatProd>"+produit.getFormatP()+"</formatProd>");
+            }
+            //label
+            System.out.println("lst size"+labels.size());
             if(labels.size() == 0){
                 out.println("<srcLabel>nonlabel</srcLabel>"); 
                 System.out.println("mei you label");
             }else{
                 for (String label : labels){
-                    out.println("<srcLabel>image/labelscore/" + label +".jpg</srcLabel>");             
+                    System.out.println("lab "+label);
+                    out.println("<srcLabel>image/labelscore/" + label +".jpg</srcLabel>");    
+                    System.out.println("<srcLabel>image/labelscore/" + label +".jpg</srcLabel>");
                 }
             }
-            if(produit.getNutriScoreP()==""){
+            //NutriScore
+            if(produit.getNutriScoreP().isEmpty()){
                 out.println("<srcNutriScore>nonNS</srcNutriScore>");
             }else{
                 out.println("<srcNutriScore>image/labelscore/" + produit.getNutriScoreP() +".jpg</srcNutriScore>");

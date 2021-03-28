@@ -17,8 +17,10 @@ function afficheDetail() {
         // Si la requête http s'est bien passée.
         if (xhr.status === 200) {
             console.log("reussi");
-            var elt = document.getElementById("produitsTous");
-            elt.innerText = "";
+            var elt = document.getElementById("prod_ou_sonDetail");
+            elt.innerHTML = "<div class='features_items'><!--features_items-->"+
+                            "<h2 class='title text-center' id='nosProds'>NOS PRODUITS</h2>"+
+                            "<div id='produitsTous'>";
             for (var i = 1; i <= xhr.responseXML.getElementsByTagName("src").length; i++) {
                 var src = xhr.responseXML.getElementsByTagName("src")[i - 1].firstChild.nodeValue;
                 var prixUniteProd = xhr.responseXML.getElementsByTagName("prixUniteProd")[i - 1].firstChild.nodeValue;
@@ -26,9 +28,9 @@ function afficheDetail() {
                 var idProd = xhr.responseXML.getElementsByTagName("idProd")[i - 1].firstChild.nodeValue;
                 var text = creerModuleProduit(i, src, prixUniteProd, libProd, idProd);
                 // Elément html que l'on va mettre à jour.
-                elt.insertAdjacentHTML("beforeend", text);
+                elt.insertAdjacentHTML("beforeend",text);
             }
-
+            elt.insertAdjacentHTML("beforeend","</div></div>");
             for (var i = 1; i <= xhr.responseXML.getElementsByTagName("src").length; i++) {
                 var idProd = xhr.responseXML.getElementsByTagName("idProd")[i - 1].firstChild.nodeValue;
                 document.getElementById("btn_ajouter" + idProd).addEventListener("click", ajouter);
@@ -76,7 +78,7 @@ function creerModuleProduit(i, src, prixUniteProd, libProd, idProd) {
             + "<div class='single-products'>"
             + "<div class='productinfo text-center'>"
             + "<div id='image" + i + "'><img src='" + src + "' width=200px hight=150px>"
-            + "<h2>Prix Unitaire: " + prixUniteProd + "</h2>"
+            + "<h2>Prix Unitaire: " + prixUniteProd + "&#0128</h2>"
             + "<div height='50px'><p>" + libProd + "</p></div></div>"
             + "</div>"
             + "<div class='product-overlay'>"
@@ -137,15 +139,17 @@ function afficherProduits() {
 
     var xhr = new XMLHttpRequest();
     var cateChoisi = event.srcElement.id;
-    alert(cateChoisi);
+    console.log("categorie:"+cateChoisi);
     xhr.open("GET", "ServletRechercheProdUnCate?cateId=" + cateChoisi);
 
     // On précise ce que l'on va faire quand on aura reçu la réponse du serveur.
     xhr.onload = function () {
         // Si la requête http s'est bien passée.
         if (xhr.status === 200) {
-            var elt2 = document.getElementById("produitsTous");
-            elt2.innerText = "";
+            var elt2 = document.getElementById("prod_ou_sonDetail");
+            elt2.innerHTML = "<div class='features_items'><!--features_items-->"+
+                            "<h2 class='title text-center' id='nosProds'>NOS PRODUITS</h2>"+
+                            "<div id='produitsTous'>";
             //var elt = document.getElementById("nosProds");
             for (var i = 1; i <= xhr.responseXML.getElementsByTagName("src").length; i++) {
                 var src = xhr.responseXML.getElementsByTagName("src")[i - 1].firstChild.nodeValue;
@@ -156,7 +160,7 @@ function afficherProduits() {
                 // Elément html que l'on va mettre à jour.
                 elt2.insertAdjacentHTML("beforeend", text);
             }
-
+            elt2.insertAdjacentHTML("beforeend","</div></div>");
             for (var i = 1; i <= xhr.responseXML.getElementsByTagName("src").length; i++) {
                 var idProd = xhr.responseXML.getElementsByTagName("idProd")[i - 1].firstChild.nodeValue;
                 document.getElementById("btn_ajouter" + idProd).addEventListener("click", ajouter);
@@ -212,8 +216,10 @@ function rechercher() {
                 if (xhr.responseXML.getElementsByTagName("res")[0].firstChild.nodeValue === "reussi") {
                     alert("zhaodaole!");
                     //Modification page
-                    var elt2 = document.getElementById("produitsTous");
-                    elt2.innerText = "";
+                    var elt2 = document.getElementById("prod_ou_sonDetail");
+                    elt2.innerHTML = "<div class='features_items'><!--features_items-->"+
+                            "<h2 class='title text-center' id='nosProds'>NOS PRODUITS</h2>"+
+                            "<div id='produitsTous'>";
                     //var elt = document.getElementById("nosProds");
                     for (var i = 1; i <= xhr.responseXML.getElementsByTagName("src").length; i++) {
                         var src = xhr.responseXML.getElementsByTagName("src")[i - 1].firstChild.nodeValue;
@@ -224,9 +230,9 @@ function rechercher() {
                         // Elément html que l'on va mettre à jour.
                         elt2.insertAdjacentHTML("beforeend", text);
                     }
-
-                    for (var i = 1; i <= xhr.responseXML.getElementsByTagName("src").length; i++) {
-                        var idProd = xhr.responseXML.getElementsByTagName("idProd")[i - 1].firstChild.nodeValue;
+                    elt2.insertAdjacentHTML("beforeend","</div></div>");
+                    for (var i = 0; i < xhr.responseXML.getElementsByTagName("src").length; i++) {
+                        var idProd = xhr.responseXML.getElementsByTagName("idProd")[i].firstChild.nodeValue;
                         document.getElementById("btn_ajouter" + idProd).addEventListener("click", ajouter);
                         document.getElementById("btn_detail"+idProd).addEventListener("click", plusDetail);
                     }
@@ -266,17 +272,18 @@ function plusDetail() {
                 // bu deng yu
             } else { 
                 for (j = 0; j < tabLabel.length; j++) {
-                    srcLabel = srcLabel + tabLabel[j];
+                    srcLabel = srcLabel + "<img src='" +tabLabel[j].firstChild.nodeValue + "' alt='' width='80px' height='80px'/>";
                 }
             }
+            console.log(srcLabel);
             //déterminer si ce produit possède le nuriScore ou pas
             var srcNS = "";
             if (xhr.responseXML.getElementsByTagName("srcNutriScore")[0].firstChild.nodeValue === "nonNS") {
                 // bu deng yu
                 console.log("nonNS");
             } else {
-                srcNS = "<img src='" + xhr.responseXML.getElementsByTagName("srcNutriScore")[0].firstChild.nodeValue + "' alt='' />";
-                console.log(srcNS);
+                srcNS = "<img src='" + xhr.responseXML.getElementsByTagName("srcNutriScore")[0].firstChild.nodeValue + "' alt='' width='100px' height='60px'/>";
+                console.log("NS "+srcNS);
             }
 
             var txt = "<div class='product-details'><!--product-details-->" +
@@ -291,9 +298,9 @@ function plusDetail() {
                     "<h2>" + xhr.responseXML.getElementsByTagName("libProd")[0].firstChild.nodeValue + "</h2>" +
                     srcNS +
                     "<span>" +
-                    "<span>" + xhr.responseXML.getElementsByTagName("prixUniteProd")[0].firstChild.nodeValue + "?</span>" +
+                    "<span>" + xhr.responseXML.getElementsByTagName("prixUniteProd")[0].firstChild.nodeValue + "&#0128</span>" +
                     "<label>Quantity:</label>" +
-                    "<input type='text' value='3' id='qte'/>" +
+                    "<input type='text' value='1' id='qte'/>" +
                     "<button type='button' class='btn btn-fefault cart' id='detailProd" + xhr.responseXML.getElementsByTagName("idProd")[0].firstChild.nodeValue + "' name='" + xhr.responseXML.getElementsByTagName("idProd")[0].firstChild.nodeValue + "'>" +
                     "<i class='fa fa-shopping-cart'></i>" +
                     "Ajouter au panier" +
