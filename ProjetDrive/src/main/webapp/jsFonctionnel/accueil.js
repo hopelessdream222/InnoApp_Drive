@@ -20,18 +20,19 @@ function afficheDetail() {
             var elt = document.getElementById("prod_ou_sonDetail");
             elt.innerHTML = "<h2 class='title text-center' id='nosProds'>NOS PRODUITS</h2>"+
                             "<div id='produitsTous'>";
-            for (var i = 1; i <= xhr.responseXML.getElementsByTagName("src").length; i++) {
-                var src = xhr.responseXML.getElementsByTagName("src")[i - 1].firstChild.nodeValue;
-                var prixUniteProd = xhr.responseXML.getElementsByTagName("prixUniteProd")[i - 1].firstChild.nodeValue;
-                var libProd = xhr.responseXML.getElementsByTagName("libProd")[i - 1].firstChild.nodeValue;
-                var idProd = xhr.responseXML.getElementsByTagName("idProd")[i - 1].firstChild.nodeValue;
+            for (var i = 0; i < xhr.responseXML.getElementsByTagName("src").length; i++) {
+                var src = xhr.responseXML.getElementsByTagName("src")[i].firstChild.nodeValue;
+                var prixUniteProd = xhr.responseXML.getElementsByTagName("prixUniteProd")[i].firstChild.nodeValue;
+                var libProd = xhr.responseXML.getElementsByTagName("libProd")[i].firstChild.nodeValue;
+                var idProd = xhr.responseXML.getElementsByTagName("idProd")[i].firstChild.nodeValue;
                 var text = creerModuleProduit(i, src, prixUniteProd, libProd, idProd);
                 // Elément html que l'on va mettre à jour.
                 elt.insertAdjacentHTML("beforeend",text);
             }
             elt.insertAdjacentHTML("beforeend","</div>");
-            for (var i = 1; i <= xhr.responseXML.getElementsByTagName("src").length; i++) {
-                var idProd = xhr.responseXML.getElementsByTagName("idProd")[i - 1].firstChild.nodeValue;
+            //var qte1 = 1;
+            for (var i = 0; i < xhr.responseXML.getElementsByTagName("src").length; i++) {
+                var idProd = xhr.responseXML.getElementsByTagName("idProd")[i].firstChild.nodeValue;
                 document.getElementById("btn_ajouter" + idProd).addEventListener("click", ajouter);
                 document.getElementById("btn_detail"+idProd).addEventListener("click", plusDetail);
             }
@@ -159,6 +160,7 @@ function afficherProduits() {
                 elt2.insertAdjacentHTML("beforeend", text);
             }
             elt2.insertAdjacentHTML("beforeend","</div>");
+            //var qte1 = 1;
             for (var i = 1; i <= xhr.responseXML.getElementsByTagName("src").length; i++) {
                 var idProd = xhr.responseXML.getElementsByTagName("idProd")[i - 1].firstChild.nodeValue;
                 document.getElementById("btn_ajouter" + idProd).addEventListener("click", ajouter);
@@ -172,16 +174,21 @@ function afficherProduits() {
     xhr.send();
 }
 
-function ajouter() {
+function ajouter(q) {
+    if(q=== undefined){
+        q = 1;
+    }
     var result = confirm("Vous voulez l'ajouter au panier ?");
+    
     if (result) {
         // Objet XMLHttpRequest.
         var xhr = new XMLHttpRequest();
         // Requête au serveur avec les paramètres éventuels.
         var produitchoisi = event.srcElement.name;
-        var qte = 1;
+        
         alert("produit" + produitchoisi);
-        xhr.open("GET", "ServletAjouterPanier?idP=" + produitchoisi + "&qte=" + qte, true);
+       
+        xhr.open("GET", "ServletAjouterPanier?idP=" + produitchoisi + "&qte=" + q, true);
 
         // On précise ce que l'on va faire quand on aura reçu la réponse du serveur.
         xhr.onload = function () {
@@ -210,9 +217,8 @@ function rechercher() {
         xhr.onload = function () {
             // Si la requête http s'est bien passée.
             if (xhr.status === 200) {
-                alert("200");
                 if (xhr.responseXML.getElementsByTagName("res")[0].firstChild.nodeValue === "reussi") {
-                    alert("zhaodaole!");
+                    console.log("Trouvé!");
                     //Modification page
                     var elt2 = document.getElementById("prod_ou_sonDetail");
                     elt2.innerHTML = "<h2 class='title text-center' id='nosProds'>NOS PRODUITS</h2>"+
@@ -228,13 +234,14 @@ function rechercher() {
                         elt2.insertAdjacentHTML("beforeend", text);
                     }
                     elt2.insertAdjacentHTML("beforeend","</div>");
+                    //var qte1 = 1;
                     for (var i = 0; i < xhr.responseXML.getElementsByTagName("src").length; i++) {
                         var idProd = xhr.responseXML.getElementsByTagName("idProd")[i].firstChild.nodeValue;
                         document.getElementById("btn_ajouter" + idProd).addEventListener("click", ajouter);
                         document.getElementById("btn_detail"+idProd).addEventListener("click", plusDetail);
                     }
                 } else {
-                    alert("meizhaodao!");
+                    console.log("Trouvé pas!");
                     document.getElementById("zonSaisi").innerHTML = "";
                     elt2.innerText = "";
                 }
@@ -277,7 +284,7 @@ function plusDetail() {
             var srcNS = "";
             if (xhr.responseXML.getElementsByTagName("srcNutriScore")[0].firstChild.nodeValue === "nonNS") {
                 // bu deng yu
-                console.log("nonNS");
+                console.log("pas de NS");
             } else {
                 srcNS = "<img src='" + xhr.responseXML.getElementsByTagName("srcNutriScore")[0].firstChild.nodeValue + "' alt='' width='100px' height='60px'/>";
                 console.log("NS "+srcNS);
@@ -302,8 +309,9 @@ function plusDetail() {
                     "<span>" +
                     "<span>" + xhr.responseXML.getElementsByTagName("prixUniteProd")[0].firstChild.nodeValue + "&#0128</span>" +
                     "<label>Quantity:</label>" +
-                    "<input type='text' value='1' id='qte'/>" +
-                    "<button type='button' class='btn btn-fefault cart' id='detailProd" + xhr.responseXML.getElementsByTagName("idProd")[0].firstChild.nodeValue + "' name='" + xhr.responseXML.getElementsByTagName("idProd")[0].firstChild.nodeValue + "'>" +
+                    "<input type='text' value='3' id='detail_qte'/>" +
+                    "<button type='button' class='btn btn-fefault cart' name='"+xhr.responseXML.getElementsByTagName("idProd")[0].firstChild.nodeValue+
+                            "' id='btn_detail_ajouter'>" +
                     "<i class='fa fa-shopping-cart'></i>" +
                     "Ajouter au panier" +
                     "</button>" +
@@ -316,6 +324,8 @@ function plusDetail() {
                     "</div>" +
                     "</div><!--/product-details-->";
             eltRight.innerHTML = txt;
+            document.getElementById("btn_detail_ajouter").addEventListener("click",function(){ajouter(document.getElementById("detail_qte").value);});
+            
         }
     };
 
