@@ -72,6 +72,18 @@
         <servlet-name>DetailProd</servlet-name>
         <jsp-file>/html/DetailProd.html</jsp-file>
     </servlet>
+    <servlet>
+        <servlet-name>ServletChoisirRecette</servlet-name>
+        <servlet-class>metier.action.ServletChoisirRecette</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServletDetailRecette</servlet-name>
+        <servlet-class>metier.action.ServletDetailRecette</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DetailRecette</servlet-name>
+        <jsp-file>/html/DetailRecette.html</jsp-file>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ServletDetailProd</servlet-name>
         <url-pattern>/ServletDetailProd</url-pattern>
@@ -143,6 +155,18 @@
     <servlet-mapping>
         <servlet-name>DetailProd</servlet-name>
         <url-pattern>/DetailProd</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletChoisirRecette</servlet-name>
+        <url-pattern>/ServletChoisirRecette</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletDetailRecette</servlet-name>
+        <url-pattern>/ServletDetailRecette</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DetailRecette</servlet-name>
+        <url-pattern>/DetailRecette</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

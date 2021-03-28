@@ -33,7 +33,7 @@ function afficheDetail() {
             //var qte1 = 1;
             for (var i = 0; i < xhr.responseXML.getElementsByTagName("src").length; i++) {
                 var idProd = xhr.responseXML.getElementsByTagName("idProd")[i].firstChild.nodeValue;
-                document.getElementById("btn_ajouter" + idProd).addEventListener("click", ajouter);
+                document.getElementById("btn_ajouter" + idProd).addEventListener("click", function(){ajouter(1);});
                 document.getElementById("btn_detail"+idProd).addEventListener("click", plusDetail);
             }
 
@@ -75,7 +75,12 @@ function afficheDetail() {
                 var text2 = creerModuleRecette(recetteId, recetteSrc, recetteLib) ;
                 elt4.insertAdjacentHTML("beforeend", text2);
                 elt5.insertAdjacentHTML("beforeend", text2);
-            }           
+            }
+
+            for (var z = 0; z < xhr.responseXML.getElementsByTagName("recetteId").length; z++) {
+                var idProd = xhr.responseXML.getElementsByTagName("recetteId")[z].firstChild.nodeValue;
+                document.getElementById("btn_voir_detail" + idProd).addEventListener("click", allerDetailRecette);               
+            }
         }
     };
 
@@ -122,6 +127,29 @@ function creerModuleProduit(i, src, prixUniteProd, libProd, idProd) {
             + "</div>"
             + "</div>");
 }
+
+function allerDetailRecette (){
+	// Objet XMLHttpRequest.
+	var xhr = new XMLHttpRequest();
+        
+        var idRecette = event.srcElement.name;
+
+	// RequÃªte au serveur avec les paramÃ¨tres Ã©ventuels.
+	xhr.open("GET","ServletChoisirRecette?idRecette="+idRecette);
+
+	// On prÃ©cise ce que l'on va faire quand on aura reÃ§u la rÃ©ponse du serveur.
+	xhr.onload = function(){
+            // Si la requÃªte http s'est bien passÃ©e.
+            if (xhr.status === 200){
+                alert("guoqule!");
+                window.location.href="DetailRecette";    
+                
+            }
+	};
+	
+	// Envoie de la requÃªte.
+	xhr.send();
+	}
 
 function afficherCategories(rayonChoisi) {
     //this get VALUE
@@ -190,25 +218,10 @@ function afficherProduits() {
             //var qte1 = 1;
             for (var i = 1; i <= xhr.responseXML.getElementsByTagName("src").length; i++) {
                 var idProd = xhr.responseXML.getElementsByTagName("idProd")[i - 1].firstChild.nodeValue;
-                document.getElementById("btn_ajouter" + idProd).addEventListener("click", ajouter);
+                document.getElementById("btn_ajouter" + idProd).addEventListener("click", function(){ajouter(1);});
                 document.getElementById("btn_detail"+idProd).addEventListener("click", plusDetail);
             }
             
-            var elt4 = document.getElementById("recette_accueil");
-            var elt5 = document.getElementById("recette_accueil_2");
-            elt4.innerHTML="";
-            elt5.innerHTML="";
-            for (var y = 0; y < xhr.responseXML.getElementsByTagName("recetteId").length; y++) {
-                // Elément html que l'on va mettre à jour.
-                var recetteId = xhr.responseXML.getElementsByTagName("recetteId")[y].firstChild.nodeValue;
-                var recetteSrc = xhr.responseXML.getElementsByTagName("recetteSrc")[y].firstChild.nodeValue;
-                var recetteLib = xhr.responseXML.getElementsByTagName("recetteNom")[y].firstChild.nodeValue;
-                //elt3.insertAdjacentHTML("beforeend","<div name='lien' id='"+ xhr.responseXML.getElementsByTagName("rayonProd")[x].firstChild.nodeValue +"'>"+xhr.responseXML.getElementsByTagName("rayonProd")[x].firstChild.nodeValue+"</div><br/>");
-                var text2 = creerModuleRecette(recetteId, recetteSrc, recetteLib) ;
-                elt4.insertAdjacentHTML("beforeend", text2);
-                elt5.insertAdjacentHTML("beforeend", text2);
-            }
-
         }
     };
 
@@ -217,9 +230,6 @@ function afficherProduits() {
 }
 
 function ajouter(q) {
-    if(q=== undefined){
-        q = 1;
-    }
     console.log("qqqqqqqqqqq"+q);
     var result = confirm("Vous voulez l'ajouter au panier ?");
     
@@ -255,7 +265,7 @@ function rechercher() {
     } else {
         // Requête au serveur avec les paramètres éventuels.
         xhr.open("GET", "ServletAffichageProd?nomProd=" + nomProd);
-
+        var elt2 = document.getElementById("prod_ou_sonDetail");
         // On précise ce que l'on va faire quand on aura reçu la réponse du serveur.
         xhr.onload = function () {
             // Si la requête http s'est bien passée.
@@ -263,7 +273,7 @@ function rechercher() {
                 if (xhr.responseXML.getElementsByTagName("res")[0].firstChild.nodeValue === "reussi") {
                     console.log("Trouvé!");
                     //Modification page
-                    var elt2 = document.getElementById("prod_ou_sonDetail");
+                    
                     elt2.innerHTML = "<h2 class='title text-center' id='nosProds'>NOS PRODUITS</h2>"+
                                 "<div id='produitsTous'>";
                     //var elt = document.getElementById("nosProds");
@@ -280,29 +290,15 @@ function rechercher() {
                     //var qte1 = 1;
                     for (var i = 0; i < xhr.responseXML.getElementsByTagName("src").length; i++) {
                         var idProd = xhr.responseXML.getElementsByTagName("idProd")[i].firstChild.nodeValue;
-                        document.getElementById("btn_ajouter" + idProd).addEventListener("click", ajouter);
+                        document.getElementById("btn_ajouter" + idProd).addEventListener("click", function(){ajouter(1);});
                         document.getElementById("btn_detail"+idProd).addEventListener("click", plusDetail);
                     }
-                    
-                    var elt4 = document.getElementById("recette_accueil");
-                    var elt5 = document.getElementById("recette_accueil_2");
-                    elt4.innerHTML="";
-                    elt5.innerHTML="";
-                    for (var y = 0; y < xhr.responseXML.getElementsByTagName("recetteId").length; y++) {
-                        // Elément html que l'on va mettre à jour.
-                        var recetteId = xhr.responseXML.getElementsByTagName("recetteId")[y].firstChild.nodeValue;
-                        var recetteSrc = xhr.responseXML.getElementsByTagName("recetteSrc")[y].firstChild.nodeValue;
-                        var recetteLib = xhr.responseXML.getElementsByTagName("recetteNom")[y].firstChild.nodeValue;
-                        //elt3.insertAdjacentHTML("beforeend","<div name='lien' id='"+ xhr.responseXML.getElementsByTagName("rayonProd")[x].firstChild.nodeValue +"'>"+xhr.responseXML.getElementsByTagName("rayonProd")[x].firstChild.nodeValue+"</div><br/>");
-                        var text2 = creerModuleRecette(recetteId, recetteSrc, recetteLib) ;
-                        elt4.insertAdjacentHTML("beforeend", text2);
-                        elt5.insertAdjacentHTML("beforeend", text2);
-                    }
-                    
+                                                            
                 } else {
                     alert("Oups! Aucun résultat! ");
                     document.getElementById("zonSaisi").innerHTML = "";
-                    elt2.innerText = "";
+                    elt2.innerHTML = "<h2 class='title text-center' id='nosProds'>NOS PRODUITS</h2>"+
+                                "<div id='produitsTous'></div>";
                 }
             }
         };
@@ -368,7 +364,7 @@ function plusDetail() {
                     "<span>" +
                     "<span>" + xhr.responseXML.getElementsByTagName("prixUniteProd")[0].firstChild.nodeValue + "&#0128</span>" +
                     "<label>Quantity:</label>" +
-                    "<input type='text' value='3' id='detail_qte'/>" +
+                    "<input type='text' value='1' id='detail_qte'/>" +
                     "<button type='button' class='btn btn-fefault cart' name='"+xhr.responseXML.getElementsByTagName("idProd")[0].firstChild.nodeValue+
                             "' id='btn_detail_ajouter'>" +
                     "<i class='fa fa-shopping-cart'></i>" +

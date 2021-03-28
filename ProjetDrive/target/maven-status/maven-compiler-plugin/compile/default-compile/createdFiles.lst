@@ -2,10 +2,12 @@ miage\dao\nbDde.class
 metier\action\ServletRechercheProd.class
 miage\metier\Comporter.class
 miage\metier\Panier.class
+metier\action\ServletChoisirRecette.class
 miage\metier\LigneCommandeId.class
 miage\metier\Stocker.class
 metier\action\ServletLirePanier.class
 miage\metier\StockerId.class
+metier\action\ServletDetailRecette.class
 miage\metier\Promotion.class
 miage\dao\HibernateUtil.class
 miage\metier\Necessiter.class

@@ -1,6 +1,7 @@
 C:\Users\75835\Documents\GitHub\InnoApp_Drive\ProjetDrive\src\main\java\miage\metier\Produit.java
 C:\Users\75835\Documents\GitHub\InnoApp_Drive\ProjetDrive\src\main\java\miage\metier\Rayon.java
 C:\Users\75835\Documents\GitHub\InnoApp_Drive\ProjetDrive\src\main\java\miage\metier\Magasin.java
+C:\Users\75835\Documents\GitHub\InnoApp_Drive\ProjetDrive\src\main\java\metier\action\ServletDetailRecette.java
 C:\Users\75835\Documents\GitHub\InnoApp_Drive\ProjetDrive\src\main\java\miage\metier\FournirId.java
 C:\Users\75835\Documents\GitHub\InnoApp_Drive\ProjetDrive\src\main\java\miage\metier\LigneCommandeId.java
 C:\Users\75835\Documents\GitHub\InnoApp_Drive\ProjetDrive\src\main\java\miage\metier\Promotion.java
@@ -18,6 +19,7 @@ C:\Users\75835\Documents\GitHub\InnoApp_Drive\ProjetDrive\src\main\java\miage\me
 C:\Users\75835\Documents\GitHub\InnoApp_Drive\ProjetDrive\src\main\java\metier\action\ServletConnexion.java
 C:\Users\75835\Documents\GitHub\InnoApp_Drive\ProjetDrive\src\main\java\metier\action\ServletAjouterPanier.java
 C:\Users\75835\Documents\GitHub\InnoApp_Drive\ProjetDrive\src\main\java\miage\metier\Ingredient.java
+C:\Users\75835\Documents\GitHub\InnoApp_Drive\ProjetDrive\src\main\java\metier\action\ServletChoisirRecette.java
 C:\Users\75835\Documents\GitHub\InnoApp_Drive\ProjetDrive\src\main\java\miage\dao\HibernateUtil.java
 C:\Users\75835\Documents\GitHub\InnoApp_Drive\ProjetDrive\src\main\java\miage\metier\StockerId.java
 C:\Users\75835\Documents\GitHub\InnoApp_Drive\ProjetDrive\src\main\java\miage\metier\Commande.java
