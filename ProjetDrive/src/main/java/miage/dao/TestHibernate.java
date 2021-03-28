@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,7 +19,9 @@ import miage.metier.Categorie;
 import miage.metier.Client;
 import miage.metier.Comporter;
 import miage.metier.ComporterId;
+import miage.metier.Ingredient;
 import miage.metier.Magasin;
+import miage.metier.Necessiter;
 import miage.metier.Panier;
 import miage.metier.Produit;
 import miage.metier.Rayon;
@@ -156,19 +159,26 @@ public class TestHibernate
       return listeRes;
       }
      }
-    public static void insertProduitPanier(int idCli,int idP,int qte){
-    try (Session session = HibernateUtil.getSessionFactory().getCurrentSession())
-                {
-                /*----- Ouverture d'une transaction -----*/
-                Transaction t = session.beginTransaction();
-                // ...
-                Produit p1 = session.get(Produit.class,idP);
-                Client c1 = session.get(Client.class, idCli);
-                ComporterId comporterid= new ComporterId(idP,idCli); // idp;idPan
-                Comporter comportement = new Comporter(comporterid,qte,p1,c1.getPanier());
-                session.save(comportement);
-                t.commit(); // Commit et flush automatique de la session.
-                }
+    public static void insertProduitPanier(int idCli, int idP,int qte) {
+        try (Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
+            /*----- Ouverture d'une transaction -----*/
+            Transaction t = session.beginTransaction();
+            Produit p1 = session.get(Produit.class, idP);
+            Client c1 = session.get(Client.class, idCli);
+            Comporter comporterment = c1.getPanier().getComportements().get(p1);
+            comporterment.setQtePP(comporterment.getQtePP() + qte);
+            session.save(comporterment);
+            t.commit();
+        } catch (NullPointerException npe) {
+            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            Transaction t = session.beginTransaction();
+            Produit p1 = session.get(Produit.class, idP);
+            Client c1 = session.get(Client.class, idCli);
+            ComporterId comporterid = new ComporterId(idP, idCli); // idp;idPan
+            Comporter comportement = new Comporter(comporterid, qte, p1, c1.getPanier());
+            session.save(comportement);
+            t.commit(); 
+        }
     }
     
     public static Produit loadProduit(int id) {
@@ -272,6 +282,58 @@ public class TestHibernate
             }
         }
          return lstRec;
+    }
+    
+    public static List<Produit> chercherPromsProduits() {
+        List<Produit> lstP=new ArrayList<>();
+        /*----- Ouverture de la session -----*/
+        try (Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
+            /*----- Ouverture d'une transaction -----*/
+            Transaction t = session.beginTransaction();
+            //List<Produit> liste = session.createQuery("select new miage.metier.Produit(libelleP,prixUnitaireP,prixKGP,nutriScoreP,photoP,labelP,formatP,conditionnementP,categorieP) from Produit where idP<=5").list();
+            List<Produit> liste = session.createQuery("from Produit where idProm=5 or idProm=4").list();
+            for(Produit pr:liste){
+                Produit p = session.get(Produit.class, pr.getIdP());
+                lstP.add(p);       
+                System.out.println(p.getProm().getIdProm());
+            } 
+        }
+        return lstP;
+    }
+    
+    public static Recette loadRecette(int id) {
+        /*----- Ouverture de la session -----*/
+        try ( Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
+            /*----- Ouverture d'une transaction -----*/
+            session.beginTransaction();
+            Recette r = session.get(Recette.class, id);
+            //System.out.println("Produit---- " + p.getCategorieP());
+            return r;
+        }
+    }
+    
+    
+    public static List<Produit> chercherProduitRecommenter(int idRect, int idIng) { 
+        List<Produit> lstP = new ArrayList<>();
+        /*----- Ouverture de la session -----*/
+        try (Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
+            /*----- Ouverture d'une transaction -----*/
+            Transaction t = session.beginTransaction();
+            Recette r = session.get(Recette.class, idRect);
+            Map<Ingredient, Necessiter> m = r.getNecessiters();
+            Ingredient ing = session.get(Ingredient.class, idIng);
+            float qte=m.get(ing).getQteRI();
+            Query query = session.createQuery("from Produit where idIng=:Ing and prixUnitaireP/prixKGP >:n order by prixUnitaireP/prixKGP ASC, prixUnitaireP ASC");
+            query.setParameter("Ing", idIng);
+            query.setParameter("n", qte);
+            List<Produit> liste = query.list();
+            for (Produit pr : liste) {
+                Produit p = session.get(Produit.class, pr.getIdP());
+                lstP.add(p);
+                System.out.println("Produit: "+p.getIdP());
+            }
+        }
+        return lstP;
     }
     
     

@@ -5,6 +5,7 @@
  */
 package miage.metier;
 
+import java.io.Serializable;
 import java.sql.Blob;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,7 +27,7 @@ import javax.persistence.OneToMany;
  */
 
 @Entity (name="Produit")
-public class Produit {
+public class Produit{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="idP")

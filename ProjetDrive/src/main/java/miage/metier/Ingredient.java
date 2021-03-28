@@ -5,6 +5,7 @@
  */
 package miage.metier;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -24,7 +25,7 @@ import javax.persistence.OneToMany;
  * @author ccc
  */
 @Entity (name="Ingredient")
-public class Ingredient {
+public class Ingredient{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="idPIng")    
@@ -41,7 +42,7 @@ public class Ingredient {
     
     // Relation <Necessiter>
     @OneToMany(mappedBy = "ingredient",cascade=CascadeType.ALL)
-    @MapKeyJoinColumn(name = "IdRect")
+    @MapKeyJoinColumn(name = "idIng")
     private Map<Recette, Necessiter> necessiters=new HashMap(0);
 
     public Ingredient() {

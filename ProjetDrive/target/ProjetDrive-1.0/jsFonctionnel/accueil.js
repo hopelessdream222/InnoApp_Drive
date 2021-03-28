@@ -1,20 +1,20 @@
 /**
- * Cette méthode affiche les details de la page d'acceuil.
+ * Cette mï¿½thode affiche les details de la page d'acceuil.
  *
- * On utilise la propriété 'responseText' de l'objet XMLHttpRequest afin
- * de récupérer sous forme de texte le flux envoyé par le serveur.
+ * On utilise la propriï¿½tï¿½ 'responseText' de l'objet XMLHttpRequest afin
+ * de rï¿½cupï¿½rer sous forme de texte le flux envoyï¿½ par le serveur.
  */
 
 window.onload = afficheDetail();
 function afficheDetail() {
     // Objet XMLHttpRequest.
     var xhr = new XMLHttpRequest();
-    // Requête au serveur avec les paramètres éventuels.
+    // Requï¿½te au serveur avec les paramï¿½tres ï¿½ventuels.
     xhr.open("GET", "ServletDetailProd");
 
-    // On précise ce que l'on va faire quand on aura reçu la réponse du serveur.
+    // On prï¿½cise ce que l'on va faire quand on aura reï¿½u la rï¿½ponse du serveur.
     xhr.onload = function () {
-        // Si la requête http s'est bien passée.
+        // Si la requï¿½te http s'est bien passï¿½e.
         if (xhr.status === 200) {
             console.log("reussi");
             var elt = document.getElementById("prod_ou_sonDetail");
@@ -27,7 +27,7 @@ function afficheDetail() {
                 var idProd = xhr.responseXML.getElementsByTagName("idProd")[i].firstChild.nodeValue;
                 var promoProd = xhr.responseXML.getElementsByTagName("promotionProd")[i].firstChild.nodeValue;
                 var text = creerModuleProduit(i, src, prixUniteProd, libProd, idProd, promoProd);
-                // Elément html que l'on va mettre à jour.
+                // Elï¿½ment html que l'on va mettre ï¿½ jour.
                 elt.insertAdjacentHTML("beforeend",text);
             }
             elt.insertAdjacentHTML("beforeend","</div>");
@@ -49,7 +49,7 @@ function afficheDetail() {
             var elt3 = document.getElementById("accordian");
 
             for (var x = 0; x < xhr.responseXML.getElementsByTagName("rayonProd").length; x++) {
-                // Elément html que l'on va mettre à jour.
+                // Elï¿½ment html que l'on va mettre ï¿½ jour.
                 var rayonId = xhr.responseXML.getElementsByTagName("rayonId")[x].firstChild.nodeValue;
                 //elt3.insertAdjacentHTML("beforeend","<div name='lien' id='"+ xhr.responseXML.getElementsByTagName("rayonProd")[x].firstChild.nodeValue +"'>"+xhr.responseXML.getElementsByTagName("rayonProd")[x].firstChild.nodeValue+"</div><br/>");
                 var str = "<div class='panel panel-default'>" +
@@ -62,13 +62,13 @@ function afficheDetail() {
 
             }
             console.log("reussi------");
-            
+
             var elt4 = document.getElementById("recette_accueil");
             var elt5 = document.getElementById("recette_accueil_2");
             elt4.innerHTML="";
             elt5.innerHTML="";
             for (var y = 0; y < xhr.responseXML.getElementsByTagName("recetteId").length; y++) {
-                // Elément html que l'on va mettre à jour.
+                // Elï¿½ment html que l'on va mettre ï¿½ jour.
                 var recetteId = xhr.responseXML.getElementsByTagName("recetteId")[y].firstChild.nodeValue;
                 var recetteSrc = xhr.responseXML.getElementsByTagName("recetteSrc")[y].firstChild.nodeValue;
                 var recetteLib = xhr.responseXML.getElementsByTagName("recetteNom")[y].firstChild.nodeValue;
@@ -76,12 +76,16 @@ function afficheDetail() {
                 var text2 = creerModuleRecette(recetteId, recetteSrc, recetteLib) ;
                 elt4.insertAdjacentHTML("beforeend", text2);
                 elt5.insertAdjacentHTML("beforeend", text2);
-            }         
-            
+            }
+
+            for (var z = 0; z < xhr.responseXML.getElementsByTagName("recetteId").length; z++) {
+                var idProd = xhr.responseXML.getElementsByTagName("recetteId")[z].firstChild.nodeValue;
+                document.getElementById("btn_voir_detail" + idProd).addEventListener("click", allerDetailRecette);
+            }
         }
     };
 
-    // Envoie de la requête.
+    // Envoie de la requï¿½te.
     xhr.send();
 }
 
@@ -93,7 +97,7 @@ function creerModuleRecette(recetteId, recetteSrc, recetteLib) {
                             +"<img src='"+recetteSrc+"' alt='' />"
                             +"<div>"+recetteId+"</div>"
                             +"<p>"+recetteLib+"</p>"
-                            +"<a href='#' class='btn btn-default add-to-cart'><i class='fa fa-plus-square'></i>Plus de Détail</a>"
+                            +"<a href='#' class='btn btn-default add-to-cart' name='" + recetteId + "' id='btn_voir_detail" + recetteId + "'><i class='fa fa-plus-square'></i>Voir detail</a>"
                         +"</div>"
 
                     +"</div>"
@@ -101,9 +105,9 @@ function creerModuleRecette(recetteId, recetteSrc, recetteLib) {
             +"</div>");
 }
 
-function creerModuleProduit(i, src, prixUniteProd, libProd, idProd,promo) { 
+function creerModuleProduit(i, src, prixUniteProd, libProd, idProd,promo) {
     if(promo === "nonpromotion"){
-        var imgPromo = ""; 
+        var imgPromo = "";
     }else{
         var imgPromo = "<img src='image/promo.png' class='new' alt='' />";
     }
@@ -124,12 +128,35 @@ function creerModuleProduit(i, src, prixUniteProd, libProd, idProd,promo) {
             + "</div>"
             + "<div class='choose'>"
             + "<ul class='av nav-pills nav-justified'>"
-            + "<li><a href='#' name='"+idProd+"' id='btn_detail" + idProd + "'><i class='fa fa-plus-square'></i>Plus de Détail</a></li>"
+            + "<li><a href='#' name='"+idProd+"' id='btn_detail" + idProd + "'><i class='fa fa-plus-square'></i>Plus de Dï¿½tail</a></li>"
             + "</ul>"
             + "</div>"
             + "</div>"
             + "</div>");
 }
+
+function allerDetailRecette (){
+	// Objet XMLHttpRequest.
+	var xhr = new XMLHttpRequest();
+
+        var idRecette = event.srcElement.name;
+
+	// RequÃªte au serveur avec les paramÃ¨tres Ã©ventuels.
+	xhr.open("GET","ServletChoisirRecette?idRecette="+idRecette);
+
+	// On prÃ©cise ce que l'on va faire quand on aura reÃ§u la rÃ©ponse du serveur.
+	xhr.onload = function(){
+            // Si la requÃªte http s'est bien passÃ©e.
+            if (xhr.status === 200){
+                alert("guoqule!");
+                window.location.href="DetailRecette";
+
+            }
+	};
+
+	// Envoie de la requÃªte.
+	xhr.send();
+	}
 
 function afficherCategories(rayonChoisi) {
     //this get VALUE
@@ -138,9 +165,9 @@ function afficherCategories(rayonChoisi) {
 
     xhr.open("GET", "ServletRechercheCate?rayon=" + rayonChoisi);
     //alert(rayonChoisi);
-    // On précise ce que l'on va faire quand on aura reçu la réponse du serveur.
+    // On prï¿½cise ce que l'on va faire quand on aura reï¿½u la rï¿½ponse du serveur.
     xhr.onload = function () {
-        // Si la requête http s'est bien passée.
+        // Si la requï¿½te http s'est bien passï¿½e.
         if (xhr.status === 200) {
             //alert(" cat 200");
             var elt = document.getElementById("rayon_" + rayonChoisi);
@@ -151,11 +178,11 @@ function afficherCategories(rayonChoisi) {
 
             for (var i = 0; i < tab.length; i++) {
                 var categorieId = xhr.responseXML.getElementsByTagName("categorieId")[i].firstChild.nodeValue;
-//                elt.insertAdjacentHTML("afterend","<li><a href='#'>"+tab[i].firstChild.nodeValue+"</a></li>");                
+//                elt.insertAdjacentHTML("afterend","<li><a href='#'>"+tab[i].firstChild.nodeValue+"</a></li>");
                 text = text + "<li><a href='#' name='lienCate' value='" + categorieId + "' id='" + categorieId + "'>" + tab[i].firstChild.nodeValue + "</a></li>";
 
             }
-//            elt.insertAdjacentHTML("afterend","<div id='sportswear' class='panel-collapse collapse'><div class='panel-body'><ul>");          
+//            elt.insertAdjacentHTML("afterend","<div id='sportswear' class='panel-collapse collapse'><div class='panel-body'><ul>");
             elt.insertAdjacentHTML("afterend", text + "</ul></div></div>");
 
             var elt4 = document.getElementsByName("lienCate");
@@ -166,7 +193,7 @@ function afficherCategories(rayonChoisi) {
         }
     };
 
-    // Envoie de la requête.
+    // Envoie de la requï¿½te.
     xhr.send();
 }
 
@@ -177,9 +204,9 @@ function afficherProduits() {
     console.log("categorie:"+cateChoisi);
     xhr.open("GET", "ServletRechercheProdUnCate?cateId=" + cateChoisi);
 
-    // On précise ce que l'on va faire quand on aura reçu la réponse du serveur.
+    // On prï¿½cise ce que l'on va faire quand on aura reï¿½u la rï¿½ponse du serveur.
     xhr.onload = function () {
-        // Si la requête http s'est bien passée.
+        // Si la requï¿½te http s'est bien passï¿½e.
         if (xhr.status === 200) {
             var elt2 = document.getElementById("prod_ou_sonDetail");
             elt2.innerHTML = "<h2 class='title text-center' id='nosProds'>NOS PRODUITS</h2>"+
@@ -192,7 +219,7 @@ function afficherProduits() {
                 var idProd = xhr.responseXML.getElementsByTagName("idProd")[i].firstChild.nodeValue;
                 var promoProd = xhr.responseXML.getElementsByTagName("promotionProd")[i].firstChild.nodeValue;
                 var text = creerModuleProduit(i, src, prixUniteProd, libProd, idProd, promoProd);
-                // Elément html que l'on va mettre à jour.
+                // Elï¿½ment html que l'on va mettre ï¿½ jour.
                 elt2.insertAdjacentHTML("beforeend", text);
             }
             elt2.insertAdjacentHTML("beforeend","</div>");
@@ -206,33 +233,33 @@ function afficherProduits() {
         }
     };
 
-    // Envoie de la requête.
+    // Envoie de la requï¿½te.
     xhr.send();
 }
 
 function ajouter(q) {
     console.log("qte"+q);
     var result = confirm("Vous voulez l'ajouter au panier ?");
-    
+
     if (result) {
         // Objet XMLHttpRequest.
         var xhr = new XMLHttpRequest();
-        // Requête au serveur avec les paramètres éventuels.
+        // Requï¿½te au serveur avec les paramï¿½tres ï¿½ventuels.
         var produitchoisi = event.srcElement.name;
-        
-        alert("produit" + produitchoisi);
-       
+
+        console.log("produit" + produitchoisi);
+
         xhr.open("GET", "ServletAjouterPanier?idP=" + produitchoisi + "&qte=" + q, true);
 
-        // On précise ce que l'on va faire quand on aura reçu la réponse du serveur.
+        // On prï¿½cise ce que l'on va faire quand on aura reï¿½u la rï¿½ponse du serveur.
         xhr.onload = function () {
-            // Si la requête http s'est bien passée.
+            // Si la requï¿½te http s'est bien passï¿½e.
             if (xhr.status === 200) {
                 var result2 = alert("Le produit est bien ajoute dans le panier");
             }
         };
     }
-    // Envoie de la requête.
+    // Envoie de la requï¿½te.
     xhr.send();
 }
 
@@ -244,18 +271,18 @@ function rechercher() {
     if (nomProd === "") {
         alert("Veuillez saisir un produit");
     } else {
-        // Requête au serveur avec les paramètres éventuels.
+        // Requï¿½te au serveur avec les paramï¿½tres ï¿½ventuels.
         xhr.open("GET", "ServletAffichageProd?nomProd=" + nomProd);
-
-        // On précise ce que l'on va faire quand on aura reçu la réponse du serveur.
+        var elt2 = document.getElementById("prod_ou_sonDetail");
+        // On prï¿½cise ce que l'on va faire quand on aura reï¿½u la rï¿½ponse du serveur.
         xhr.onload = function () {
-            // Si la requête http s'est bien passée.
+            // Si la requï¿½te http s'est bien passï¿½e.
             if (xhr.status === 200) {
                 var elt2 = document.getElementById("prod_ou_sonDetail");
                 if (xhr.responseXML.getElementsByTagName("res")[0].firstChild.nodeValue === "reussi") {
-                    console.log("Trouvé!");
+                    console.log("Trouvï¿½!");
                     //Modification page
-                    
+
                     elt2.innerHTML = "<h2 class='title text-center' id='nosProds'>NOS PRODUITS</h2>"+
                                 "<div id='produitsTous'>";
                     //var elt = document.getElementById("nosProds");
@@ -266,7 +293,7 @@ function rechercher() {
                         var idProd = xhr.responseXML.getElementsByTagName("idProd")[i].firstChild.nodeValue;
                         var promoProd = xhr.responseXML.getElementsByTagName("promotionProd")[i].firstChild.nodeValue;
                         var text = creerModuleProduit(i, src, prixUniteProd, libProd, idProd, promoProd);
-                        // Elément html que l'on va mettre à jour.
+                        // Elï¿½ment html que l'on va mettre ï¿½ jour.
                         elt2.insertAdjacentHTML("beforeend", text);
                     }
                     elt2.insertAdjacentHTML("beforeend","</div>");
@@ -276,8 +303,9 @@ function rechercher() {
                         document.getElementById("btn_ajouter" + idProd).addEventListener("click", function(){ajouter(1);});
                         document.getElementById("btn_detail"+idProd).addEventListener("click", plusDetail);
                     }
+
                 } else {
-                    alert("Oups, aucun résultat!");
+                    alert("Oups! Aucun rï¿½sultat! ");
                     document.getElementById("zonSaisi").innerHTML = "";
                     elt2.innerHTML = "<h2 class='title text-center' id='nosProds'>NOS PRODUITS</h2>"+
                                 "<div id='produitsTous'></div>";
@@ -285,16 +313,16 @@ function rechercher() {
             }
         };
     }
-    // Envoie de la requête.
+    // Envoie de la requï¿½te.
     xhr.send();
 }
 
 function plusDetail() {
-    //récupérer id de produit choisi
+    //rï¿½cupï¿½rer id de produit choisi
     var idProd = event.srcElement.name;
     console.log("id p choisi:" + idProd);
 
-    //vider la partie à droite : Nos Produit
+    //vider la partie ï¿½ droite : Nos Produit
     var eltRight = document.getElementById("prod_ou_sonDetail");
 
     // Objet XMLHttpRequest.
@@ -302,22 +330,22 @@ function plusDetail() {
 
     xhr.open("GET", "ServletRechercheProd?idProd=" + idProd, true);
     xhr.onload = function () {
-        // Si la requête http s'est bien passée.
+        // Si la requï¿½te http s'est bien passï¿½e.
         if (xhr.status === 200) {
             //obtenir le tableau de label
             var tabLabel = xhr.responseXML.getElementsByTagName("srcLabel");
 
-            //déterminer si ce produit possède des labels ou pas
+            //dï¿½terminer si ce produit possï¿½de des labels ou pas
             var srcLabel = "";
             if (tabLabel[0].firstChild.nodeValue === "nonlabel") {
                 // bu deng yu
-            } else { 
+            } else {
                 for (j = 0; j < tabLabel.length; j++) {
                     srcLabel = srcLabel + "<img src='" +tabLabel[j].firstChild.nodeValue + "' alt='' width='80px' height='80px'/>";
                 }
             }
             console.log(srcLabel);
-            //déterminer si ce produit possède le nuriScore ou pas
+            //dï¿½terminer si ce produit possï¿½de le nuriScore ou pas
             var srcNS = "";
             if (xhr.responseXML.getElementsByTagName("srcNutriScore")[0].firstChild.nodeValue === "nonNS") {
                 // bu deng yu
@@ -331,7 +359,7 @@ function plusDetail() {
             var logoPromo = "";
             var pourcent = xhr.responseXML.getElementsByTagName("promotionProd")[0].firstChild.nodeValue;
             if( pourcent !== "nonpromotion"){
-                promotion = "<div class='promo'>PROMO : "+ pourcent +"%</div><br/>"; 
+                promotion = "<div class='promo'>PROMO : "+ pourcent +"%</div><br/>";
                 logoPromo = "<img src='image/logopromo.jpg' class='newarrival' alt='' width='60px' height='60px'/>";
             }
             //composition
@@ -344,7 +372,7 @@ function plusDetail() {
             var tailleRef = "";
             if(xhr.responseXML.getElementsByTagName("compositionProd")[0].firstChild.nodeValue !== "nontaille"){
                 console.log(xhr.responseXML.getElementsByTagName("compositionProd")[0].firstChild.nodeValue !== "nontaille");
-                tailleRef = "<p><b>Taille de référence:</b> " + xhr.responseXML.getElementsByTagName("tailleProd")[0].firstChild.nodeValue + "</p>";
+                tailleRef = "<p><b>Taille de rï¿½fï¿½rence:</b> " + xhr.responseXML.getElementsByTagName("tailleProd")[0].firstChild.nodeValue + "</p>";
             }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           xhr.responseXML.getElementsByTagName("promotionProd")[0].firstChild.nodeValue
             var txt = "<div class='product-details'><!--product-details-->" +
                     "<div class='col-sm-5'>" +
@@ -377,18 +405,18 @@ function plusDetail() {
                     "</div><!--/product-details-->";
             eltRight.innerHTML = txt;
             document.getElementById("btn_detail_ajouter").addEventListener("click",function(){ajouter(document.getElementById("detail_qte").value);});
-            
+
         }
     };
 
-    // Envoie de la requête.
+    // Envoie de la requï¿½te.
     xhr.send();
 
 }
 
 
 /**
- * Lancement après le chargement du DOM.
+ * Lancement aprï¿½s le chargement du DOM.
  */
 document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("btnRechercher").addEventListener("click", rechercher);
