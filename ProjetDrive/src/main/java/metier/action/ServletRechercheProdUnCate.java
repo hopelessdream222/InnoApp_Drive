@@ -52,7 +52,11 @@ public class ServletRechercheProdUnCate extends HttpServlet {
                         "<formatProd>"+produit.getFormatP()+"</formatProd>"+
                         "<prixKGProd>"+produit.getPrixKGP()+"</prixKGProd>"+
                         "<prixUniteProd>"+produit.getPrixUnitaireP()+"</prixUniteProd>");
-                System.out.println(produit.getPrixUnitaireP());
+                if(produit.getProm() == null){
+                    out.println("<promotionProd>nonpromotion</promotionProd>");
+                }else{
+                    out.println("<promotionProd>"+produit.getProm().getPourcentageProm()+"</promotionProd>");
+                }
             }
                    
             out.println("</liste_produit>");

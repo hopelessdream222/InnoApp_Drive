@@ -69,7 +69,12 @@ public class ServletAffichageProd extends HttpServlet {
                         "</idProd><libProd>"+produit.getLibelleP()+"</libProd>"+
                         "<formatProd>"+produit.getFormatP()+"</formatProd>"+
                         "<prixKGProd>"+produit.getPrixKGP()+"</prixKGProd>"+
-                        "<prixUniteProd>"+produit.getPrixUnitaireP()+"</prixUniteProd>");                  
+                        "<prixUniteProd>"+produit.getPrixUnitaireP()+"</prixUniteProd>");  
+                    if(produit.getProm() == null){
+                        out.println("<promotionProd>nonpromotion</promotionProd>");
+                    }else{
+                        out.println("<promotionProd>"+produit.getProm().getPourcentageProm()+"</promotionProd>");
+                    }
                 }
                 out.println("</responseRecherche>");
                 

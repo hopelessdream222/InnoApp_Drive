@@ -25,7 +25,8 @@ function afficheDetail() {
                 var prixUniteProd = xhr.responseXML.getElementsByTagName("prixUniteProd")[i].firstChild.nodeValue;
                 var libProd = xhr.responseXML.getElementsByTagName("libProd")[i].firstChild.nodeValue;
                 var idProd = xhr.responseXML.getElementsByTagName("idProd")[i].firstChild.nodeValue;
-                var text = creerModuleProduit(i, src, prixUniteProd, libProd, idProd);
+                var promoProd = xhr.responseXML.getElementsByTagName("promotionProd")[i].firstChild.nodeValue;
+                var text = creerModuleProduit(i, src, prixUniteProd, libProd, idProd, promoProd);
                 // Elément html que l'on va mettre à jour.
                 elt.insertAdjacentHTML("beforeend",text);
             }
@@ -33,7 +34,7 @@ function afficheDetail() {
             //var qte1 = 1;
             for (var i = 0; i < xhr.responseXML.getElementsByTagName("src").length; i++) {
                 var idProd = xhr.responseXML.getElementsByTagName("idProd")[i].firstChild.nodeValue;
-                document.getElementById("btn_ajouter" + idProd).addEventListener("click", ajouter);
+                document.getElementById("btn_ajouter" + idProd).addEventListener("click", function(){ajouter(1);});
                 document.getElementById("btn_detail"+idProd).addEventListener("click", plusDetail);
             }
 
@@ -92,7 +93,7 @@ function creerModuleRecette(recetteId, recetteSrc, recetteLib) {
                             +"<img src='"+recetteSrc+"' alt='' />"
                             +"<div>"+recetteId+"</div>"
                             +"<p>"+recetteLib+"</p>"
-                            +"<a href='#' class='btn btn-default add-to-cart'><i class='fa fa-shopping-cart'></i>Voir detail</a>"
+                            +"<a href='#' class='btn btn-default add-to-cart'><i class='fa fa-plus-square'></i>Plus de Détail</a>"
                         +"</div>"
 
                     +"</div>"
@@ -100,7 +101,12 @@ function creerModuleRecette(recetteId, recetteSrc, recetteLib) {
             +"</div>");
 }
 
-function creerModuleProduit(i, src, prixUniteProd, libProd, idProd) {
+function creerModuleProduit(i, src, prixUniteProd, libProd, idProd,promo) { 
+    if(promo === "nonpromotion"){
+        var imgPromo = ""; 
+    }else{
+        var imgPromo = "<img src='image/promo.png' class='new' alt='' />";
+    }
     return ("<div class='col-sm-4'>"
             + "<div class='product-image-wrapper'>"
             + "<div class='single-products'>"
@@ -114,6 +120,7 @@ function creerModuleProduit(i, src, prixUniteProd, libProd, idProd) {
             + "<a href='#' class='btn btn-default add-to-cart' name='" + idProd + "' id='btn_ajouter" + idProd + "'><i class='fa fa-shopping-cart'></i>Ajouter au panier</a>"
             + "</div>"
             + "</div>"
+            + imgPromo
             + "</div>"
             + "<div class='choose'>"
             + "<ul class='av nav-pills nav-justified'>"
@@ -178,12 +185,13 @@ function afficherProduits() {
             elt2.innerHTML = "<h2 class='title text-center' id='nosProds'>NOS PRODUITS</h2>"+
                             "<div id='produitsTous'>";
             //var elt = document.getElementById("nosProds");
-            for (var i = 1; i <= xhr.responseXML.getElementsByTagName("src").length; i++) {
-                var src = xhr.responseXML.getElementsByTagName("src")[i - 1].firstChild.nodeValue;
-                var prixUniteProd = xhr.responseXML.getElementsByTagName("prixUniteProd")[i - 1].firstChild.nodeValue;
-                var libProd = xhr.responseXML.getElementsByTagName("libProd")[i - 1].firstChild.nodeValue;
-                var idProd = xhr.responseXML.getElementsByTagName("idProd")[i - 1].firstChild.nodeValue;
-                var text = creerModuleProduit(i, src, prixUniteProd, libProd, idProd);
+            for (var i = 0; i < xhr.responseXML.getElementsByTagName("src").length; i++) {
+                var src = xhr.responseXML.getElementsByTagName("src")[i].firstChild.nodeValue;
+                var prixUniteProd = xhr.responseXML.getElementsByTagName("prixUniteProd")[i].firstChild.nodeValue;
+                var libProd = xhr.responseXML.getElementsByTagName("libProd")[i].firstChild.nodeValue;
+                var idProd = xhr.responseXML.getElementsByTagName("idProd")[i].firstChild.nodeValue;
+                var promoProd = xhr.responseXML.getElementsByTagName("promotionProd")[i].firstChild.nodeValue;
+                var text = creerModuleProduit(i, src, prixUniteProd, libProd, idProd, promoProd);
                 // Elément html que l'on va mettre à jour.
                 elt2.insertAdjacentHTML("beforeend", text);
             }
@@ -191,7 +199,7 @@ function afficherProduits() {
             //var qte1 = 1;
             for (var i = 1; i <= xhr.responseXML.getElementsByTagName("src").length; i++) {
                 var idProd = xhr.responseXML.getElementsByTagName("idProd")[i - 1].firstChild.nodeValue;
-                document.getElementById("btn_ajouter" + idProd).addEventListener("click", ajouter);
+                document.getElementById("btn_ajouter" + idProd).addEventListener("click", function(){ajouter(1);});
                 document.getElementById("btn_detail"+idProd).addEventListener("click", plusDetail);
             }
 
@@ -203,9 +211,7 @@ function afficherProduits() {
 }
 
 function ajouter(q) {
-    if(q=== undefined){
-        q = 1;
-    }
+    console.log("qte"+q);
     var result = confirm("Vous voulez l'ajouter au panier ?");
     
     if (result) {
@@ -245,19 +251,21 @@ function rechercher() {
         xhr.onload = function () {
             // Si la requête http s'est bien passée.
             if (xhr.status === 200) {
+                var elt2 = document.getElementById("prod_ou_sonDetail");
                 if (xhr.responseXML.getElementsByTagName("res")[0].firstChild.nodeValue === "reussi") {
                     console.log("Trouvé!");
                     //Modification page
-                    var elt2 = document.getElementById("prod_ou_sonDetail");
+                    
                     elt2.innerHTML = "<h2 class='title text-center' id='nosProds'>NOS PRODUITS</h2>"+
                                 "<div id='produitsTous'>";
                     //var elt = document.getElementById("nosProds");
-                    for (var i = 1; i <= xhr.responseXML.getElementsByTagName("src").length; i++) {
-                        var src = xhr.responseXML.getElementsByTagName("src")[i - 1].firstChild.nodeValue;
-                        var prixUniteProd = xhr.responseXML.getElementsByTagName("prixUniteProd")[i - 1].firstChild.nodeValue;
-                        var libProd = xhr.responseXML.getElementsByTagName("libProd")[i - 1].firstChild.nodeValue;
-                        var idProd = xhr.responseXML.getElementsByTagName("idProd")[i - 1].firstChild.nodeValue;
-                        var text = creerModuleProduit(i, src, prixUniteProd, libProd, idProd);
+                    for (var i = 0; i < xhr.responseXML.getElementsByTagName("src").length; i++) {
+                        var src = xhr.responseXML.getElementsByTagName("src")[i].firstChild.nodeValue;
+                        var prixUniteProd = xhr.responseXML.getElementsByTagName("prixUniteProd")[i].firstChild.nodeValue;
+                        var libProd = xhr.responseXML.getElementsByTagName("libProd")[i].firstChild.nodeValue;
+                        var idProd = xhr.responseXML.getElementsByTagName("idProd")[i].firstChild.nodeValue;
+                        var promoProd = xhr.responseXML.getElementsByTagName("promotionProd")[i].firstChild.nodeValue;
+                        var text = creerModuleProduit(i, src, prixUniteProd, libProd, idProd, promoProd);
                         // Elément html que l'on va mettre à jour.
                         elt2.insertAdjacentHTML("beforeend", text);
                     }
@@ -265,13 +273,14 @@ function rechercher() {
                     //var qte1 = 1;
                     for (var i = 0; i < xhr.responseXML.getElementsByTagName("src").length; i++) {
                         var idProd = xhr.responseXML.getElementsByTagName("idProd")[i].firstChild.nodeValue;
-                        document.getElementById("btn_ajouter" + idProd).addEventListener("click", ajouter);
+                        document.getElementById("btn_ajouter" + idProd).addEventListener("click", function(){ajouter(1);});
                         document.getElementById("btn_detail"+idProd).addEventListener("click", plusDetail);
                     }
                 } else {
-                    console.log("Trouvé pas!");
+                    alert("Oups, aucun résultat!");
                     document.getElementById("zonSaisi").innerHTML = "";
-                    elt2.innerText = "";
+                    elt2.innerHTML = "<h2 class='title text-center' id='nosProds'>NOS PRODUITS</h2>"+
+                                "<div id='produitsTous'></div>";
                 }
             }
         };
@@ -319,10 +328,24 @@ function plusDetail() {
             }
             //promotion
             var promotion = "";
+            var logoPromo = "";
             var pourcent = xhr.responseXML.getElementsByTagName("promotionProd")[0].firstChild.nodeValue;
             if( pourcent !== "nonpromotion"){
                 promotion = "<div class='promo'>PROMO : "+ pourcent +"%</div><br/>"; 
-            }//                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              xhr.responseXML.getElementsByTagName("promotionProd")[0].firstChild.nodeValue
+                logoPromo = "<img src='image/logopromo.jpg' class='newarrival' alt='' width='60px' height='60px'/>";
+            }
+            //composition
+            var compo = "";
+            if(xhr.responseXML.getElementsByTagName("compositionProd")[0].firstChild.nodeValue !== "noncomposition"){
+                console.log(xhr.responseXML.getElementsByTagName("compositionProd")[0].firstChild.nodeValue);
+                compo = "<p><b>Composition:</b> " + xhr.responseXML.getElementsByTagName("compositionProd")[0].firstChild.nodeValue + "</p>";
+            }
+            //taille ref
+            var tailleRef = "";
+            if(xhr.responseXML.getElementsByTagName("compositionProd")[0].firstChild.nodeValue !== "nontaille"){
+                console.log(xhr.responseXML.getElementsByTagName("compositionProd")[0].firstChild.nodeValue !== "nontaille");
+                tailleRef = "<p><b>Taille de référence:</b> " + xhr.responseXML.getElementsByTagName("tailleProd")[0].firstChild.nodeValue + "</p>";
+            }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           xhr.responseXML.getElementsByTagName("promotionProd")[0].firstChild.nodeValue
             var txt = "<div class='product-details'><!--product-details-->" +
                     "<div class='col-sm-5'>" +
                     "<div class='view-product'>" +
@@ -331,22 +354,23 @@ function plusDetail() {
                     "</div>" +
                     "<div class='col-sm-7'>" +
                     "<div class='product-information'><!--/product-information-->" +
-                    promotion+
+                    logoPromo +
+                    promotion +
                     "<h2>" + xhr.responseXML.getElementsByTagName("libProd")[0].firstChild.nodeValue + "</h2>" +
                     srcNS +
                     "<span>" +
                     "<span>" + xhr.responseXML.getElementsByTagName("prixUniteProd")[0].firstChild.nodeValue + "&#0128</span>" +
                     "<label>Quantity:</label>" +
-                    "<input type='text' value='3' id='detail_qte'/>" +
+                    "<input type='text' value='1' id='detail_qte'/>" +
                     "<button type='button' class='btn btn-fefault cart' name='"+xhr.responseXML.getElementsByTagName("idProd")[0].firstChild.nodeValue+
                             "' id='btn_detail_ajouter'>" +
                     "<i class='fa fa-shopping-cart'></i>" +
                     "Ajouter au panier" +
                     "</button>" +
                     "</span>" +
-                    "<p><b>Composition:</b> " + xhr.responseXML.getElementsByTagName("compositionProd")[0].firstChild.nodeValue + "</p>" +
+                    compo +
                     "<p><b>Condition:</b> " + xhr.responseXML.getElementsByTagName("condProd")[0].firstChild.nodeValue + "</p>" +
-                    "<p><b>Taille de référence:</b> " + xhr.responseXML.getElementsByTagName("tailleProd")[0].firstChild.nodeValue + "</p>" +
+                    tailleRef +
                     "<div>" + srcLabel + "</div>" +
                     "</div><!--/product-information-->" +
                     "</div>" +

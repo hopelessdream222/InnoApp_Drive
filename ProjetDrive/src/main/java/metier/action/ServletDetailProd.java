@@ -48,16 +48,23 @@ public class ServletDetailProd extends HttpServlet {
  
             /*----- Lecture de liste de mots dans la BD -----*/
             //Appeler la fonction dans DAO
-            List<Produit> lProduits = miage.dao.TestHibernate.chercherNeufProduits();
+            List<Produit> lProduits = miage.dao.TestHibernate.chercherPromsProduits();
             System.out.println("lstp:"+lProduits);        
             for (Produit produit : lProduits){
                 System.out.println("for :"+produit.toString());
-               out.println("<src>image/" + produit.getIdP() +".jpg</src><idProd>"+ produit.getIdP() +
+                out.println("<src>image/" + produit.getIdP() +".jpg</src><idProd>"+ produit.getIdP() +
                         "</idProd><libProd>"+produit.getLibelleP()+"</libProd>"+
                         "<formatProd>"+produit.getFormatP()+"</formatProd>"+
                         "<prixKGProd>"+produit.getPrixKGP()+"</prixKGProd>"+
-                        "<prixUniteProd>"+produit.getPrixUnitaireP()+"</prixUniteProd>");                
+                        "<prixUniteProd>"+produit.getPrixUnitaireP()+"</prixUniteProd>"); 
+                        //promotion
+                if(produit.getProm() == null){
+                    out.println("<promotionProd>nonpromotion</promotionProd>");
+                }else{
+                    out.println("<promotionProd>"+produit.getProm().getPourcentageProm()+"</promotionProd>");
+                }
             }
+            
             List<Rayon> lRayons = miage.dao.TestHibernate.obtenirRayons();  
             
             for (Rayon rayon : lRayons){

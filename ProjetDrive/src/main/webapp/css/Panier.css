@@ -327,13 +327,14 @@
 
 .magasin{   
     border-style: solid;
-    border:1px;
-    border-color: black;
-    background-color: pink;
+    border:2px;
+    border-color: orange;
+    background-color: whitesmoke;
+    color:black;
     margin-bottom:2%; 
     text-align: center;
 }
 #lstMagasin{
-    margin-left: 10%;
-    margin-right: 10%;
+    margin-left: 20%;
+    margin-right: 20%;
 }
