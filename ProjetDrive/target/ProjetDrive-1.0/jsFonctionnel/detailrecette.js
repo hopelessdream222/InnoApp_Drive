@@ -20,7 +20,7 @@ function afficheDetailRecette() {
             elt = document.getElementById("re_detail");
             elt.innerHTML = "<div class='col-sm-5'>"+
                             "<div class='view-product'>"+
-                                "<img src='"+xhr.responseXML.getElementsByTagName("ingSrc")[0].firstChild.nodeValue+"' alt='' /> "+
+                                "<img src='"+xhr.responseXML.getElementsByTagName("reSrc")[0].firstChild.nodeValue+"' alt='' /> "+
                             "</div>"+
                             "</div>"+
                             "<div class='col-sm-7'>"+

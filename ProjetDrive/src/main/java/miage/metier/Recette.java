@@ -35,6 +35,7 @@ public class Recette{
     public Recette(String libelleRect) {
         this.libelleRect = libelleRect;
     }   
+    
      
     // Relation <Necessiter>
     @OneToMany(mappedBy = "recette",cascade=CascadeType.ALL)

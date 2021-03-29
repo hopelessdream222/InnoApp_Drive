@@ -48,8 +48,8 @@ public class ServletDetailRecette extends HttpServlet {
         Recette recette = miage.dao.TestHibernate.loadRecette(idRecette);
         System.out.println(recette.getLibelleRect()+"-------");
         //System.out.println("Lib"+recette.getLibelleRect());
-//        Map<Ingredient, Necessiter> m = (Map<Ingredient, Necessiter>)recette.getNecessiters();
-//        System.out.println(m.size()+"-------");
+        Map<Ingredient, Necessiter> m = (Map<Ingredient, Necessiter>)recette.getNecessiters();
+        //System.out.println(m.size()+"-------");
         
         /*----- Type de la rÃ©ponse -----*/
         response.setContentType("application/xml;charset=UTF-8");
@@ -59,18 +59,19 @@ public class ServletDetailRecette extends HttpServlet {
             //Si on trouve pas de client, on fait une response de "echec"
             out.println("<?xml version=\"1.0\"?>");
             out.println("<responseRecette><recetteLib>"+recette.getLibelleRect()+"</recetteLib>");
+            out.println("<reSrc>image/recettes/"+recette.getIdRect()+".jpg</reSrc>");
             System.out.println("idididididid"+idRecette);
             for(Ingredient ing : m.keySet()){
-                out.println("<ingSrc>"+ing.getLibelleIng()+"</ingSrc>");
-                System.out.println("idididididid"+idRecette);
-                out.println("<ingLib>"+ing.getLibelleIng()+"</ingLib>");
-                System.out.println(ing.getLibelleIng()+"=========");
-                out.println("<qte>"+m.get(ing).getQteRI()+"</qte>");
-                System.out.println(m.get(ing).getQteRI()+"=========");
+//                System.out.println("idididididid"+idRecette);
+//                System.out.println(ing.getLibelleIng()+"=========");
+//                System.out.println(m.get(ing).getQteRI()+"=========");
+//                System.out.println(lProduits.get(0).getLibelleP()+"=========");
                 List<Produit> lProduits = miage.dao.TestHibernate.chercherProduitRecommenter(idRecette,ing.getIdIng());
-                out.println("<prodId>"+lProduits.get(0).getIdP()+"</prodId>");
-                out.println("<prodLib>"+lProduits.get(0).getLibelleP()+"</prodLib>");
-                System.out.println(lProduits.get(0).getLibelleP()+"=========");
+                out.println("<ingLib>"+ing.getLibelleIng()+"</ingLib>"+
+                            "<qte>"+m.get(ing).getQteRI()+"</qte>"+
+                            "<prodId>"+lProduits.get(0).getIdP()+"</prodId>"+
+                            "<prodLib>"+lProduits.get(0).getLibelleP()+"</prodLib>");
+                
             }
             /*----- Récupération le session de client -----*/
             HttpSession sClient = request.getSession();
