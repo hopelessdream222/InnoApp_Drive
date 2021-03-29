@@ -22,7 +22,7 @@ import javax.persistence.OneToMany;
  * @author ccc
  */
 @Entity(name="Recette")
-public class Recette{
+public class Recette implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="idRect")        
@@ -40,7 +40,7 @@ public class Recette{
     // Relation <Necessiter>
     @OneToMany(mappedBy = "recette",cascade=CascadeType.ALL)
     @MapKeyJoinColumn(name = "idIng")
-    private Map<Ingredient, Necessiter> necessiters=new HashMap(0);
+    private Map<Ingredient, Necessiter> necessiters=new HashMap<Ingredient, Necessiter>(0);
     
     public int getIdRect() {
         return idRect;

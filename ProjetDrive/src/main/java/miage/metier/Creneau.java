@@ -5,6 +5,7 @@
  */
 package miage.metier;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -25,7 +26,7 @@ import javax.persistence.OneToMany;
  * @author ccc
  */
 @Entity
-public class Creneau {
+public class Creneau implements Serializable{
     // proprietes
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

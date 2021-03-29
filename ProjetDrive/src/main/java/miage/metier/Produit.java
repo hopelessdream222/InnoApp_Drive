@@ -27,7 +27,7 @@ import javax.persistence.OneToMany;
  */
 
 @Entity (name="Produit")
-public class Produit{
+public class Produit implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="idP")

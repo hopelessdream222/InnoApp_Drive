@@ -74,7 +74,7 @@ public class ServletRechercheProd extends HttpServlet {
             if(produit.getProm() == null){
                 out.println("<promotionProd>nonpromotion</promotionProd>");
             }else{
-                out.println("<promotionProd>"+produit.getProm().getPourcentageProm()+"</promotionProd>");
+                out.println("<promotionProd>"+miage.dao.TestHibernate.chercherProduitPromotion(idProd)+"</promotionProd>");
             }
 
             //Conditionnement

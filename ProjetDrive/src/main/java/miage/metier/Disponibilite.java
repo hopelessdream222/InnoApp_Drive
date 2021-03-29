@@ -5,6 +5,7 @@
  */
 package miage.metier;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 import javax.persistence.EmbeddedId;
@@ -17,7 +18,7 @@ import javax.persistence.ManyToOne;
  * @author ccc
  */
 @Entity
-public class Disponibilite {
+public class Disponibilite implements Serializable{
     // proprietes
     @EmbeddedId
     private DisponibiliteId dispoId;

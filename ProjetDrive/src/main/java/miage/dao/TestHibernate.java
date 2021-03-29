@@ -321,19 +321,72 @@ public class TestHibernate
         return lstP;
     }
     
-    public static void chercherIngRecette(int id) { //Client client
-        /*----- Ouverture de la session -----*/
+    public static String chercherProduitPromotion(int idP) {
+        String res = "";
+            try (Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
+                Transaction t = session.beginTransaction();
+                Produit p = session.get(Produit.class, idP);
+                int libelleProm = p.getProm().getLibelleProm();
+                float pourcentage = p.getProm().getPourcentageProm();
+                if (libelleProm == 1) {
+                    res = pourcentage * 100 + " % sur premier Achete";
+                    System.out.println(res);
+                } else if (libelleProm == 2) {
+                    res = pourcentage * 100 + " % sur deuxieme Achete";
+                    System.out.println(res);
+                } else if (libelleProm == 3) {
+                    res = pourcentage * 100 + " % sur troisieme Achete";
+                    System.out.println(res);
+                }
+            } catch (NullPointerException npe) {
+                res = "Pas de promotion";
+                System.out.println(res);
+            }
+        return res;
+    }
+    
+    public static String libIngerdient(int idIng) {
         try (Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
+            /*----- Ouverture d'une transaction -----*/
+            Transaction t = session.beginTransaction();
+            Ingredient Ing = session.get(Ingredient.class, idIng);
+            return Ing.getLibelleIng();
+        }
+    }
+    
+     public static List<Necessiter> chercherIngRecette(int id) { //Client client
+        /*----- Ouverture de la session -----*/
+        try ( Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
             /*----- Ouverture d'une transaction -----*/
             Transaction t = session.beginTransaction();
             Recette r = session.get(Recette.class, id);
             Map<Ingredient, Necessiter> m = r.getNecessiters();
+            List<Necessiter> lstNecessiter = new ArrayList<>();
             for (Ingredient ing : m.keySet()) {
                 System.out.println("Ingredient--" + ing.getLibelleIng());
+                lstNecessiter.add(m.get(ing));
             }
+            return lstNecessiter;
         }
     }
 
+    /*----- Chercher la quantite des produits dans le panier d'un client-----*/
+    public static int chercherQuantitePanierClient(int idCli){ //Client client
+        /*----- Ouverture de la session -----*/
+        try (Session session = HibernateUtil.getSessionFactory().getCurrentSession()){
+            /*----- Ouverture d'une transaction -----*/
+            Transaction t = session.beginTransaction();
+            int quantite = 0;
+            List<Comporter> liste = session.createQuery("from Comporter").list();
+            for (Comporter c : liste) {
+                if(c.getPaniers().getIdPan()==idCli){
+                    quantite = quantite +c.getQtePP();
+                }
+            }
+            return quantite;
+            }
+     }
+     
     /**
      * Programme de test.
      */

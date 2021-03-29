@@ -25,7 +25,7 @@ import javax.persistence.OneToMany;
  * @author ccc
  */
 @Entity (name="Ingredient")
-public class Ingredient{
+public class Ingredient implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="idPIng")    
@@ -59,6 +59,22 @@ public class Ingredient{
 
     public void setIdIng(int idIng) {
         this.idIng = idIng;
+    }
+
+    public Set<Produit> getProduits() {
+        return produits;
+    }
+
+    public void setProduits(Set<Produit> produits) {
+        this.produits = produits;
+    }
+
+    public Map<Recette, Necessiter> getNecessiters() {
+        return necessiters;
+    }
+
+    public void setNecessiters(Map<Recette, Necessiter> necessiters) {
+        this.necessiters = necessiters;
     }
 
     public String getLibelleIng() {

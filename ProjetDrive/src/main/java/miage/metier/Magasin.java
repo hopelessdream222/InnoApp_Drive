@@ -5,6 +5,7 @@
  */
 package miage.metier;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -24,7 +25,7 @@ import javax.persistence.OneToMany;
  * @author ccc
  */
 @Entity (name="Magasin")
-public class Magasin {
+public class Magasin implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="idMag")  

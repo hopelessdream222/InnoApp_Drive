@@ -5,6 +5,7 @@
  */
 package miage.metier;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.CascadeType;
@@ -21,7 +22,7 @@ import javax.persistence.OneToMany;
  * @author ccc
  */
 @Entity (name="Rayon")
-public class Rayon {
+public class Rayon implements Serializable {
     // proprietes
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

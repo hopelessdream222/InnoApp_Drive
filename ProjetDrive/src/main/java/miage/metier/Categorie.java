@@ -5,6 +5,7 @@
  */
 package miage.metier;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.CascadeType;
@@ -23,7 +24,7 @@ import javax.persistence.OneToMany;
  * @author ccc
  */
 @Entity (name="Categorie")
-public class Categorie {
+public class Categorie implements Serializable {
     // proprietes
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

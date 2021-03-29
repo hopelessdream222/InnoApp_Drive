@@ -5,6 +5,7 @@
  */
 package miage.metier;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.CascadeType;
@@ -23,7 +24,7 @@ import javax.persistence.OneToOne;
  * @author ccc
  */
 @Entity (name="Client")
-public class Client {
+public class Client implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="idCli")

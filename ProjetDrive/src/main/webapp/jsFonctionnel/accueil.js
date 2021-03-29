@@ -44,6 +44,7 @@ function afficheDetail() {
                 var elt2 = document.getElementById("connexion");
                 elt2.innerHTML = "Bienvenue! " + xhr.responseXML.getElementsByTagName("client")[0].firstChild.nodeValue;
                 //elt2.insertAdjacentHTML("afterbegin",xhr.responseXML.getElementsByTagName("client")[0].firstChild.nodeValue);
+                afficherQte();
             }
 
             var elt3 = document.getElementById("accordian");
@@ -70,6 +71,7 @@ function afficheDetail() {
             for (var y = 0; y < xhr.responseXML.getElementsByTagName("recetteId").length; y++) {
                 // Elï¿½ment html que l'on va mettre ï¿½ jour.
                 var recetteId = xhr.responseXML.getElementsByTagName("recetteId")[y].firstChild.nodeValue;
+                console.log(recetteId+"---id re");
                 var recetteSrc = xhr.responseXML.getElementsByTagName("recetteSrc")[y].firstChild.nodeValue;
                 var recetteLib = xhr.responseXML.getElementsByTagName("recetteNom")[y].firstChild.nodeValue;
                 //elt3.insertAdjacentHTML("beforeend","<div name='lien' id='"+ xhr.responseXML.getElementsByTagName("rayonProd")[x].firstChild.nodeValue +"'>"+xhr.responseXML.getElementsByTagName("rayonProd")[x].firstChild.nodeValue+"</div><br/>");
@@ -140,7 +142,7 @@ function allerDetailRecette (){
 	var xhr = new XMLHttpRequest();
 
         var idRecette = event.srcElement.name;
-
+        console.log(idRecette+"---id re aller");
 	// RequÃªte au serveur avec les paramÃ¨tres Ã©ventuels.
 	xhr.open("GET","ServletChoisirRecette?idRecette="+idRecette);
 
@@ -194,6 +196,29 @@ function afficherCategories(rayonChoisi) {
     };
 
     // Envoie de la requï¿½te.
+    xhr.send();
+}
+
+function afficherQte() {
+    console.log("zhixingle");
+    // Objet XMLHttpRequest.
+    var xhr = new XMLHttpRequest();
+
+        xhr.open("GET", "ServletAfficherNb");
+
+        //On précise ce que l'on va faire quand on aura reçu la réponse du serveur.
+        xhr.onload = function () {
+            // Si la requête http s'est bien passée.
+            if (xhr.status === 200) {
+                
+                var quantitePanier = document.getElementById("cartcounter");
+                //quantitePanier.innerHTML = 2;
+                console.log(xhr.responseXML.getElementsByTagName("quantitePanier")[0].firstChild.nodeValue);
+                quantitePanier.innerHTML = xhr.responseXML.getElementsByTagName("quantitePanier")[0].firstChild.nodeValue;
+            }
+        };
+    
+    // Envoie de la requête.
     xhr.send();
 }
 
@@ -256,6 +281,7 @@ function ajouter(q) {
             // Si la requï¿½te http s'est bien passï¿½e.
             if (xhr.status === 200) {
                 var result2 = alert("Le produit est bien ajoute dans le panier");
+                afficherQte();
             }
         };
     }
@@ -359,7 +385,7 @@ function plusDetail() {
             var logoPromo = "";
             var pourcent = xhr.responseXML.getElementsByTagName("promotionProd")[0].firstChild.nodeValue;
             if( pourcent !== "nonpromotion"){
-                promotion = "<div class='promo'>PROMO : "+ pourcent +"%</div><br/>";
+                promotion = "<div class='promo'>PROMO : "+ pourcent +"</div><br/>";
                 logoPromo = "<img src='image/logopromo.jpg' class='newarrival' alt='' width='60px' height='60px'/>";
             }
             //composition

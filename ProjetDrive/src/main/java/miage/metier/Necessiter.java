@@ -21,12 +21,19 @@ public class Necessiter implements Serializable{
     // Proprietes
     @EmbeddedId    
     private NecessiterId necessiter;
-    private int qteRI;
+    private float qteRI;
 
     public Necessiter() {
     }
 
-    public Necessiter(NecessiterId necessiter, int qteRI) {
+    public Necessiter(NecessiterId necessiter, float qteRI, Ingredient ingredient, Recette recette) {
+        this.necessiter = necessiter;
+        this.qteRI = qteRI;
+        this.ingredient = ingredient;
+        this.recette = recette;
+    }
+
+    public Necessiter(NecessiterId necessiter, float qteRI) {
         this.necessiter = necessiter;
         this.qteRI = qteRI;
     }
@@ -47,8 +54,13 @@ public class Necessiter implements Serializable{
         this.necessiter = necessiter;
     }
 
-    public int getQteRI() {
+    public float getQteRI() {
         return qteRI;
+    }
+
+    @Override
+    public String toString() {
+        return "Necessiter{" + "necessiter=" + necessiter + ", qteRI=" + qteRI + '}';
     }
 
     public void setQteRI(int qteRI) {

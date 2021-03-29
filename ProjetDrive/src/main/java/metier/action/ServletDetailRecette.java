@@ -7,6 +7,7 @@ package metier.action;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.ServletException;
@@ -42,14 +43,13 @@ public class ServletDetailRecette extends HttpServlet {
         //nt idRecette = Integer.parseInt(request.getParameter("idRecette"));
         HttpSession s = request.getSession();
         int idRecette = (Integer)s.getAttribute("recette");
-        System.out.println("servlet detail recette id:"+idRecette);
+        //System.out.println("servlet detail recette id:"+idRecette);
         
         //Appeler methode
         Recette recette = miage.dao.TestHibernate.loadRecette(idRecette);
-        System.out.println(recette.getLibelleRect()+"-------");
+        //System.out.println(recette.getLibelleRect()+"-------");
         //System.out.println("Lib"+recette.getLibelleRect());
-        Map<Ingredient, Necessiter> m = (Map<Ingredient, Necessiter>)recette.getNecessiters();
-        //System.out.println(m.size()+"-------");
+        List<Necessiter> lstN=miage.dao.TestHibernate.chercherIngRecette(idRecette);
         
         /*----- Type de la réponse -----*/
         response.setContentType("application/xml;charset=UTF-8");
@@ -57,18 +57,18 @@ public class ServletDetailRecette extends HttpServlet {
         try (PrintWriter out = response.getWriter()){
             /*----- Ecriture de la page XML -----*/
             //Si on trouve pas de client, on fait une response de "echec"
+            System.out.println("jin try le");
             out.println("<?xml version=\"1.0\"?>");
             out.println("<responseRecette><recetteLib>"+recette.getLibelleRect()+"</recetteLib>");
-            out.println("<reSrc>image/recettes/"+recette.getIdRect()+".jpg</reSrc>");
-            System.out.println("idididididid"+idRecette);
-            for(Ingredient ing : m.keySet()){
-//                System.out.println("idididididid"+idRecette);
-//                System.out.println(ing.getLibelleIng()+"=========");
-//                System.out.println(m.get(ing).getQteRI()+"=========");
-//                System.out.println(lProduits.get(0).getLibelleP()+"=========");
-                List<Produit> lProduits = miage.dao.TestHibernate.chercherProduitRecommenter(idRecette,ing.getIdIng());
-                out.println("<ingLib>"+ing.getLibelleIng()+"</ingLib>"+
-                            "<qte>"+m.get(ing).getQteRI()+"</qte>"+
+            out.println("<reSrc>image/recettes/"+idRecette+".jpg</reSrc>");
+            
+            //System.out.println("idididididid"+idRecette);
+            for(Necessiter n : lstN){
+                System.out.println("ing: "+n.getIngredient().getIdIng()+n.getIngredient().getLibelleIng());
+                List<Produit> lProduits = miage.dao.TestHibernate.chercherProduitRecommenter(idRecette,n.getIngredient().getIdIng());
+                System.out.println("prodCommenter----- " +lProduits.get(0).getLibelleP());
+                out.println("<ingLib>"+n.getIngredient().getLibelleIng()+"</ingLib>"+
+                            "<qte>"+n.getQteRI()+"</qte>"+
                             "<prodId>"+lProduits.get(0).getIdP()+"</prodId>"+
                             "<prodLib>"+lProduits.get(0).getLibelleP()+"</prodLib>");
                 

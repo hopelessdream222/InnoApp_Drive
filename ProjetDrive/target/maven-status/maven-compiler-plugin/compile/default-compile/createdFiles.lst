@@ -26,6 +26,7 @@ miage\dao\TestHibernate.class
 miage\metier\NecessiterId.class
 miage\metier\Client.class
 miage\metier\Fournir.class
+metier\action\ServletAfficherNb.class
 miage\metier\DisponibiliteId.class
 miage\metier\Ingredient.class
 miage\metier\Rayon.class
