@@ -83,6 +83,7 @@ function afficheDetail() {
             for (var z = 0; z < xhr.responseXML.getElementsByTagName("recetteId").length; z++) {
                 var idRe = xhr.responseXML.getElementsByTagName("recetteId")[z].firstChild.nodeValue;
                 document.getElementById("btn_voir_detail" + idRe).addEventListener("click", allerDetailRecette);
+                
             }
         }
     };
@@ -97,7 +98,7 @@ function creerModuleRecette(recetteId, recetteSrc, recetteLib) {
                     +"<div class='single-products'>"
                         +"<div class='productinfo text-center'>"
                             +"<img src='"+recetteSrc+"' alt='' />"
-                            +"<div>"+recetteId+"</div>"
+                            //+"<div>"+recetteId+"</div>"
                             +"<p>"+recetteLib+"</p>"
                             +"<a href='#' class='btn btn-default add-to-cart' name='" + recetteId + "' id='btn_voir_detail" + recetteId + "'><i class='fa fa-plus-square'></i>Plus de D&#xE9;tail</a>"
                         +"</div>"
@@ -150,7 +151,7 @@ function allerDetailRecette (){
 	xhr.onload = function(){
             // Si la requête http s'est bien passée.
             if (xhr.status === 200){
-                alert("guoqule!");
+                console.log("guoqule!");
                 window.location.href="DetailRecette";
 
             }
@@ -331,7 +332,7 @@ function rechercher() {
                     }
 
                 } else {
-                    alert("Oups! Aucun r�sultat! ");
+                    alert("Oups! Aucun r&#xE9;sultat! ");
                     document.getElementById("zonSaisi").innerHTML = "";
                     elt2.innerHTML = "<h2 class='title text-center' id='nosProds'>NOS PRODUITS</h2>"+
                                 "<div id='produitsTous'></div>";

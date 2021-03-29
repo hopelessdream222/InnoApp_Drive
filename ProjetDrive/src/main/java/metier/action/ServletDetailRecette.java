@@ -69,6 +69,7 @@ public class ServletDetailRecette extends HttpServlet {
                 System.out.println("prodCommenter----- " +lProduits.get(0).getLibelleP());
                 out.println("<ingLib>"+n.getIngredient().getLibelleIng()+"</ingLib>"+
                             "<qte>"+n.getQteRI()+"</qte>"+
+                            "<mesure>"+n.getIngredient().getUnitedMesureIng()+"</mesure>"+        
                             "<prodId>"+lProduits.get(0).getIdP()+"</prodId>"+
                             "<prodLib>"+lProduits.get(0).getLibelleP()+"</prodLib>");
                 

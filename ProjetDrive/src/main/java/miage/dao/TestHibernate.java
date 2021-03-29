@@ -236,6 +236,7 @@ public class TestHibernate
         }
         return lstCat;
     }   
+    
     public static List<Produit> obtenirProduits(int id) {
         /*----- Ouverture de la session -----*/
         List<Produit> lstP=new ArrayList<>();

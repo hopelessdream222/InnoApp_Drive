@@ -26,18 +26,19 @@ function afficheDetailRecette() {
             for (var i = 0; i < xhr.responseXML.getElementsByTagName("ingLib").length; i++) {
                 var ing = xhr.responseXML.getElementsByTagName("ingLib")[i].firstChild.nodeValue;
                 var qte = xhr.responseXML.getElementsByTagName("qte")[i].firstChild.nodeValue;
+                var mesure = xhr.responseXML.getElementsByTagName("mesure")[i].firstChild.nodeValue;
                 var prodLib = xhr.responseXML.getElementsByTagName("prodLib")[i].firstChild.nodeValue;                
                 console.log(ing+"----"+qte+"----"+prodLib);
                 text = text + "<tr>"+
                                     "<td><p>"+ing+"</p></td>"+                                         
-                                    "<td><p>"+qte+"</p></td>"+
+                                    "<td><p>"+qte +" "+ mesure +"</p></td>"+
                                     "<td><p>"+prodLib+"</p></td>"+
                                 "</tr>";
                 
             }
             var txt=creerModuleTable(reSrc,recetteLib,text);
             elt.innerHTML = txt;
-            elt.insertAdjacentHTML("beforeend","<div>product-information</div>");
+            //elt.insertAdjacentHTML("beforeend","<div>product-information</div>");
             //Client
             if (xhr.responseXML.getElementsByTagName("client")[0].firstChild.nodeValue === "horsConnection") {
             } else {
@@ -80,12 +81,12 @@ function afficherQte() {
 }
 
 function creerModuleTable (reSrc,recetteLib, text){
-    return("<div class='col-sm-5'>"+
+    return("<div class='col-sm-6'>"+
                 "<div class='view-product'>"+
                     "<img src='"+reSrc+"' alt='' /> "+
                 "</div>"+
-                "</div>"+
-                "<div class='col-sm-7'>"+
+            "</div>"+
+            "<div class='col-sm-6'>"+
                     "<div class='product-information'><!--/product-information-->"+
                         "<h2>"+recetteLib+"</h2>"+
                         "<span>"+

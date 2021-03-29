@@ -26,6 +26,7 @@ public class ServletAjouterPanier extends HttpServlet {
         /*----- R√cup√ration des param√®tres -----*/
         int idP = Integer.parseInt(request.getParameter("idP"));
         int qte = Integer.parseInt(request.getParameter("qte"));
+        System.out.println(qte+"‡‡‡‡‡‡‡‡‡‡‡‡‡");
         /*----- R√cup√ration le session de client -----*/
         HttpSession s = request.getSession();
         if (s.getAttribute("client") != null) {
