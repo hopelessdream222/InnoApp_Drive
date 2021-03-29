@@ -23,6 +23,12 @@ public class LigneCommandeId implements Serializable{
     public LigneCommandeId() {
     }
 
+    public LigneCommandeId(int idP, int idCmd) {
+        this.idP = idP;
+        this.idCmd = idCmd;
+    }
+    
+
     public int getIdP() {
         return idP;
     }

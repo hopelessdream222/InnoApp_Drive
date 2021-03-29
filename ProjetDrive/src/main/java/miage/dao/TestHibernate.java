@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -17,9 +18,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import miage.metier.Categorie;
 import miage.metier.Client;
+import miage.metier.Commande;
 import miage.metier.Comporter;
 import miage.metier.ComporterId;
+import miage.metier.Creneau;
+import miage.metier.Disponibilite;
 import miage.metier.Ingredient;
+import miage.metier.LigneCommande;
+import miage.metier.LigneCommandeId;
 import miage.metier.Magasin;
 import miage.metier.Necessiter;
 import miage.metier.Panier;
@@ -27,6 +33,7 @@ import miage.metier.Produit;
 import miage.metier.Rayon;
 import miage.metier.Recette;
 import org.hibernate.LazyInitializationException;
+import org.hibernate.QueryException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -50,31 +57,28 @@ public class TestHibernate
 	 */
 
 	/*----- Création et enregistrement d'employés -----*/
-    public static List<Produit> chercherNeufProduits() {
+
+     public static List<Produit> searchProduits(String mot) throws QueryException
+    {
+        List<Produit> lp = new ArrayList<>();
         /*----- Ouverture de la session -----*/
         try ( Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
             /*----- Ouverture d'une transaction -----*/
             Transaction t = session.beginTransaction();
-            //List<Produit> liste = session.createQuery("select new miage.metier.Produit(libelleP,prixUnitaireP,prixKGP,nutriScoreP,photoP,labelP,formatP,conditionnementP,categorieP) from Produit where idP<=5").list();
-            List<Produit> liste = session.createQuery("from Produit where idP in (1,2,3,65,79,18,36,49,28)").list();
-            //for(Produit p:liste)
-            //System.out.println("Produit: "+p.getLibelleP()+"photo:"+p.getPhotoP());
-            // t.commit(); // Commit et flush automatique de la session.
-            return liste;
-        }
-    }
-
-      public static List<Produit> searchProduits(String mot){
-            /*----- Ouverture de la session -----*/
-            try ( Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
-                /*----- Ouverture d'une transaction -----*/
-                Transaction t = session.beginTransaction();
-                Query query = session.createQuery("from Produit where libelleP LIKE :m");
-                query.setParameter("m","%"+ mot + "%");
-                List<Produit> lp = query.list();
-                return lp;
+            Query query = session.createQuery("from Produit where libelleP LIKE :m");
+            query.setParameter("m", "%" + mot + "%");
+            List<Produit> liste=query.list();           
+            if (liste.size() != 0) {
+                for(int i=0;i<liste.size();i++) {
+                    Produit p = session.get(Produit.class, liste.get(i).getIdP());
+                    System.out.println("Produit--"+p.getLibelleP());
+                    lp.add(p);
+                }
             }
         }
+        return lp;
+    }
+     
     public static void loadPhotos() throws FileNotFoundException, IOException, SQLException {
         /*----- Ouverture de la session -----*/
         try ( Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
@@ -101,15 +105,14 @@ public class TestHibernate
         try ( Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
             /*----- Ouverture d'une transaction -----*/
             Transaction t = session.beginTransaction();
-            Query query = session.createQuery("select new miage.metier.Client(c.idCli,c.nomCli,c.prenomCli,c.emailCli,c.mdpCli,c.telCli,c.pointCli) "
-                    + "from Client c "
-                    + "where c.emailCli=:mail");
+            Query query = session.createQuery("from Client where emailCli=:mail");
             query.setParameter("mail", email);
             List<Client> rlt = query.list();
             if (rlt.size() != 0) {
                 String mdpcli = rlt.get(0).getMdpCli();
                 if (mdpcli.equals(mdp)) {
-                    c = rlt.get(0);
+                    c= session.get(Client.class,rlt.get(0).getIdCli());
+                    System.out.println(c.getEmailCli());
                 }
             }
         }
@@ -117,33 +120,6 @@ public class TestHibernate
     }
 
 
-    public static List<Magasin> obtenirMagasins() throws LazyInitializationException
-    {
-        /*----- Ouverture de la session -----*/
-         try ( Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
-            /*----- Ouverture d'une transaction -----*/
-            Transaction t = session.beginTransaction();
-            List<Magasin> liste = session.createQuery("from Magasin").list();
-            return liste;
-            }
-    }
-/*----- Chercher les produits dans le panier d'un client-----*/
-    public static List<Comporter> chercherPanierClient(int idCli){ //Client client
-     /*----- Ouverture de la session -----*/
-     try (Session session = HibernateUtil.getSessionFactory().getCurrentSession())
-      {
-      /*----- Ouverture d'une transaction -----*/
-      Transaction t = session.beginTransaction();
-      List<Comporter> listeRes = new ArrayList();
-      List<Comporter> liste = session.createQuery("from Comporter").list();
-      for (Comporter c : liste) {
-          if(c.getPaniers().getIdPan()==idCli){
-              listeRes.add(c);
-          }
-      }
-      return listeRes;
-      }
-     }
     public static void insertProduitPanier(int idCli, int idP,int qte) {
         try (Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
             /*----- Ouverture d'une transaction -----*/
@@ -189,27 +165,7 @@ public class TestHibernate
         System.out.println(lstLables.size());
         return lstLables;
     }
-    
-     public static void supprimerProduitPanier(int idCli,int idP){
-         try (Session session = HibernateUtil.getSessionFactory().getCurrentSession())
-                {
-                /*----- Ouverture d'une transaction -----*/
-                Transaction t = session.beginTransaction();
-                Client c = session.get(Client.class,idCli);
-                Panier p = c.getPanier();
-                Set<Produit> produit = p.getComportements().keySet();
-                for(Produit pdt : produit)
-                    //System.out.println("-- " + pdt.getIdP());
-                    if (pdt.getIdP()==idP){
-                        //System.out.println("-- " + pdt.getIdP());                    
-                        Comporter c2= (Comporter)p.getComportements().get(pdt);
-                        //System.out.println("-- " + c2.getQtePP());
-                        c.getPanier().getComportements().remove(pdt);                        
-                        session.delete(c2);
-                        t.commit();
-               }
-                }
-    }
+
     public static List<Rayon> obtenirRayons() {
         /*----- Ouverture de la session -----*/
         try ( Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
@@ -370,23 +326,268 @@ public class TestHibernate
             return lstNecessiter;
         }
     }
-
-    /*----- Chercher la quantite des produits dans le panier d'un client-----*/
-    public static int chercherQuantitePanierClient(int idCli){ //Client client
+    
+    public static List<Magasin> obtenirMagasins()
+    {
         /*----- Ouverture de la session -----*/
-        try (Session session = HibernateUtil.getSessionFactory().getCurrentSession()){
+         try ( Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
             /*----- Ouverture d'une transaction -----*/
             Transaction t = session.beginTransaction();
-            int quantite = 0;
-            List<Comporter> liste = session.createQuery("from Comporter").list();
-            for (Comporter c : liste) {
-                if(c.getPaniers().getIdPan()==idCli){
-                    quantite = quantite +c.getQtePP();
-                }
+            List<Magasin> liste = session.createQuery("from Magasin").list();
+            return liste;
             }
-            return quantite;
-            }
+    }
+    
+    /*----- Chercher la quantite des produits dans le panier d'un client-----*/
+    public static int chercherQuantitePanierClient(int idCli){ //Client client
+     /*----- Ouverture de la session -----*/
+     try (Session session = HibernateUtil.getSessionFactory().getCurrentSession())
+      {
+      /*----- Ouverture d'une transaction -----*/
+      Transaction t = session.beginTransaction();
+      int quantite = 0;
+      List<Comporter> liste = session.createQuery("from Comporter").list();
+      for (Comporter c : liste) {
+          if(c.getPaniers().getIdPan()==idCli){
+              quantite = quantite +c.getQtePP();
+          }
+      }
+      return quantite;
+      }
      }
+    /*----- insert un produit dans le panier d'un client-----*/
+    public static void insertProduitPanier(int idCli, int idP) {
+        try (Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
+            /*----- Ouverture d'une transaction -----*/
+            Transaction t = session.beginTransaction();
+
+            Produit p1 = session.get(Produit.class, idP);
+            Client c1 = session.get(Client.class, idCli);
+            Comporter comporter = c1.getPanier().getComportements().get(p1);
+            comporter.setQtePP(comporter.getQtePP() + idCli);
+            session.save(comporter);
+            t.commit();
+        } catch (NullPointerException npe) {
+            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            Transaction t = session.beginTransaction();
+
+            Produit p1 = session.get(Produit.class, idP);
+            Client c1 = session.get(Client.class, idCli);
+
+            Comporter comportement = new Comporter();
+            ComporterId comporterid = new ComporterId(idP, idCli);
+            comportement.setComporterId(comporterid);
+            comportement.setPaniers(c1.getPanier());
+            comportement.setProduits(p1);
+            comportement.setQtePP(1);
+            session.save(comportement);
+            t.commit();
+        }
+    }
+
+        /*----- Chercher les produits dans le panier d'un client-----*/
+    public static List<Comporter> chercherPanierClient(int idCli) { //Client client
+        /*----- Ouverture de la session -----*/
+        try ( Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
+            /*----- Ouverture d'une transaction -----*/
+            Transaction t = session.beginTransaction();
+            Client c = session.get(Client.class, idCli);
+            Panier pan=c.getPanier();
+            Map<Produit, Comporter> m=pan.getComportements();
+            List<Comporter> listeRes = new ArrayList();
+            for (Produit p : m.keySet()) {
+                    listeRes.add(m.get(p));
+                    //System.out.println(m.get(p).getProduits().getIdP());
+            }
+            //System.out.println(listeRes.size());
+            return listeRes;
+        }
+    }
+    /*----- Chercher les creneaux et le nombre de places disponibles dans un magasin-----*/
+    public static List<Disponibilite> chercherCreneaux(int idMag) {
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        Transaction t = session.beginTransaction();
+        Magasin mag = session.get(Magasin.class, idMag);
+        List<Disponibilite> liste = new ArrayList();
+        for (Creneau c : mag.getCreneaux().keySet()) {
+            liste.add(mag.getCreneaux().get(c));
+        }
+        return liste;
+    }
+    /*----- Enregistrer les donnees d'une commande-----*/
+    public static int enregistrerCmd(int idCli, int idMag, int idCren, String dateR,float economie) throws ParseException {
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        Transaction t = session.beginTransaction();
+        System.out.println("---------------------"+idCli+idMag+idCren);
+
+        // La date de la commande
+        Date dateSys = new Date();
+        SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String date = formatDate.format(dateSys);
+        Date dateCmd = formatDate.parse(date);
+
+        // La date retrait de la commande
+        SimpleDateFormat formatDate2 = new SimpleDateFormat("yyyy-MM-dd");
+        Date dateRetrait = formatDate2.parse(dateR);
+
+        Client clientCmd = session.get(Client.class, idCli);
+        Magasin magCmd = session.get(Magasin.class, idMag);
+        Creneau creneauCmd = session.get(Creneau.class, 1);
+
+        // Chercher des produits dans le panier
+        List<Comporter> liste = new ArrayList();
+        for (Produit p : clientCmd.getPanier().getComportements().keySet()) {
+            liste.add(clientCmd.getPanier().getComportements().get(p));
+        }
+
+        // Modifier la nombre de places disponible pour ce creneau ( moins 1)
+        magCmd.getCreneaux().get(creneauCmd).setNbPlaceRest(magCmd.getCreneaux().get(creneauCmd).getNbPlaceRest() - 1);
+
+        // Generation d'une nouvelle commande
+        Commande cmd = new Commande();
+        cmd.setClientCmd(clientCmd);
+        cmd.setCreneauCmd(creneauCmd);
+        cmd.setDatecmd(dateCmd);
+        cmd.setMagasinCmd(magCmd);
+        cmd.setDateRetrait(dateRetrait);
+        cmd.setEconomieCmd(economie);
+        session.save(cmd);
+        t.commit();
+
+        // Generation des lignes commandes
+        enregistrerLigneCmd(clientCmd, cmd, liste);
+        return cmd.getIdCmd();
+    }
+    /*----- Enregistrer des lignes commandes -----*/ 
+    public static void enregistrerLigneCmd(Client clientCmd, Commande cmd, List<Comporter> liste) throws ParseException {
+        for (Comporter c : liste) {
+            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            Transaction t = session.beginTransaction();
+
+            LigneCommande ligneCmd = new LigneCommande();
+            LigneCommandeId ligneCmdId = new LigneCommandeId(c.getProduits().getIdP(), cmd.getIdCmd());
+            ligneCmd.setLigneId(ligneCmdId);
+            ligneCmd.setQteCP(c.getQtePP());
+
+            session.save(ligneCmd);
+            t.commit();
+            supprimerProduitPanier(clientCmd.getIdCli(), c.getProduits().getIdP());
+        }
+    }
+    /*----- Supprimer un produit dans le panier -----*/     
+    public static void supprimerProduitPanier(int idCli, int idP) {
+        try (Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
+            /*----- Ouverture d'une transaction -----*/
+            Transaction t = session.beginTransaction();
+
+            Client c = session.get(Client.class, idCli);
+            Produit p = session.get(Produit.class, idP);
+
+            Comporter comporter = c.getPanier().getComportements().get(p);
+            c.getPanier().getComportements().remove(p);
+            session.delete(comporter);
+            t.commit();
+        }
+    }
+    public static float calculerEconomiePromotionClient(int idCli) {
+
+        float economie = 0.00f;
+        int libelleProm = 0;
+        List<Comporter> liste = new ArrayList();
+        try (Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
+            Transaction t = session.beginTransaction();
+            Client c = session.get(Client.class, idCli);
+
+        
+            for (Produit p : c.getPanier().getComportements().keySet()) {
+                liste.add(c.getPanier().getComportements().get(p));
+
+            }
+        }
+        for (miage.metier.Comporter comporter : liste) {
+            try (Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
+                Transaction t = session.beginTransaction();
+                libelleProm = comporter.getProduits().getProm().getLibelleProm();
+                float pu = comporter.getProduits().getPrixUnitaireP();
+                float pourcentage = comporter.getProduits().getProm().getPourcentageProm();
+                if (libelleProm == 1) {
+                    economie += pu * pourcentage;
+//                    System.out.println("libelleProm == 1: " + economie);
+                } else if (libelleProm == 2) {
+                    economie += pu * pourcentage * (comporter.getQtePP() / 2);
+//                    System.out.println("libelleProm == 2: " + economie);
+                } else if (libelleProm == 3) {
+                    economie += pu * pourcentage * (comporter.getQtePP() / 3);
+//                    System.out.println("libelleProm == 3: " + economie);
+                }
+            } catch (NullPointerException npe) {
+                economie += 0;
+            }
+        }
+        return economie;
+    }
+    /*----- Chercher le prix bloqué par les points difilite d'un client pour sa commande-----*/
+    public static int chercherPointfideliteUtilisableClient(int idCli) {
+        try (Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
+            /*----- Ouverture d'une transaction -----*/
+            Transaction t = session.beginTransaction();
+
+            Client c = session.get(Client.class, idCli);
+            // Calculer le prixTotal de la commande
+            float prixTotal = 0;
+            List<Comporter> liste = new ArrayList();
+            for (Produit p : c.getPanier().getComportements().keySet()) {
+                liste.add(c.getPanier().getComportements().get(p));
+            }
+            for (miage.metier.Comporter comporter : liste) {
+                prixTotal += comporter.getQtePP() * comporter.getProduits().getPrixUnitaireP();
+            }
+            // Afficher les points fidelites à consumer
+            int prixDebloque = 0;
+            if (c.getPointCli() / 10 < prixTotal) {
+                prixDebloque = c.getPointCli() / 10;
+            } else {
+                prixDebloque = (int) Math.floor(prixTotal);
+            }
+            return prixDebloque;
+        }
+    }
+    /*----- Chercher les produits dans une commande d'un client-----*/
+    public static List<LigneCommande> chercherCommandeClient(int idCli, int idCmd) { //Client client
+        /*----- Ouverture de la session -----*/
+        try (Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
+            /*----- Ouverture d'une transaction -----*/
+            Transaction t = session.beginTransaction();
+            Commande cmd = session.get(Commande.class, idCmd);
+            Map<Produit, LigneCommande> m = cmd.getLignecommandes();
+
+            List<LigneCommande> listeRes = new ArrayList();
+            for (Produit p : m.keySet()) {
+                listeRes.add(m.get(p));
+                //System.out.println(m.get(p).getProduits().getIdP());
+            }
+            //System.out.println(listeRes.size());
+            return listeRes;
+        }
+    }
+	/**
+	 * Affichage d'une liste de tableaux d'objets.
+	 */
+	private static void affichage (List l)
+		{
+		Iterator e = l.iterator();
+		while (e.hasNext())
+			{
+			Object[] tab_obj = ((Object[]) e.next());
+
+			for (Object obj : tab_obj)
+				System.out.print(obj + " ");
+
+			System.out.println("");
+			}
+		}
+    
+    
      
     /**
      * Programme de test.

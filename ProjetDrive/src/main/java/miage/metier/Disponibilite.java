@@ -5,7 +5,6 @@
  */
 package miage.metier;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 import javax.persistence.EmbeddedId;
@@ -18,12 +17,12 @@ import javax.persistence.ManyToOne;
  * @author ccc
  */
 @Entity
-public class Disponibilite implements Serializable{
+public class Disponibilite {
     // proprietes
     @EmbeddedId
     private DisponibiliteId dispoId;
-    private int nbPlace;
-    private Date dateCren;
+    private int nbPlaceTotal;
+    private int nbPlaceRest;
     
     @ManyToOne
     @JoinColumn(name="idMag",insertable=false,updatable=false)
@@ -36,10 +35,9 @@ public class Disponibilite implements Serializable{
     public Disponibilite() {
     }
 
-    public Disponibilite(DisponibiliteId dispoId, int nbPlace, Date dateCren, Magasin magasins, Creneau creneaux) {
-        this.dispoId = dispoId;
-        this.nbPlace = nbPlace;
-        this.dateCren = dateCren;
+    public Disponibilite(int nbPlaceTotal, int nbPlaceRest, Magasin magasins, Creneau creneaux) {
+        this.nbPlaceTotal = nbPlaceTotal;
+        this.nbPlaceRest = nbPlaceRest;
         this.magasins = magasins;
         this.creneaux = creneaux;
     }
@@ -52,20 +50,20 @@ public class Disponibilite implements Serializable{
         this.dispoId = dispoId;
     }
 
-    public int getNbPlace() {
-        return nbPlace;
+    public int getNbPlaceTotal() {
+        return nbPlaceTotal;
     }
 
-    public void setNbPlace(int nbPlace) {
-        this.nbPlace = nbPlace;
+    public void setNbPlaceTotal(int nbPlaceTotal) {
+        this.nbPlaceTotal = nbPlaceTotal;
     }
 
-    public Date getDateCren() {
-        return dateCren;
+    public int getNbPlaceRest() {
+        return nbPlaceRest;
     }
 
-    public void setDateCren(Date dateCren) {
-        this.dateCren = dateCren;
+    public void setNbPlaceRest(int nbPlaceRest) {
+        this.nbPlaceRest = nbPlaceRest;
     }
 
     public Magasin getMagasins() {
@@ -86,13 +84,13 @@ public class Disponibilite implements Serializable{
 
     @Override
     public String toString() {
-        return "Disponibilite{" + "dispoId=" + dispoId + ", nbPlace=" + nbPlace + ", dateCren=" + dateCren + ", magasins=" + magasins + ", creneaux=" + creneaux + '}';
+        return "Disponibilite{" + "dispoId=" + dispoId + ", nbPlaceTotal=" + nbPlaceTotal + ", nbPlaceRest=" + nbPlaceRest + ", magasins=" + magasins + ", creneaux=" + creneaux + '}';
     }
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 29 * hash + Objects.hashCode(this.dispoId);
+        int hash = 5;
+        hash = 41 * hash + Objects.hashCode(this.dispoId);
         return hash;
     }
 
@@ -114,6 +112,8 @@ public class Disponibilite implements Serializable{
         return true;
     }
     
+
     
     
+
 }

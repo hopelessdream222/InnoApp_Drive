@@ -5,7 +5,6 @@
  */
 package miage.metier;
 
-import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.CascadeType;
@@ -24,7 +23,7 @@ import javax.persistence.OneToOne;
  * @author ccc
  */
 @Entity (name="Client")
-public class Client implements Serializable{
+public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="idCli")
@@ -34,10 +33,10 @@ public class Client implements Serializable{
     private String emailCli;
     private String mdpCli;
     private String telCli;
-    private String pointCli;
+    private int pointCli;
     
     // relation <Passer>
-    @OneToMany(mappedBy = "clientCmd", cascade= CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "clientCmd", cascade= CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Commande> commandes = new HashSet<>(0);
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -47,7 +46,7 @@ public class Client implements Serializable{
     public Client() {
     }
     
-    public Client(String nomCli, String prenomCli, String emailCli,String mdpCli, String telCli, String pointCli) {
+    public Client(String nomCli, String prenomCli, String emailCli,String mdpCli, String telCli, int pointCli) {
         this.nomCli = nomCli;
         this.prenomCli = prenomCli;
         this.emailCli = emailCli;
@@ -56,7 +55,7 @@ public class Client implements Serializable{
         this.pointCli = pointCli;
     }
 
-    public Client(int idCli, String nomCli, String prenomCli, String emailCli, String mdpCli, String telCli, String pointCli) {
+    public Client(int idCli, String nomCli, String prenomCli, String emailCli, String mdpCli, String telCli, int pointCli) {
         this.idCli = idCli;
         this.nomCli = nomCli;
         this.prenomCli = prenomCli;
@@ -114,11 +113,11 @@ public class Client implements Serializable{
         this.telCli = telCli;
     }
 
-    public String getPointCli() {
+    public int getPointCli() {
         return pointCli;
     }
 
-    public void setPointCli(String pointCli) {
+    public void setPointCli(int pointCli) {
         this.pointCli = pointCli;
     }
 
@@ -137,6 +136,7 @@ public class Client implements Serializable{
     public void setPanier(Panier panier) {
         this.panier = panier;
     }
+    
 
     @Override
     public String toString() {

@@ -5,7 +5,6 @@
  */
 package miage.metier;
 
-import java.io.Serializable;
 import java.sql.Blob;
 import java.util.HashMap;
 import java.util.Map;
@@ -27,7 +26,7 @@ import javax.persistence.OneToMany;
  */
 
 @Entity (name="Produit")
-public class Produit implements Serializable{
+public class Produit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="idP")
@@ -36,38 +35,6 @@ public class Produit implements Serializable{
     private float prixUnitaireP;
     private float prixKGP;
     private String nutriScoreP;
-
-    public String getTailleReferenceP() {
-        return tailleReferenceP;
-    }
-
-    public void setTailleReferenceP(String tailleReferenceP) {
-        this.tailleReferenceP = tailleReferenceP;
-    }
-
-    public String getCompositionP() {
-        return compositionP;
-    }
-
-    public void setCompositionP(String compositionP) {
-        this.compositionP = compositionP;
-    }
-
-    public Promotion getProm() {
-        return Prom;
-    }
-
-    public void setProm(Promotion Prom) {
-        this.Prom = Prom;
-    }
-
-    public Ingredient getIngredient() {
-        return ingredient;
-    }
-
-    public void setIngredient(Ingredient ingredient) {
-        this.ingredient = ingredient;
-    }
     private Blob photoP;
     private String labelP;
     private String formatP;
@@ -224,6 +191,38 @@ public class Produit implements Serializable{
 
     public void setComportements(Map<Panier, Comporter> comportements) {
         this.comportements = comportements;
+    }
+
+    public String getTailleReferenceP() {
+        return tailleReferenceP;
+    }
+
+    public void setTailleReferenceP(String tailleReferenceP) {
+        this.tailleReferenceP = tailleReferenceP;
+    }
+
+    public String getCompositionP() {
+        return compositionP;
+    }
+
+    public void setCompositionP(String compositionP) {
+        this.compositionP = compositionP;
+    }
+
+    public Promotion getProm() {
+        return Prom;
+    }
+
+    public void setProm(Promotion Prom) {
+        this.Prom = Prom;
+    }
+
+    public Ingredient getIngredient() {
+        return ingredient;
+    }
+
+    public void setIngredient(Ingredient ingredient) {
+        this.ingredient = ingredient;
     }
 
     @Override

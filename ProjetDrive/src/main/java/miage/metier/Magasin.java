@@ -5,7 +5,6 @@
  */
 package miage.metier;
 
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -25,7 +24,7 @@ import javax.persistence.OneToMany;
  * @author ccc
  */
 @Entity (name="Magasin")
-public class Magasin implements Serializable{
+public class Magasin {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="idMag")  
@@ -37,7 +36,7 @@ public class Magasin implements Serializable{
     private String telMag;
     
     // relation  <Retirer>
-    @OneToMany(mappedBy = "magasinCmd", cascade= CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "magasinCmd", cascade= CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Commande> commandes = new HashSet<>(0);
     
     // Relation <Stocker>

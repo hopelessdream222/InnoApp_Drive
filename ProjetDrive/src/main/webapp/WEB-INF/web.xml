@@ -41,20 +41,12 @@
         <servlet-class>metier.action.ServletAjouterPanier</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ServletLirePanier</servlet-name>
-        <servlet-class>metier.action.ServletLirePanier</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>Connexion</servlet-name>
         <jsp-file>/html/Connexion.html</jsp-file>
     </servlet>
     <servlet>
         <servlet-name>ServletRechercheCate</servlet-name>
         <servlet-class>metier.action.ServletRechercheCate</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ServletSupprimerProdPanier</servlet-name>
-        <servlet-class>metier.action.ServletSupprimerProdPanier</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ServletRechercheProdUnCate</servlet-name>
@@ -104,6 +96,22 @@
         <servlet-name>ServletGenererCommande</servlet-name>
         <servlet-class>metier.action.ServletGenererCommande</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ServletLirePanier</servlet-name>
+        <servlet-class>metier.action.ServletLirePanier</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServletStockerCre</servlet-name>
+        <servlet-class>metier.action.ServletStockerCre</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServletSupprimerProdPanier</servlet-name>
+        <servlet-class>metier.action.ServletSupprimerProdPanier</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServletSupprimerTousProdPanier</servlet-name>
+        <servlet-class>metier.action.ServletSupprimerTousProdPanier</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ServletDetailProd</servlet-name>
         <url-pattern>/ServletDetailProd</url-pattern>
@@ -145,20 +153,12 @@
         <url-pattern>/ServletAjouterPanier</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ServletLirePanier</servlet-name>
-        <url-pattern>/ServletLirePanier</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>Connexion</servlet-name>
         <url-pattern>/Connexion</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ServletRechercheCate</servlet-name>
         <url-pattern>/ServletRechercheCate</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ServletSupprimerProdPanier</servlet-name>
-        <url-pattern>/ServletSupprimerProdPanier</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ServletRechercheProdUnCate</servlet-name>
@@ -207,6 +207,22 @@
     <servlet-mapping>
         <servlet-name>ServletGenererCommande</servlet-name>
         <url-pattern>/ServletGenererCommande</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletLirePanier</servlet-name>
+        <url-pattern>/ServletLirePanier</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletStockerCre</servlet-name>
+        <url-pattern>/ServletStockerCre</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletSupprimerProdPanier</servlet-name>
+        <url-pattern>/ServletSupprimerProdPanier</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletSupprimerTousProdPanier</servlet-name>
+        <url-pattern>/ServletSupprimerTousProdPanier</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

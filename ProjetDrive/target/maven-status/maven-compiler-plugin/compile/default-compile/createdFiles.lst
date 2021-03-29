@@ -1,12 +1,16 @@
 metier\action\ServletRechercheProd.class
+metier\action\ServletGenererCommande.class
 miage\metier\Comporter.class
 miage\metier\Panier.class
 metier\action\ServletChoisirRecette.class
 miage\metier\LigneCommandeId.class
 miage\metier\Stocker.class
+metier\action\ServletSupprimerTousProdPanier.class
 metier\action\ServletLirePanier.class
+metier\action\ServletStockerCre.class
 miage\metier\StockerId.class
 metier\action\ServletDetailRecette.class
+metier\action\ServletChoisirCreneau.class
 miage\metier\Promotion.class
 miage\dao\HibernateUtil.class
 miage\metier\Necessiter.class
@@ -16,6 +20,7 @@ metier\action\ServletRechercheProdUnCate.class
 metier\action\ServletAjouterPanier.class
 metier\action\ServletAfficherMagasins.class
 miage\metier\Commande.class
+miage\dao\EnvoyerEmail.class
 metier\action\ServletSupprimerProdPanier.class
 metier\action\ServletAffichageProd.class
 miage\metier\Fournisseur.class
@@ -35,6 +40,8 @@ metier\action\ServletRechercheCate.class
 miage\metier\Magasin.class
 metier\action\ServletFinaliserPanier.class
 miage\metier\Categorie.class
+miage\dao\PDFEnsemble.class
 miage\metier\Produit.class
 miage\metier\Creneau.class
+metier\action\ServletAfficherSession.class
 miage\metier\Disponibilite.class

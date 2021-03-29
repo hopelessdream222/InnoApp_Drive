@@ -33,14 +33,14 @@ public class ServletSupprimerProdPanier extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-    /*----- Type de la réponse -----*/
+    /*----- Type de la rÃ©ponse -----*/
 		response.setContentType("application/xml;charset=UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		//try (PrintWriter out = response.getWriter()){
-                /*----- Récupération des paramètres -----*/
+                /*----- RÃ©cupÃ©ration des paramÃ¨tres -----*/
                 int idP = Integer.parseInt(request.getParameter("idP"));
 
-                /*----- Récupération le session de client -----*/
+                /*----- RÃ©cupÃ©ration le session de client -----*/
                 HttpSession s = request.getSession();
                 if(s.getAttribute("client")!=null){
                     Client client = (Client)s.getAttribute("client");

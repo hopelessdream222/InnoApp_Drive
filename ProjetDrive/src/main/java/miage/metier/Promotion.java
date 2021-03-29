@@ -5,7 +5,6 @@
  */
 package miage.metier;
 
-import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.CascadeType;
@@ -22,7 +21,7 @@ import javax.persistence.OneToMany;
  * @author ccc
  */
 @Entity
-public class Promotion implements Serializable{
+public class Promotion {
     // proprietes
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,7 +31,7 @@ public class Promotion implements Serializable{
     private float pourcentageProm;
     
     // relation <Promouvoir>
-    @OneToMany(mappedBy = "Prom", cascade= CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "Prom", cascade= CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Produit> produits = new HashSet<>(0);
 
     public Promotion() {
@@ -54,16 +53,12 @@ public class Promotion implements Serializable{
         return libelleProm;
     }
 
-    public float getPourcentageProm() {
-        return pourcentageProm;
-    }
-
     public void setLibelleProm(int libelleProm) {
         this.libelleProm = libelleProm;
     }
 
-    public void setPourcentageProm(float pourcentageProm) {
-        this.pourcentageProm = pourcentageProm;
+    public float getPourcentageProm() {
+        return pourcentageProm;
     }
 
     public void setPourcentageProm(int pourcentageProm) {

@@ -6,9 +6,7 @@
 package miage.metier;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -36,7 +34,7 @@ public class Panier {
     private Client clientPan;
     
     // Relation <Comporter>
-    @OneToMany(mappedBy = "paniers",cascade=CascadeType.ALL)
+    @OneToMany(mappedBy = "paniers",cascade=CascadeType.ALL,fetch = FetchType.EAGER)
     @MapKeyJoinColumn(name = "idP")
     private Map<Produit, Comporter> comportements=new HashMap(0);
 

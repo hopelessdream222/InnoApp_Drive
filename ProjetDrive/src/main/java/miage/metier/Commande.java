@@ -5,12 +5,9 @@
  */
 package miage.metier;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -27,11 +24,13 @@ import javax.persistence.OneToMany;
  * @author ccc
  */
 @Entity
-public class Commande implements Serializable{
+public class Commande {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)  
     private int idCmd;
     private Date datecmd;
+    private Date dateRetrait;
+    private float economieCmd;
     
     // Relation <LigneCommande>
     @OneToMany(mappedBy = "commandes",cascade=CascadeType.ALL)
@@ -62,6 +61,14 @@ public class Commande implements Serializable{
         this.clientCmd = clientCmd;
         this.magasinCmd = magasinCmd;
     }
+
+    public Commande(Date datecmd, Client clientCmd, Magasin magasinCmd, Creneau creneauCmd) {
+        this.datecmd = datecmd;
+        this.clientCmd = clientCmd;
+        this.magasinCmd = magasinCmd;
+        this.creneauCmd = creneauCmd;
+    }
+    
 
     public int getIdCmd() {
         return idCmd;
@@ -109,6 +116,22 @@ public class Commande implements Serializable{
 
     public void setCreneauCmd(Creneau creneauCmd) {
         this.creneauCmd = creneauCmd;
+    }
+
+    public Date getDateRetrait() {
+        return dateRetrait;
+    }
+
+    public void setDateRetrait(Date dateRetrait) {
+        this.dateRetrait = dateRetrait;
+    }
+
+    public float getEconomieCmd() {
+        return economieCmd;
+    }
+
+    public void setEconomieCmd(float economieCmd) {
+        this.economieCmd = economieCmd;
     }
     
     @Override

@@ -5,7 +5,6 @@
  */
 package miage.metier;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -26,7 +25,7 @@ import javax.persistence.OneToMany;
  * @author ccc
  */
 @Entity
-public class Creneau implements Serializable{
+public class Creneau {
     // proprietes
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,7 +39,7 @@ public class Creneau implements Serializable{
     private Map<Magasin, Disponibilite> magasins=new HashMap(0);
     
     // Relation <ChoisirCren>
-    @OneToMany(mappedBy = "creneauCmd", cascade= CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "creneauCmd", cascade= CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Commande> commandes = new HashSet<>(0);
 
     public Creneau() {
