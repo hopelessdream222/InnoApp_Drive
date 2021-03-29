@@ -42,7 +42,7 @@ public class Ingredient{
     
     // Relation <Necessiter>
     @OneToMany(mappedBy = "ingredient",cascade=CascadeType.ALL)
-    @MapKeyJoinColumn(name = "idIng")
+    @MapKeyJoinColumn(name = "idRect")
     private Map<Recette, Necessiter> necessiters=new HashMap(0);
 
     public Ingredient() {

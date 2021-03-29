@@ -40,10 +40,10 @@ public class ServletChoisirRecette extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
         
         int idRecette = Integer.parseInt(request.getParameter("idRecette"));
+        System.out.println("--idre --"+idRecette);
         HttpSession s = request.getSession();
         s.setAttribute("recette", idRecette);
                

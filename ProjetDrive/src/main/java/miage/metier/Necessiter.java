@@ -17,11 +17,14 @@ import javax.persistence.ManyToOne;
  * @author ccc
  */
 @Entity (name="Necessiter")
-public class Necessiter{
+public class Necessiter implements Serializable{
     // Proprietes
     @EmbeddedId    
     private NecessiterId necessiter;
     private int qteRI;
+
+    public Necessiter() {
+    }
 
     public Necessiter(NecessiterId necessiter, int qteRI) {
         this.necessiter = necessiter;

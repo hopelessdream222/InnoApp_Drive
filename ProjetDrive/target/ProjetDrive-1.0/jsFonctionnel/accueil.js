@@ -79,8 +79,8 @@ function afficheDetail() {
             }
 
             for (var z = 0; z < xhr.responseXML.getElementsByTagName("recetteId").length; z++) {
-                var idProd = xhr.responseXML.getElementsByTagName("recetteId")[z].firstChild.nodeValue;
-                document.getElementById("btn_voir_detail" + idProd).addEventListener("click", allerDetailRecette);
+                var idRe = xhr.responseXML.getElementsByTagName("recetteId")[z].firstChild.nodeValue;
+                document.getElementById("btn_voir_detail" + idRe).addEventListener("click", allerDetailRecette);
             }
         }
     };
@@ -97,7 +97,7 @@ function creerModuleRecette(recetteId, recetteSrc, recetteLib) {
                             +"<img src='"+recetteSrc+"' alt='' />"
                             +"<div>"+recetteId+"</div>"
                             +"<p>"+recetteLib+"</p>"
-                            +"<a href='#' class='btn btn-default add-to-cart' name='" + recetteId + "' id='btn_voir_detail" + recetteId + "'><i class='fa fa-plus-square'></i>Voir detail</a>"
+                            +"<a href='#' class='btn btn-default add-to-cart' name='" + recetteId + "' id='btn_voir_detail" + recetteId + "'><i class='fa fa-plus-square'></i>Plus de D&#xE9;tail</a>"
                         +"</div>"
 
                     +"</div>"
@@ -128,7 +128,7 @@ function creerModuleProduit(i, src, prixUniteProd, libProd, idProd,promo) {
             + "</div>"
             + "<div class='choose'>"
             + "<ul class='av nav-pills nav-justified'>"
-            + "<li><a href='#' name='"+idProd+"' id='btn_detail" + idProd + "'><i class='fa fa-plus-square'></i>Plus de D�tail</a></li>"
+            + "<li><a href='#' name='"+idProd+"' id='btn_detail" + idProd + "'><i class='fa fa-plus-square'></i>Plus de D&#xE9;tail</a></li>"
             + "</ul>"
             + "</div>"
             + "</div>"
@@ -370,9 +370,9 @@ function plusDetail() {
             }
             //taille ref
             var tailleRef = "";
-            if(xhr.responseXML.getElementsByTagName("compositionProd")[0].firstChild.nodeValue !== "nontaille"){
+            if(xhr.responseXML.getElementsByTagName("tailleProd")[0].firstChild.nodeValue !== "nontaille"){
                 console.log(xhr.responseXML.getElementsByTagName("compositionProd")[0].firstChild.nodeValue !== "nontaille");
-                tailleRef = "<p><b>Taille de r�f�rence:</b> " + xhr.responseXML.getElementsByTagName("tailleProd")[0].firstChild.nodeValue + "</p>";
+                tailleRef = "<p><b>Taille de r&#xE9;f&#xE9;rence:</b> " + xhr.responseXML.getElementsByTagName("tailleProd")[0].firstChild.nodeValue + "</p>";
             }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           xhr.responseXML.getElementsByTagName("promotionProd")[0].firstChild.nodeValue
             var txt = "<div class='product-details'><!--product-details-->" +
                     "<div class='col-sm-5'>" +

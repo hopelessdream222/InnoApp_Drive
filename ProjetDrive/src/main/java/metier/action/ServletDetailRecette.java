@@ -37,19 +37,19 @@ public class ServletDetailRecette extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         
         //nt idRecette = Integer.parseInt(request.getParameter("idRecette"));
         HttpSession s = request.getSession();
         int idRecette = (Integer)s.getAttribute("recette");
+        System.out.println("servlet detail recette id:"+idRecette);
         
         //Appeler methode
         Recette recette = miage.dao.TestHibernate.loadRecette(idRecette);
         System.out.println(recette.getLibelleRect()+"-------");
         //System.out.println("Lib"+recette.getLibelleRect());
-        Map<Ingredient, Necessiter> m = recette.getNecessiters();
-        System.out.println(m.size()+"-------");
+//        Map<Ingredient, Necessiter> m = (Map<Ingredient, Necessiter>)recette.getNecessiters();
+//        System.out.println(m.size()+"-------");
         
         /*----- Type de la réponse -----*/
         response.setContentType("application/xml;charset=UTF-8");
@@ -61,12 +61,14 @@ public class ServletDetailRecette extends HttpServlet {
             out.println("<responseRecette><recetteLib>"+recette.getLibelleRect()+"</recetteLib>");
             System.out.println("idididididid"+idRecette);
             for(Ingredient ing : m.keySet()){
+                out.println("<ingSrc>"+ing.getLibelleIng()+"</ingSrc>");
                 System.out.println("idididididid"+idRecette);
                 out.println("<ingLib>"+ing.getLibelleIng()+"</ingLib>");
                 System.out.println(ing.getLibelleIng()+"=========");
                 out.println("<qte>"+m.get(ing).getQteRI()+"</qte>");
                 System.out.println(m.get(ing).getQteRI()+"=========");
                 List<Produit> lProduits = miage.dao.TestHibernate.chercherProduitRecommenter(idRecette,ing.getIdIng());
+                out.println("<prodId>"+lProduits.get(0).getIdP()+"</prodId>");
                 out.println("<prodLib>"+lProduits.get(0).getLibelleP()+"</prodLib>");
                 System.out.println(lProduits.get(0).getLibelleP()+"=========");
             }

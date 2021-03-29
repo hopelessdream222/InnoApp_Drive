@@ -321,20 +321,34 @@ public class TestHibernate
         return lstP;
     }
     
-    
-        	/**
-	 * Programme de test.
-	 */
-	public static void main(String[] args) throws IOException, FileNotFoundException, SQLException, LazyInitializationException{
-                //System.out.println(TestHibernate.chercherCinqProduits());
-                //TestHibernate.loadPhotos();
-               //TestHibernate.obtenirMagasins();
-                //chercherCinqProduits();
-            //insertProduitPanier();
-            //TestHibernate.afficherLabels("");
-            TestHibernate.obtenirRecettes();
-                /*----- Exit -----*/
-            System.exit(0);
+    public static void chercherIngRecette(int id) { //Client client
+        /*----- Ouverture de la session -----*/
+        try (Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
+            /*----- Ouverture d'une transaction -----*/
+            Transaction t = session.beginTransaction();
+            Recette r = session.get(Recette.class, id);
+            Map<Ingredient, Necessiter> m = r.getNecessiters();
+            for (Ingredient ing : m.keySet()) {
+                System.out.println("Ingredient--" + ing.getLibelleIng());
             }
+        }
+    }
 
-} /*----- Fin de la classe TestHibernate -----*/
+    /**
+     * Programme de test.
+     */
+    public static void main(String[] args) throws IOException, FileNotFoundException, SQLException, ClassNotFoundException, LazyInitializationException {
+        //System.out.println(TestHibernate.chercherCinqProduits());
+        //TestHibernate.loadPhotos();
+        //TestHibernate.obtenirMagasins();
+        //chercherCinqProduits();
+        //insertProduitPanier();
+        //TestHibernate.afficherLabels("");
+        //TestHibernate.obtenirRecettes();
+        TestHibernate.chercherIngRecette(1);
+        /*----- Exit -----*/
+        System.exit(0);
+    }
+
+}
+/*----- Fin de la classe TestHibernate -----*/
