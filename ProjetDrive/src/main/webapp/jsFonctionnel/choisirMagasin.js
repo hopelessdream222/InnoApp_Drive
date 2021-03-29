@@ -19,29 +19,36 @@ function afficherMag (){
            var tabTel = xhr.responseXML.getElementsByTagName("telMag");
            
            for(var i=0; i<tabId.length; i++){
-               var detail = tabNom[i].firstChild.nodeValue+"<br/>"+tabAdr[i].firstChild.nodeValue+"<br/>"+tabCp[i].firstChild.nodeValue+"<br/>Tel: "+tabTel[i].firstChild.nodeValue+"<br/>";
+               var detail = tabNom[i].firstChild.nodeValue+"    Tel: "+tabTel[i].firstChild.nodeValue+"<br/>"+tabAdr[i].firstChild.nodeValue+",    "+tabCp[i].firstChild.nodeValue+"<br/>";
                var id = tabId[i].firstChild.nodeValue;
                
                elt.insertAdjacentHTML("beforeend","<div class='magasin'>"+
-                       "<input type='radio' name='magasin' id='"+id+"' value='"+id+"'/>"+
+                       "<input type='radio' name='magasin' id='"+id+"' value='"+id+"' onclick = 'checkClick()'/>"+
                        "<label for='"+id+"'>"+detail+"<label/></div><br/>");
            }
            
-           if(xhr.responseXML.getElementsByTagName("client")[0]===null){  
-               
-            }else{
-                
+           if(xhr.responseXML.getElementsByTagName("client")[0]===null){                 
+            }else{                
                 var elt2 = document.getElementById("J_userInfo");
-                elt2.innerHTML = "Bienvenue! "+xhr.responseXML.getElementsByTagName("client")[0].firstChild.nodeValue;
+                elt2.innerHTML = "Bonjour "+xhr.responseXML.getElementsByTagName("client")[0].firstChild.nodeValue;
                 //elt2.insertAdjacentHTML("afterbegin",xhr.responseXML.getElementsByTagName("client")[0].firstChild.nodeValue);
-            }   
+            }
+            document.getElementById("btnChoisirMag").disabled = "disabled";
         }
     };
 	
     // Envoie de la requête.
     xhr.send();
-    }
     
+    }
+function checkClick() {
+    var radio = document.getElementsByName("magasin");
+    for (j = 0; j < radio.length; j++) {
+        if (radio[j].checked) {
+            document.getElementById("btnChoisirMag").disabled = "";
+        } 
+    }
+}
 function choisirMag(){
     var radio = document.getElementsByName("magasin");
     var idMag = 0;
@@ -50,7 +57,7 @@ function choisirMag(){
             idMag = radio[j].value;          
         }
     }
-    
+    //location.href="Creneau?"+"magasin="+encodeURI(idMag.value);
     alert(idMag);
     // Objet XMLHttpRequest.
     var xhr = new XMLHttpRequest();
@@ -67,13 +74,11 @@ function choisirMag(){
     };
     xhr.send();
     }
-
-
 /**
  * Lancement après le chargement du DOM.
  */
 document.addEventListener("DOMContentLoaded", () => {
-  
-    document.getElementById("pay").addEventListener("click",choisirMag);
+
+    document.getElementById("btnChoisirMag").addEventListener("click",choisirMag);
 });
 

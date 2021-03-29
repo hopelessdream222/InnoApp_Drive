@@ -25,14 +25,6 @@
         <servlet-class>metier.action.ServletAffichageProd</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ServletAfficherMagasins</servlet-name>
-        <servlet-class>metier.action.ServletAfficherMagasins</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ServletFinaliserPanier</servlet-name>
-        <servlet-class>metier.action.ServletFinaliserPanier</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>ChoisirMagasin</servlet-name>
         <jsp-file>/html/ChoisirMagasin.html</jsp-file>
     </servlet>
@@ -84,6 +76,34 @@
         <servlet-name>ServletAfficherNb</servlet-name>
         <servlet-class>metier.action.ServletAfficherNb</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Confirmer</servlet-name>
+        <jsp-file>/html/Confirmer.html</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>Creneau</servlet-name>
+        <jsp-file>/html/Creneau.html</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>ServletAfficherMagasins</servlet-name>
+        <servlet-class>metier.action.ServletAfficherMagasins</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServletAfficherSession</servlet-name>
+        <servlet-class>metier.action.ServletAfficherSession</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServletChoisirCreneau</servlet-name>
+        <servlet-class>metier.action.ServletChoisirCreneau</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServletFinaliserPanier</servlet-name>
+        <servlet-class>metier.action.ServletFinaliserPanier</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServletGenererCommande</servlet-name>
+        <servlet-class>metier.action.ServletGenererCommande</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ServletDetailProd</servlet-name>
         <url-pattern>/ServletDetailProd</url-pattern>
@@ -107,14 +127,6 @@
     <servlet-mapping>
         <servlet-name>ServletAffichageProd</servlet-name>
         <url-pattern>/ServletAffichageProd</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ServletAfficherMagasins</servlet-name>
-        <url-pattern>/ServletAfficherMagasins</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ServletFinaliserPanier</servlet-name>
-        <url-pattern>/ServletFinaliserPanier</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ChoisirMagasin</servlet-name>
@@ -167,6 +179,34 @@
     <servlet-mapping>
         <servlet-name>ServletAfficherNb</servlet-name>
         <url-pattern>/ServletAfficherNb</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Confirmer</servlet-name>
+        <url-pattern>/Confirmer</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Creneau</servlet-name>
+        <url-pattern>/Creneau</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletAfficherMagasins</servlet-name>
+        <url-pattern>/ServletAfficherMagasins</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletAfficherSession</servlet-name>
+        <url-pattern>/ServletAfficherSession</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletChoisirCreneau</servlet-name>
+        <url-pattern>/ServletChoisirCreneau</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletFinaliserPanier</servlet-name>
+        <url-pattern>/ServletFinaliserPanier</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletGenererCommande</servlet-name>
+        <url-pattern>/ServletGenererCommande</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

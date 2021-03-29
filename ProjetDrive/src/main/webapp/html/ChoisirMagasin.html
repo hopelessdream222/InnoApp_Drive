@@ -7,52 +7,32 @@ and open the template in the editor.
 <html>
     <head>
         <title>Choisir un magasin</title>
-        <meta charset="utf-8">
+        <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!--        <link rel="stylesheet" href="css/Style.css" type="text/css" />-->
-        <link rel="stylesheet" type="text/css" href="css/Panier.css"/>
-
+        <link rel="stylesheet" href="css/Magasin.css" type="text/css" />
     </head>
     <body>
- 
+        <form action="Creneau">
             <div class="header">
                 <div class="container">
                     <div class="header-title" id="J_miniHeaderTitle">
-                        <h2 style="font-size: 30px;">Liste de magasins</h2>
-                         
+                        <h2 style="font-size: 30px;">Magasin</h2>
                     </div>
-                    <div class="topbar-info" id="J_userInfo">
-                       <a href="Connexion">Se Connecter</a>
-                        
+                    <div class="topbar-info" id="J_userInfo">    
                     </div>
                 </div>
-            </div>
-
-            <div id="car" class="car">
+            </div>        
+            <hr/>
+            <div id="corps">
                 <div id ="lstMagasin">
-            <!-- liste des magasins -->
-            
+                    <!-- liste des magasins -->
                 </div>
-  
             </div>
-            <div id="sum_area">
-                 <input id="pay" type="submit" value="Valider"/>
-                <!--<button id="pay" name="btnChoisirMag">Valider</button>-->
+            <div id="pied">
+                <a href="ChoisirMagasin"><button id="btnChoisirMag">Valider</button></a>
+                <a href="Accueil"><button id="accueil">Page Accueil</button></a>
             </div>
-            <script type="text/JavaScript" src="jsFonctionnel/choisirMagasin.js"></script>
-            
-<!---------------------------------------------------------------------------comment -------------------------------------->      
-
-        
-<!--        <hr/>
-        <div id="corps">
-            <h2>Liste de Magasins</h2><br/>
-            <div id ="lstMagasin">
-             liste des magasins 
-            
-            </div>
-            <button id="btnChoisirMag">Valider</button>
-        </div>
-    <script type="text/JavaScript" src="jsFonctionnel/choisirMagasin.js"></script>   -->
+            <script type="text/JavaScript" src="js/choisirMagasin.js"></script>
+        </form>
     </body>
 </html>

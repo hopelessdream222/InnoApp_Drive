@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import static miage.dao.TestHibernate.chercherCinqProduits;
 import miage.metier.Client;
 import miage.metier.Produit;
 
@@ -40,14 +41,14 @@ public class ServletFinaliserPanier extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         try (PrintWriter out = response.getWriter()){
             /*Récupérer l'attribut "idMag" qui est transmis par le fichier JS*/
-            int idMag = (Integer)request.getAttribute("idMag");
+            int idMag = Integer.parseInt(request.getParameter("idMag"));
             /*----- Ecriture de la page XML -----*/
             out.println("<?xml version=\"1.0\"?>");
             out.println("<liste_produit>");
 
             /*----- Récupération le session de client -----*/
             HttpSession s = request.getSession();
-            
+            s.setAttribute("idMag", idMag);
             /*----- Lecture de liste de mots dans la BD -----*/
             //Appeler la fonction dans DAO
             //List<Produit> lProduits = obtenirProduitPanier();
