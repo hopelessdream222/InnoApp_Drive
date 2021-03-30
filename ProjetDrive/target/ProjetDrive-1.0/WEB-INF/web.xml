@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <servlet>
-        <servlet-name>ServletDetailProd</servlet-name>
-        <servlet-class>metier.action.ServletDetailProd</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>Accueil</servlet-name>
         <jsp-file>/html/Accueil.html</jsp-file>
     </servlet>
@@ -13,16 +9,8 @@
         <servlet-class>metier.action.ServletConnexion</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ServletRechercheProd</servlet-name>
-        <servlet-class>metier.action.ServletRechercheProd</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>ProduitRecherche</servlet-name>
         <jsp-file>/html/ProduitRecherche.html</jsp-file>
-    </servlet>
-    <servlet>
-        <servlet-name>ServletAffichageProd</servlet-name>
-        <servlet-class>metier.action.ServletAffichageProd</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ChoisirMagasin</servlet-name>
@@ -37,24 +25,8 @@
         <jsp-file>/html/Panier.html</jsp-file>
     </servlet>
     <servlet>
-        <servlet-name>ServletAjouterPanier</servlet-name>
-        <servlet-class>metier.action.ServletAjouterPanier</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>Connexion</servlet-name>
         <jsp-file>/html/Connexion.html</jsp-file>
-    </servlet>
-    <servlet>
-        <servlet-name>ServletRechercheCate</servlet-name>
-        <servlet-class>metier.action.ServletRechercheCate</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ServletRechercheProdUnCate</servlet-name>
-        <servlet-class>metier.action.ServletRechercheProdUnCate</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ServletChoisirRecette</servlet-name>
-        <servlet-class>metier.action.ServletChoisirRecette</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ServletDetailRecette</servlet-name>
@@ -63,10 +35,6 @@
     <servlet>
         <servlet-name>DetailRecette</servlet-name>
         <jsp-file>/html/DetailRecette.html</jsp-file>
-    </servlet>
-    <servlet>
-        <servlet-name>ServletAfficherNb</servlet-name>
-        <servlet-class>metier.action.ServletAfficherNb</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>Confirmer</servlet-name>
@@ -112,10 +80,10 @@
         <servlet-name>ServletSupprimerTousProdPanier</servlet-name>
         <servlet-class>metier.action.ServletSupprimerTousProdPanier</servlet-class>
     </servlet>
-    <servlet-mapping>
-        <servlet-name>ServletDetailProd</servlet-name>
-        <url-pattern>/ServletDetailProd</url-pattern>
-    </servlet-mapping>
+    <servlet>
+        <servlet-name>ServletAccueil</servlet-name>
+        <servlet-class>metier.action.ServletAccueil</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Accueil</servlet-name>
         <url-pattern>/Accueil</url-pattern>
@@ -125,16 +93,8 @@
         <url-pattern>/ServletConnexion</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ServletRechercheProd</servlet-name>
-        <url-pattern>/ServletRechercheProd</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>ProduitRecherche</servlet-name>
         <url-pattern>/ProduitRecherche</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ServletAffichageProd</servlet-name>
-        <url-pattern>/ServletAffichageProd</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ChoisirMagasin</servlet-name>
@@ -149,24 +109,8 @@
         <url-pattern>/Panier</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ServletAjouterPanier</servlet-name>
-        <url-pattern>/ServletAjouterPanier</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>Connexion</servlet-name>
         <url-pattern>/Connexion</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ServletRechercheCate</servlet-name>
-        <url-pattern>/ServletRechercheCate</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ServletRechercheProdUnCate</servlet-name>
-        <url-pattern>/ServletRechercheProdUnCate</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ServletChoisirRecette</servlet-name>
-        <url-pattern>/ServletChoisirRecette</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ServletDetailRecette</servlet-name>
@@ -175,10 +119,6 @@
     <servlet-mapping>
         <servlet-name>DetailRecette</servlet-name>
         <url-pattern>/DetailRecette</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ServletAfficherNb</servlet-name>
-        <url-pattern>/ServletAfficherNb</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Confirmer</servlet-name>
@@ -223,6 +163,10 @@
     <servlet-mapping>
         <servlet-name>ServletSupprimerTousProdPanier</servlet-name>
         <url-pattern>/ServletSupprimerTousProdPanier</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletAccueil</servlet-name>
+        <url-pattern>/ServletAccueil</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

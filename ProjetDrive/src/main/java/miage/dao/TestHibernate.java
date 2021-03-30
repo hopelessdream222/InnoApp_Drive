@@ -290,10 +290,10 @@ public class TestHibernate
                     res = "Promo: "+ pourcentage * 100 + "%";
                     System.out.println(res);
                 } else if (libelleProm == 2) {
-                    res = "Le deuxième à "+pourcentage * 100 + "%";
+                    res = "Le deuxième à "+pourcentage * 100 + "%, soit un";
                     System.out.println(res);
                 } else if (libelleProm == 3) {
-                    res = "Le troisième à "+pourcentage * 100 + "%";
+                    res = "Le troisième à "+pourcentage * 100 + "%, soit un";
                     System.out.println(res);
                 }
             } catch (NullPointerException npe) {
@@ -542,10 +542,10 @@ public class TestHibernate
                     economie = pu * pourcentage;
 //                    System.out.println("libelleProm == 1: " + economie);
                 } else if (libelleProm == 2) {
-                    economie = pu -(pu * (1-pourcentage)+ pu)/2 ;
+                    economie = (pu * pourcentage+ pu)/2 ;
 //                    System.out.println("libelleProm == 2: " + economie);
                 } else if (libelleProm == 3) {
-                    economie = pu - (pu * (1-pourcentage)+ 2*pu)/3;
+                    economie = (pu * pourcentage+ 2*pu)/3;
 //                    System.out.println("libelleProm == 3: " + economie);
                 }
             } catch (NullPointerException npe) {

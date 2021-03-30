@@ -10,7 +10,8 @@ function afficheDetail() {
     // Objet XMLHttpRequest.
     var xhr = new XMLHttpRequest();
     // Requ�te au serveur avec les param�tres �ventuels.
-    xhr.open("GET", "ServletDetailProd");
+    //xhr.open("GET", "ServletDetailProd");
+    xhr.open("GET", "ServletAccueil?method=afficherAccueil");
 
     // On pr�cise ce que l'on va faire quand on aura re�u la r�ponse du serveur.
     xhr.onload = function () {
@@ -156,7 +157,7 @@ function allerDetailRecette (){
         var idRecette = event.srcElement.name;
         console.log(idRecette+"---id re aller");
 	// Requête au serveur avec les paramètres éventuels.
-	xhr.open("GET","ServletChoisirRecette?idRecette="+idRecette);
+	xhr.open("GET","ServletAccueil?method=ChoisirRecette&idRecette="+idRecette);
 
 	// On précise ce que l'on va faire quand on aura reçu la réponse du serveur.
 	xhr.onload = function(){
@@ -177,7 +178,7 @@ function afficherCategories(rayonChoisi) {
 
     var xhr = new XMLHttpRequest();
 
-    xhr.open("GET", "ServletRechercheCate?rayon=" + rayonChoisi);
+    xhr.open("GET", "ServletAccueil?method=rechercherCate&rayon=" + rayonChoisi);
     //alert(rayonChoisi);
     // On pr�cise ce que l'on va faire quand on aura re�u la r�ponse du serveur.
     xhr.onload = function () {
@@ -216,7 +217,7 @@ function afficherQte() {
     // Objet XMLHttpRequest.
     var xhr = new XMLHttpRequest();
 
-        xhr.open("GET", "ServletAfficherNb");
+        xhr.open("GET", "ServletAccueil?method=afficherNbPanier");
 
         //On pr�cise ce que l'on va faire quand on aura re�u la r�ponse du serveur.
         xhr.onload = function () {
@@ -239,7 +240,7 @@ function afficherProduits() {
     var xhr = new XMLHttpRequest();
     var cateChoisi = event.srcElement.id;
     console.log("categorie:"+cateChoisi);
-    xhr.open("GET", "ServletRechercheProdUnCate?cateId=" + cateChoisi);
+    xhr.open("GET", "ServletAccueil?method=rechercherProdParCate&cateId=" + cateChoisi);
 
     // On pr�cise ce que l'on va faire quand on aura re�u la r�ponse du serveur.
     xhr.onload = function () {
@@ -287,7 +288,7 @@ function ajouter(q) {
 
         console.log("produit" + produitchoisi);
 
-        xhr.open("GET", "ServletAjouterPanier?idP=" + produitchoisi + "&qte=" + q, true);
+        xhr.open("GET", "ServletAccueil?method=ajouterPanier&idP=" + produitchoisi + "&qte=" + q, true);
 
         // On pr�cise ce que l'on va faire quand on aura re�u la r�ponse du serveur.
         xhr.onload = function () {
@@ -311,7 +312,7 @@ function rechercher() {
         alert("Veuillez saisir un produit");
     } else {
         // Requ�te au serveur avec les param�tres �ventuels.
-        xhr.open("GET", "ServletAffichageProd?nomProd=" + nomProd);
+        xhr.open("GET", "ServletAccueil?method=afficherProdParRecherche&nomProd=" + nomProd);
         var elt2 = document.getElementById("prod_ou_sonDetail");
         // On pr�cise ce que l'on va faire quand on aura re�u la r�ponse du serveur.
         xhr.onload = function () {
@@ -331,7 +332,8 @@ function rechercher() {
                         var libProd = xhr.responseXML.getElementsByTagName("libProd")[i].firstChild.nodeValue;
                         var idProd = xhr.responseXML.getElementsByTagName("idProd")[i].firstChild.nodeValue;
                         var promoProd = xhr.responseXML.getElementsByTagName("promotionProd")[i].firstChild.nodeValue;
-                        var prixPromo = xhr.responseXML.getElementsByTagName("prixPromo")[i].firstChild.nodeValue;               
+                        var prixPromo = xhr.responseXML.getElementsByTagName("prixPromo")[i].firstChild.nodeValue;
+                
                         var text = creerModuleProduit(i, src, prixUniteProd, libProd, idProd, promoProd,prixPromo);
                         // El�ment html que l'on va mettre � jour.
                         elt2.insertAdjacentHTML("beforeend", text);
@@ -368,7 +370,7 @@ function plusDetail() {
     // Objet XMLHttpRequest.
     var xhr = new XMLHttpRequest();
 
-    xhr.open("GET", "ServletRechercheProd?idProd=" + idProd, true);
+    xhr.open("GET", "ServletAccueil?method=plusDetail&idProd=" + idProd, true);
     xhr.onload = function () {
         // Si la requ�te http s'est bien pass�e.
         if (xhr.status === 200) {
@@ -397,10 +399,16 @@ function plusDetail() {
             //promotion
             var promotion = "";
             var logoPromo = "";
-            var pourcent = xhr.responseXML.getElementsByTagName("promotionProd")[0].firstChild.nodeValue;
-            if( pourcent !== "nonpromotion"){
-                promotion = "<div class='promo'>PROMO : "+ pourcent +"</div><br/>";
+            
+            var prixUniteProd = xhr.responseXML.getElementsByTagName("prixUniteProd")[0].firstChild.nodeValue+"&#0128";
+            var infoPromo = xhr.responseXML.getElementsByTagName("promotionProd")[0].firstChild.nodeValue;
+            var prixApresPromo = "";
+            if( infoPromo !== "nonpromotion"){
+                promotion = "<div class='promo'>"+ infoPromo +"</div><br/>";
                 logoPromo = "<img src='image/logopromo.jpg' class='newarrival' alt='' width='60px' height='60px'/>";
+                prixUniteProd = "<s>" + prixUniteProd + "&#0128</s>";
+                var prixApresPromo = xhr.responseXML.getElementsByTagName("prixPromo")[0].firstChild.nodeValue+"&#0128";
+        }       
             }
             //composition
             var compo = "";
@@ -413,7 +421,8 @@ function plusDetail() {
             if(xhr.responseXML.getElementsByTagName("tailleProd")[0].firstChild.nodeValue !== "nontaille"){
                 console.log(xhr.responseXML.getElementsByTagName("compositionProd")[0].firstChild.nodeValue !== "nontaille");
                 tailleRef = "<p><b>Taille de r&#xE9;f&#xE9;rence:</b> " + xhr.responseXML.getElementsByTagName("tailleProd")[0].firstChild.nodeValue + "</p>";
-            }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           xhr.responseXML.getElementsByTagName("promotionProd")[0].firstChild.nodeValue
+            }  
+            
             var txt = "<div class='product-details'><!--product-details-->" +
                     "<div class='col-sm-5'>" +
                     "<div class='view-product'>" +
@@ -424,16 +433,15 @@ function plusDetail() {
                     "<div class='product-information'><!--/product-information-->" +
                     logoPromo +
                     promotion +
-                    "<h2>" + xhr.responseXML.getElementsByTagName("libProd")[0].firstChild.nodeValue + "</h2>" +
+                    "<h2>" +xhr.responseXML.getElementsByTagName("libProd")[0].firstChild.nodeValue+ "</h2>" +
                     srcNS +
-                    "<span>" +
-                    "<span>" + xhr.responseXML.getElementsByTagName("prixUniteProd")[0].firstChild.nodeValue + "&#0128</span>" +
-                    "<label>Quantity:</label>" +
+                    "<span><span>" +prixUniteProd +" "+ prixApresPromo+ "</span>" +
+                    "<label>Quantit&#xE9;:</label>" +
                     "<input type='text' value='1' id='detail_qte'/>" +
                     "<button type='button' class='btn btn-fefault cart' name='"+xhr.responseXML.getElementsByTagName("idProd")[0].firstChild.nodeValue+
                             "' id='btn_detail_ajouter'>" +
                     "<i class='fa fa-shopping-cart'></i>" +
-                    "Ajouter au panier" +
+//                    "Ajouter" +
                     "</button>" +
                     "</span>" +
                     compo +
@@ -446,8 +454,8 @@ function plusDetail() {
             eltRight.innerHTML = txt;
             document.getElementById("btn_detail_ajouter").addEventListener("click",function(){ajouter(document.getElementById("detail_qte").value);});
 
-        }
-    };
+        };
+    
 
     // Envoie de la requ�te.
     xhr.send();

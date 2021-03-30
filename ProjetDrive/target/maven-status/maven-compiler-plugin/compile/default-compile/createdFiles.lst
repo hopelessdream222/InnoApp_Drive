@@ -1,8 +1,6 @@
-metier\action\ServletRechercheProd.class
 metier\action\ServletGenererCommande.class
 miage\metier\Comporter.class
 miage\metier\Panier.class
-metier\action\ServletChoisirRecette.class
 miage\metier\LigneCommandeId.class
 miage\metier\Stocker.class
 metier\action\ServletSupprimerTousProdPanier.class
@@ -16,13 +14,10 @@ miage\dao\HibernateUtil.class
 miage\metier\Necessiter.class
 miage\metier\LigneCommande.class
 miage\metier\ComporterId.class
-metier\action\ServletRechercheProdUnCate.class
-metier\action\ServletAjouterPanier.class
 metier\action\ServletAfficherMagasins.class
 miage\metier\Commande.class
 miage\dao\EnvoyerEmail.class
 metier\action\ServletSupprimerProdPanier.class
-metier\action\ServletAffichageProd.class
 miage\metier\Fournisseur.class
 metier\action\ServletConnexion.class
 miage\metier\FournirId.class
@@ -31,12 +26,10 @@ miage\dao\TestHibernate.class
 miage\metier\NecessiterId.class
 miage\metier\Client.class
 miage\metier\Fournir.class
-metier\action\ServletAfficherNb.class
 miage\metier\DisponibiliteId.class
 miage\metier\Ingredient.class
+metier\action\ServletAccueil.class
 miage\metier\Rayon.class
-metier\action\ServletDetailProd.class
-metier\action\ServletRechercheCate.class
 miage\metier\Magasin.class
 metier\action\ServletFinaliserPanier.class
 miage\metier\Categorie.class

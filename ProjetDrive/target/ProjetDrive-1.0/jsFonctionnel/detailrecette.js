@@ -10,7 +10,7 @@ function afficheDetailRecette() {
     // Objet XMLHttpRequest.
     var xhr = new XMLHttpRequest();
     // Requête au serveur avec les paramètres éventuels.
-    xhr.open("GET", "ServletDetailRecette");
+    xhr.open("GET", "ServletDetailRecette?method=detailRecette");
 
     // On précise ce que l'on va faire quand on aura reçu la réponse du serveur.
     xhr.onload = function () {
@@ -62,7 +62,7 @@ function afficherQte() {
     // Objet XMLHttpRequest.
     var xhr = new XMLHttpRequest();
 
-        xhr.open("GET", "ServletAfficherNb");
+        xhr.open("GET", "ServletDetailRecette?method=afficherNbPanier");
 
         //On précise ce que l'on va faire quand on aura reçu la réponse du serveur.
         xhr.onload = function () {

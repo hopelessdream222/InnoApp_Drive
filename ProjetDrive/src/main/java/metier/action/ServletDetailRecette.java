@@ -40,7 +40,18 @@ public class ServletDetailRecette extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         
-        //nt idRecette = Integer.parseInt(request.getParameter("idRecette"));
+        switch(request.getParameter("method")){
+            case "detailRecette":
+                plusDetailRe(request,response);
+                break;
+            case "afficherNbPanier":
+                afficherNbPanier(request,response);
+                break;        
+        }
+    }    
+         
+       protected void plusDetailRe(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+                    //nt idRecette = Integer.parseInt(request.getParameter("idRecette"));
         HttpSession s = request.getSession();
         int idRecette = (Integer)s.getAttribute("recette");
         //System.out.println("servlet detail recette id:"+idRecette);
@@ -83,10 +94,39 @@ public class ServletDetailRecette extends HttpServlet {
                 out.println("<client>horsConnection</client>");
             }
             out.println("</responseRecette>");
-        }   
-        
-    }
+        }
+}       
+       protected void afficherNbPanier(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+        /*----- Type de la réponse -----*/
+        response.setContentType("application/xml;charset=UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        try (PrintWriter out = response.getWriter()){
+            /*----- Ecriture de la page XML -----*/
+            out.println("<?xml version=\"1.0\"?>");
+            out.println("<liste_produit>");
+ 
+            /*----- Récupération le session de client -----*/
+            HttpSession s = request.getSession();
+            if(s.getAttribute("client")!=null){
+                Client client = (Client)s.getAttribute("client");
+                
+                int quantitePanier = miage.dao.TestHibernate.chercherQuantitePanierClient(client.getIdCli());
+                out.println("<client>"+client.getEmailCli()+"</client><quantitePanier>"+quantitePanier+"</quantitePanier>");
+                System.out.println("****************"+quantitePanier);
 
+                
+            }else{
+                //System.out.println("-------");
+                //System.out.println("****************"+client.getNomCli());
+                out.println("<client>horsConnection</client>");
+            }
+            
+       
+            
+            out.println("</liste_produit>");
+        }
+    } 
+ 
     
     /**
      * Returns a short description of the servlet.
