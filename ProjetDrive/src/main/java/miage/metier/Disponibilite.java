@@ -11,6 +11,7 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
 
 /**
  *
@@ -24,6 +25,10 @@ public class Disponibilite {
     private int nbPlaceTotal;
     private int nbPlaceRest;
     
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date dateCren;
+
+    
     @ManyToOne
     @JoinColumn(name="idMag",insertable=false,updatable=false)
     private Magasin magasins;
@@ -35,13 +40,23 @@ public class Disponibilite {
     public Disponibilite() {
     }
 
-    public Disponibilite(int nbPlaceTotal, int nbPlaceRest, Magasin magasins, Creneau creneaux) {
+    public Disponibilite(DisponibiliteId dispoId, int nbPlaceTotal, int nbPlaceRest, Date dateCren, Magasin magasins, Creneau creneaux) {
+        this.dispoId = dispoId;
         this.nbPlaceTotal = nbPlaceTotal;
         this.nbPlaceRest = nbPlaceRest;
+        this.dateCren = dateCren;
         this.magasins = magasins;
         this.creneaux = creneaux;
+    }    
+    
+    public Date getDateCren() {
+        return dateCren;
     }
 
+    public void setDateCren(Date dateCren) {
+        this.dateCren = dateCren;
+    }
+    
     public DisponibiliteId getDispoId() {
         return dispoId;
     }

@@ -71,16 +71,24 @@ function afficheDetail() {
             var elt5 = document.getElementById("recette_accueil_2");
             elt4.innerHTML="";
             elt5.innerHTML="";
-            for (var y = 0; y < xhr.responseXML.getElementsByTagName("recetteId").length; y++) {
+            for (var y = 0; y < 3; y++) {
                 // El�ment html que l'on va mettre � jour.
                 var recetteId = xhr.responseXML.getElementsByTagName("recetteId")[y].firstChild.nodeValue;
                 console.log(recetteId+"---id re");
                 var recetteSrc = xhr.responseXML.getElementsByTagName("recetteSrc")[y].firstChild.nodeValue;
                 var recetteLib = xhr.responseXML.getElementsByTagName("recetteNom")[y].firstChild.nodeValue;
-                //elt3.insertAdjacentHTML("beforeend","<div name='lien' id='"+ xhr.responseXML.getElementsByTagName("rayonProd")[x].firstChild.nodeValue +"'>"+xhr.responseXML.getElementsByTagName("rayonProd")[x].firstChild.nodeValue+"</div><br/>");
                 var text2 = creerModuleRecette(recetteId, recetteSrc, recetteLib) ;
                 elt4.insertAdjacentHTML("beforeend", text2);
-                elt5.insertAdjacentHTML("beforeend", text2);
+            }
+            
+            for (var z = 3; z < 6; z++) {
+                // El�ment html que l'on va mettre � jour.
+                var recetteId = xhr.responseXML.getElementsByTagName("recetteId")[z].firstChild.nodeValue;
+                console.log(recetteId+"---id re");
+                var recetteSrc = xhr.responseXML.getElementsByTagName("recetteSrc")[z].firstChild.nodeValue;
+                var recetteLib = xhr.responseXML.getElementsByTagName("recetteNom")[z].firstChild.nodeValue;
+                var text3 = creerModuleRecette(recetteId, recetteSrc, recetteLib) ;              
+                elt5.insertAdjacentHTML("beforeend", text3);
             }
 
             for (var z = 0; z < xhr.responseXML.getElementsByTagName("recetteId").length; z++) {
@@ -406,7 +414,7 @@ function plusDetail() {
             if( infoPromo !== "nonpromotion"){
                 promotion = "<div class='promo'>"+ infoPromo +"</div><br/>";
                 logoPromo = "<img src='image/logopromo.jpg' class='newarrival' alt='' width='60px' height='60px'/>";
-                prixUniteProd = "<s>" + prixUniteProd + "&#0128</s>";
+                prixUniteProd = "<s>" + prixUniteProd + "</s>";
                 var prixApresPromo = xhr.responseXML.getElementsByTagName("prixPromo")[0].firstChild.nodeValue+"&#0128";
         }       
             }
@@ -435,7 +443,7 @@ function plusDetail() {
                     promotion +
                     "<h2>" +xhr.responseXML.getElementsByTagName("libProd")[0].firstChild.nodeValue+ "</h2>" +
                     srcNS +
-                    "<span><span>" +prixUniteProd +" "+ prixApresPromo+ "</span>" +
+                    "<br/><span><span>" +prixUniteProd +" "+ prixApresPromo+ "</span>" +
                     "<label>Quantit&#xE9;:</label>" +
                     "<input type='text' value='1' id='detail_qte'/>" +
                     "<button type='button' class='btn btn-fefault cart' name='"+xhr.responseXML.getElementsByTagName("idProd")[0].firstChild.nodeValue+

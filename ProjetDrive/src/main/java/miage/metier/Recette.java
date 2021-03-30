@@ -28,14 +28,15 @@ public class Recette implements Serializable{
     @Column(name="idRect")        
     private int idRect;
     private String libelleRect;
+    private String MoyenRect;
 
     public Recette() {
     }
 
-    public Recette(String libelleRect) {
+    public Recette(String libelleRect, String MoyenRect) {
         this.libelleRect = libelleRect;
-    }   
-    
+        this.MoyenRect = MoyenRect;
+    }
      
     // Relation <Necessiter>
     @OneToMany(mappedBy = "recette",cascade=CascadeType.ALL)
@@ -64,6 +65,14 @@ public class Recette implements Serializable{
 
     public void setNecessiters(Map<Ingredient, Necessiter> necessiters) {
         this.necessiters = necessiters;
+    }
+    
+    public String getMoyenRect() {
+        return MoyenRect;
+    }
+
+    public void setMoyenRect(String MoyenRect) {
+        this.MoyenRect = MoyenRect;
     }
 
     @Override

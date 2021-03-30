@@ -225,7 +225,14 @@ public class TestHibernate
         }
          return lstRec;
     }
-    
+    public static void insertRecettePanier(int idCli, int idRect) {
+        List<Necessiter> lstNes = chercherIngRecette(idRect);
+        for (Necessiter n : lstNes) {
+            List<Produit> lstP = chercherProduitRecommenter(idRect, n.getIngredient().getIdIng());
+            insertProduitPanier(idCli, lstP.get(0).getIdP(), 1);
+            System.out.println("cli: " + idCli + "ingredient: " + n.getIngredient().getLibelleIng() + "produit: " + lstP.get(0).getIdP());
+        }
+    }
     public static List<Produit> chercherPromsProduits() {
         List<Produit> lstP=new ArrayList<>();
         /*----- Ouverture de la session -----*/

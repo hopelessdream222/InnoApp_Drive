@@ -399,10 +399,11 @@ public class ServletAccueil extends HttpServlet {
                 out.println("<srcLabel>nonlabel</srcLabel>"); 
                 System.out.println("mei you label");
             }else{
-                for (String label : labels){
-                    System.out.println("lab "+label);
-                    out.println("<srcLabel>image/labelscore/" + label +".jpg</srcLabel>");    
-                    System.out.println("<srcLabel>image/labelscore/" + label +".jpg</srcLabel>");
+                for (String label : labels){                 
+                        System.out.println("lab "+label);
+                        out.println("<srcLabel>image/labelscore/" + label +".jpg</srcLabel>");    
+                        System.out.println("<srcLabel>image/labelscore/" + label +".jpg</srcLabel>");
+                 
                 }
             }
             //NutriScore
