@@ -75,6 +75,72 @@ public class ServletAccueil extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    protected String creerModuleProduit(Produit produit){
+        String infoProd = "";
+        //id, reporatoire de l'image,libelle, format, prix unitaire, prix kg
+        infoProd = "<idProd>"+produit.getIdP()+"</idProd>"+
+                "<libProd>"+produit.getLibelleP()+"</libProd>"+
+                "<src>image/" + produit.getIdP() +".jpg</src>"+
+                "<formatProd>"+produit.getFormatP()+"</formatProd>"+
+                "<prixKGProd>"+produit.getPrixKGP()+"</prixKGProd>"+
+                "<prixUniteProd>"+produit.getPrixUnitaireP()+"</prixUniteProd>";
+        
+        //information de promotion et prix après la promo 
+        Float economie = miage.dao.TestHibernate.calculerEconomiePromotionClientUnProd(produit.getIdP());
+        System.out.println(produit.getIdP()+"- economie"+economie);
+        String prixPromo = "nonPrixPromo";
+        String infoPromo = "nonpromotion";
+        //si un produit a une promotion
+        if(economie != 0){
+            Float prixPromoLong = produit.getPrixUnitaireP()-economie;
+            DecimalFormat df= new  DecimalFormat( "0.00" ); 
+
+            prixPromo = df.format(prixPromoLong);
+            infoPromo = miage.dao.TestHibernate.chercherProduitPromotion(produit.getIdP());
+        }
+        infoProd = infoProd + "<prixPromo>"+prixPromo+"</prixPromo>"+
+                            "<promotionProd>"+infoPromo+"</promotionProd>";
+        
+        //nutriScore d'un produit
+       if(!produit.getNutriScoreP().isEmpty()){
+            infoProd = infoProd + "<srcNutriScore>image/labelscore/" + produit.getNutriScoreP() +".jpg</srcNutriScore>";
+        }else{
+           infoProd = infoProd + "<srcNutriScore>nonNS</srcNutriScore>";
+        }
+        
+        //composition, taille de référence et conditionnement
+        String compo = "noncomposition";
+        String tailleRef = "nontaille";
+        String cond = "noncoditionnement";
+        
+        if(produit.getCompositionP() != null){
+            compo = produit.getCompositionP();
+        }
+        if(produit.getTailleReferenceP() != null){
+            tailleRef = produit.getTailleReferenceP();
+        }
+        if(produit.getConditionnementP() != null){
+            cond = produit.getConditionnementP();
+        }
+        infoProd = infoProd +"<compositionProd>"+compo+"</compositionProd>"+
+                              "<tailleProd>"+tailleRef+"</tailleProd>"+
+                              "<condProd>"+cond+"</condProd>";        
+        
+        //labels d'un produit
+        List<String> labels = miage.dao.TestHibernate.afficherLabels(produit.getLabelP());
+        System.out.println("label:"+labels);
+        if(labels.size() != 0){
+            for (String srcLabel : labels){
+                if(!srcLabel.isEmpty()){
+                    infoProd = infoProd + "<label><srcLabel>image/labelscore/" + srcLabel +".jpg</srcLabel></label>";    
+                }
+            }    
+        }else{
+            infoProd = infoProd + "<label><srcLabel>nonlabel</srcLabel></label>";
+        }           
+        
+        return infoProd;
+    }
     protected void afficherAccueil(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
        /*----- Type de la réponse -----*/
         response.setContentType("application/xml;charset=UTF-8");
@@ -87,31 +153,14 @@ public class ServletAccueil extends HttpServlet {
             /*----- Lecture de liste de mots dans la BD -----*/
             //Appeler la fonction dans DAO
             List<Produit> lProduits = miage.dao.TestHibernate.chercherPromsProduits();
-            System.out.println("lstp:"+lProduits);        
+            System.out.println("lstp:"+lProduits);
+            String prods = "";
             for (Produit produit : lProduits){
-               Float economie = miage.dao.TestHibernate.calculerEconomiePromotionClientUnProd(produit.getIdP());
-  
-                String prixPromo = "nonPrixPromo";
-                String infoPromo = "nonpromotion";
-                if(economie != 0){
-                    
-                    System.out.println("bu deng yu 0");
-                    Float prixPromoLong = produit.getPrixUnitaireP()-economie;
-                    DecimalFormat df= new  DecimalFormat( "0.00" ); 
-
-                    prixPromo = df.format(prixPromoLong);
-                    infoPromo = miage.dao.TestHibernate.chercherProduitPromotion(produit.getIdP());
-                }
-                
-                out.println("<src>image/" + produit.getIdP() +".jpg</src><idProd>"+ produit.getIdP() +
-                        "</idProd><libProd>"+produit.getLibelleP()+"</libProd>"+
-                        "<formatProd>"+produit.getFormatP()+"</formatProd>"+
-                        "<prixKGProd>"+produit.getPrixKGP()+"</prixKGProd>"+
-                        "<prixUniteProd>"+produit.getPrixUnitaireP()+"</prixUniteProd>"+ 
-                        "<prixPromo>"+prixPromo+"</prixPromo>"+
-                        "<promotionProd>"+infoPromo+"</promotionProd>");
+                out.println(creerModuleProduit(produit));
+                // prods = prods +creerModuleProduit(produit);
+               
             }
-            
+            //out.println(prods);
             List<Rayon> lRayons = miage.dao.TestHibernate.obtenirRayons();  
             
             for (Rayon rayon : lRayons){
@@ -122,10 +171,7 @@ public class ServletAccueil extends HttpServlet {
             if(s.getAttribute("client")!=null){
                 Client client = (Client)s.getAttribute("client");
                 out.println("<client>"+client.getEmailCli()+"</client>");
-                //System.out.println("****************"+client.getNomCli());
             }else{
-                //System.out.println("-------");
-                //System.out.println("****************"+client.getNomCli());
                 out.println("<client>horsConnection</client>");
             }
             
@@ -135,8 +181,7 @@ public class ServletAccueil extends HttpServlet {
                 out.println("<recetteId>" + recette.getIdRect() +"</recetteId><recetteNom>" + recette.getLibelleRect() +"</recetteNom><recetteSrc>image/recettes/" + recette.getIdRect() +".jpg</recetteSrc>");                
                 System.out.println("recette"+recette.getIdRect());
             }
-            
-            
+           
             out.println("</liste_produit>");
         }
     }
@@ -157,28 +202,7 @@ public class ServletAccueil extends HttpServlet {
             List<Produit> lProduits = miage.dao.TestHibernate.obtenirProduits(idCate);
                     
             for (Produit produit : lProduits){
-                
-                Float economie = miage.dao.TestHibernate.calculerEconomiePromotionClientUnProd(produit.getIdP());
-  
-                String prixPromo = "nonPrixPromo";
-                String infoPromo = "nonpromotion";
-                if(economie != 0){
-                    
-                    System.out.println("bu deng yu 0");
-                    Float prixPromoLong = produit.getPrixUnitaireP()-economie;
-                    DecimalFormat df= new  DecimalFormat( "0.00" ); 
-
-                    prixPromo = df.format(prixPromoLong);
-                    infoPromo = miage.dao.TestHibernate.chercherProduitPromotion(produit.getIdP());
-                }
-                
-                out.println("<src>image/" + produit.getIdP() +".jpg</src><idProd>"+ produit.getIdP() +
-                        "</idProd><libProd>"+produit.getLibelleP()+"</libProd>"+
-                        "<formatProd>"+produit.getFormatP()+"</formatProd>"+
-                        "<prixKGProd>"+produit.getPrixKGP()+"</prixKGProd>"+
-                        "<prixUniteProd>"+produit.getPrixUnitaireP()+"</prixUniteProd>"+ 
-                        "<prixPromo>"+prixPromo+"</prixPromo>"+
-                        "<promotionProd>"+infoPromo+"</promotionProd>");
+                out.println(creerModuleProduit(produit));
             }
                    
             out.println("</liste_produit>");
@@ -217,27 +241,7 @@ public class ServletAccueil extends HttpServlet {
                 out.println("<?xml version=\"1.0\"?>");
                 out.println("<responseRecherche><res>reussi</res>");
                 for (Produit produit : lProduits){
-                   Float economie = miage.dao.TestHibernate.calculerEconomiePromotionClientUnProd(produit.getIdP());
-  
-                    String prixPromo = "nonPrixPromo";
-                    String infoPromo = "nonpromotion";
-                    if(economie != 0){
-
-                        System.out.println("bu deng yu 0");
-                        Float prixPromoLong = produit.getPrixUnitaireP()-economie;
-                        DecimalFormat df= new  DecimalFormat( "0.00" ); 
-
-                        prixPromo = df.format(prixPromoLong);
-                        infoPromo = miage.dao.TestHibernate.chercherProduitPromotion(produit.getIdP());
-                    }
-                
-                    out.println("<src>image/" + produit.getIdP() +".jpg</src><idProd>"+ produit.getIdP() +
-                            "</idProd><libProd>"+produit.getLibelleP()+"</libProd>"+
-                            "<formatProd>"+produit.getFormatP()+"</formatProd>"+
-                            "<prixKGProd>"+produit.getPrixKGP()+"</prixKGProd>"+
-                            "<prixUniteProd>"+produit.getPrixUnitaireP()+"</prixUniteProd>"+ 
-                            "<prixPromo>"+prixPromo+"</prixPromo>"+
-                            "<promotionProd>"+infoPromo+"</promotionProd>");
+                    out.println(creerModuleProduit(produit));
                 }
                 out.println("</responseRecherche>");
                 
@@ -312,72 +316,7 @@ public class ServletAccueil extends HttpServlet {
             //Si on trouve pas de client, on fait une response de "echec"
             out.println("<?xml version=\"1.0\"?>");
             out.println("<responseRecherche>");
-            out.println("<src>image/" + produit.getIdP() +".jpg</src>"+
-                        "<idProd>"+ produit.getIdP() +"</idProd>"+
-                        "<libProd>"+produit.getLibelleP()+"</libProd>"+
-                        "<prixKGProd>"+produit.getPrixKGP()+"</prixKGProd>"+
-                        "<prixUniteProd>"+produit.getPrixUnitaireP()+"</prixUniteProd>");
-            //composition
-            System.out.println("composition:"+produit.getCompositionP());
-            if(produit.getCompositionP() == null){
-                out.println("<compositionProd>noncomposition</compositionProd>");
-                System.out.println("compo null");
-            }else{
-                out.println("<compositionProd>"+produit.getCompositionP()+"</compositionProd>");
-            }
-            //taille
-            System.out.println("taille:"+produit.getTailleReferenceP());
-            if(produit.getTailleReferenceP() == null){
-                out.println("<tailleProd>nontaille</tailleProd>");
-            }else{
-                out.println("<tailleProd>"+produit.getTailleReferenceP()+"</tailleProd>");
-            }
-            //promotion
-            //System.out.println("promo:"+produit.getProm().toString());
-            Float economie = miage.dao.TestHibernate.calculerEconomiePromotionClientUnProd(produit.getIdP());
-            Float prixPromoLong = produit.getPrixUnitaireP()-economie;
-            DecimalFormat df= new  DecimalFormat( "0.00" ); 
-
-            String prixPromo = df.format(prixPromoLong);
-            if(produit.getProm() == null){
-                out.println("<promotionProd>nonpromotion</promotionProd>");
-            }else{
-                out.println("<promotionProd>"+miage.dao.TestHibernate.chercherProduitPromotion(idProd)+"</promotionProd>");
-            }
-            out.println("<prixPromo>"+prixPromo+"</prixPromo>");
-
-            //Conditionnement
-            System.out.println("cond:"+produit.getConditionnementP());
-            if(produit.getConditionnementP() == null){
-                out.println("<condProd>noncoditionnement</condProd>");
-            }else{
-                out.println("<condProd>"+produit.getConditionnementP()+"</condProd>");
-            }
-            //format
-            if(produit.getFormatP() == null){
-                out.println("<formatProd>nonformat</formatProd>");
-            }else{
-                out.println("<formatProd>"+produit.getFormatP()+"</formatProd>");
-            }
-            //label
-            System.out.println("lst size"+labels.size());
-            if(labels.size() == 0){
-                out.println("<srcLabel>nonlabel</srcLabel>"); 
-                System.out.println("mei you label");
-            }else{
-                for (String label : labels){                 
-                        System.out.println("lab "+label);
-                        out.println("<srcLabel>image/labelscore/" + label +".jpg</srcLabel>");    
-                        System.out.println("<srcLabel>image/labelscore/" + label +".jpg</srcLabel>");
-                 
-                }
-            }
-            //NutriScore
-            if(produit.getNutriScoreP().isEmpty()){
-                out.println("<srcNutriScore>nonNS</srcNutriScore>");
-            }else{
-                out.println("<srcNutriScore>image/labelscore/" + produit.getNutriScoreP() +".jpg</srcNutriScore>");
-            }
+            out.println(creerModuleProduit(produit));
             out.println("</responseRecherche>");                 
         }
         

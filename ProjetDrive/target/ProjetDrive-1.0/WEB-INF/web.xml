@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <servlet>
-        <servlet-name>Accueil</servlet-name>
-        <jsp-file>/html/Accueil.html</jsp-file>
-    </servlet>
-    <servlet>
         <servlet-name>ServletConnexion</servlet-name>
         <servlet-class>metier.action.ServletConnexion</servlet-class>
     </servlet>
@@ -88,10 +84,10 @@
         <servlet-name>ServletFinaliserPanier</servlet-name>
         <servlet-class>metier.action.ServletFinaliserPanier</servlet-class>
     </servlet>
-    <servlet-mapping>
+    <servlet>
         <servlet-name>Accueil</servlet-name>
-        <url-pattern>/Accueil</url-pattern>
-    </servlet-mapping>
+        <jsp-file>/html/Accueil.html</jsp-file>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ServletConnexion</servlet-name>
         <url-pattern>/ServletConnexion</url-pattern>
@@ -175,6 +171,10 @@
     <servlet-mapping>
         <servlet-name>ServletFinaliserPanier</servlet-name>
         <url-pattern>/ServletFinaliserPanier</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Accueil</servlet-name>
+        <url-pattern>/Accueil</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

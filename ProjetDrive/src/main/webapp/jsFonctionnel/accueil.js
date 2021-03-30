@@ -21,6 +21,7 @@ function afficheDetail() {
             var elt = document.getElementById("prod_ou_sonDetail");
             elt.innerHTML = "<h2 class='title text-center' id='nosProds'>NOS PRODUITS</h2>"+
                             "<div id='produitsTous'>";
+            
             for (var i = 0; i < xhr.responseXML.getElementsByTagName("src").length; i++) {
                 var src = xhr.responseXML.getElementsByTagName("src")[i].firstChild.nodeValue;
                 var prixUniteProd = xhr.responseXML.getElementsByTagName("prixUniteProd")[i].firstChild.nodeValue;
@@ -28,8 +29,17 @@ function afficheDetail() {
                 var idProd = xhr.responseXML.getElementsByTagName("idProd")[i].firstChild.nodeValue;
                 var promoProd = xhr.responseXML.getElementsByTagName("promotionProd")[i].firstChild.nodeValue;
                 var prixPromo = xhr.responseXML.getElementsByTagName("prixPromo")[i].firstChild.nodeValue;
+                var tabLabel = xhr.responseXML.getElementsByTagName("label")[i];
+                //determiner si ce produit possede des labels ou pas
+                var srcLabel = "nonlabel";
+                if (tabLabel.getElementsByTagName("srcLabel")[0].firstChild.nodeValue !== "nonlabel") {
+                    for (j = 0; j < tabLabel.getElementsByTagName("srcLabel").length; j++) {
+                        srcLabel = "";
+                        srcLabel = srcLabel + "<img src='" +tabLabel.getElementsByTagName("srcLabel")[j].firstChild.nodeValue + "' width='50px' height='50px'/>";
+                    }
+                }
                 
-                var text = creerModuleProduit(i, src, prixUniteProd, libProd, idProd, promoProd,prixPromo);
+                var text = creerModuleProduit(i, src, prixUniteProd, libProd, idProd, promoProd,prixPromo,srcLabel);
                 // El�ment html que l'on va mettre � jour.
                 elt.insertAdjacentHTML("beforeend",text);
             }
@@ -93,8 +103,7 @@ function afficheDetail() {
 
             for (var z = 0; z < xhr.responseXML.getElementsByTagName("recetteId").length; z++) {
                 var idRe = xhr.responseXML.getElementsByTagName("recetteId")[z].firstChild.nodeValue;
-                document.getElementById("btn_voir_detail" + idRe).addEventListener("click", allerDetailRecette);
-                
+                document.getElementById("btn_voir_detail" + idRe).addEventListener("click", allerDetailRecette);    
             }
         }
     };
@@ -119,9 +128,15 @@ function creerModuleRecette(recetteId, recetteSrc, recetteLib) {
             +"</div>");
 }
 
-function creerModuleProduit(i, src, prixUniteProd, libProd, idProd, promo, prixPromo) {
+function creerModuleProduit(i, src, prixUniteProd, libProd, idProd, promo, prixPromo,srcLabel) {
     var infoPromo = " ";
     var promotion = " ";
+    
+    console.log(srcLabel);
+    if(srcLabel === "nonlabel"){
+        srcLabel = " ";
+    }
+    console.log(srcLabel);
     if(promo === "nonpromotion"){
         var imgPromo = "";
         var pu = prixUniteProd+"&#0128";
@@ -138,6 +153,7 @@ function creerModuleProduit(i, src, prixUniteProd, libProd, idProd, promo, prixP
             + "<div class='single-products'>"
             + "<div class='productinfo text-center'>"
             + "<div id='image" + i + "'><img src='" + src + "' width=200px hight=150px>"
+//            + "<span>"+srcLabel+"</span>"
             + "<p style='color:red;'>"+infoPromo+"</p>"
             + "<h2>PU: " + pu +" "+ promotion +"</h2>"
             + "<div height='50px'><p>" + libProd + "</p></div></div>"
@@ -149,6 +165,7 @@ function creerModuleProduit(i, src, prixUniteProd, libProd, idProd, promo, prixP
             + "</div>"
             + imgPromo
             + "</div>"
+            +"<div>"+srcLabel+"</div>"
             + "<div class='choose'>"
             + "<ul class='av nav-pills nav-justified'>"
             + "<li><a href='#' name='"+idProd+"' id='btn_detail" + idProd + "'><i class='fa fa-plus-square'></i>Plus de D&#xE9;tail</a></li>"
@@ -265,7 +282,17 @@ function afficherProduits() {
                 var idProd = xhr.responseXML.getElementsByTagName("idProd")[i].firstChild.nodeValue;
                 var promoProd = xhr.responseXML.getElementsByTagName("promotionProd")[i].firstChild.nodeValue;
                 var prixPromo = xhr.responseXML.getElementsByTagName("prixPromo")[i].firstChild.nodeValue;
-                var text = creerModuleProduit(i, src, prixUniteProd, libProd, idProd, promoProd,prixPromo);
+                var tabLabel = xhr.responseXML.getElementsByTagName("label")[i];
+                //determiner si ce produit possede des labels ou pas
+                var srcLabel = "nonlabel";
+                if (tabLabel.getElementsByTagName("srcLabel")[0].firstChild.nodeValue !== "nonlabel") {
+                    for (j = 0; j < tabLabel.getElementsByTagName("srcLabel").length; j++) {
+                        srcLabel = "";
+                        srcLabel = srcLabel + "<img src='" +tabLabel.getElementsByTagName("srcLabel")[j].firstChild.nodeValue + "' width='50px' height='50px'/>";
+                    }
+                }
+                
+                var text = creerModuleProduit(i, src, prixUniteProd, libProd, idProd, promoProd,prixPromo,srcLabel);
                 // El�ment html que l'on va mettre � jour.
                 elt2.insertAdjacentHTML("beforeend", text);
             }
@@ -342,8 +369,18 @@ function rechercher() {
                         var promoProd = xhr.responseXML.getElementsByTagName("promotionProd")[i].firstChild.nodeValue;
                         var prixPromo = xhr.responseXML.getElementsByTagName("prixPromo")[i].firstChild.nodeValue;
                 
-                        var text = creerModuleProduit(i, src, prixUniteProd, libProd, idProd, promoProd,prixPromo);
-                        // El�ment html que l'on va mettre � jour.
+                        var tabLabel = xhr.responseXML.getElementsByTagName("label")[i];
+                        //determiner si ce produit possede des labels ou pas
+                        var srcLabel = "nonlabel";
+                        if (tabLabel.getElementsByTagName("srcLabel")[0].firstChild.nodeValue !== "nonlabel") {
+                            for (j = 0; j < tabLabel.getElementsByTagName("srcLabel").length; j++) {
+                                srcLabel = "";
+                                srcLabel = srcLabel + "<img src='" +tabLabel.getElementsByTagName("srcLabel")[j].firstChild.nodeValue + "' width='50px' height='50px'/>";
+                            }
+                        }
+
+                        var text = creerModuleProduit(i, src, prixUniteProd, libProd, idProd, promoProd,prixPromo,srcLabel);
+                                // El�ment html que l'on va mettre � jour.
                         elt2.insertAdjacentHTML("beforeend", text);
                     }
                     elt2.insertAdjacentHTML("beforeend","</div>");

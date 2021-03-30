@@ -61,8 +61,8 @@ public class ServletChoisirCreneau extends HttpServlet {
 
             /*----- Récupération le session de client -----*/
             HttpSession s = request.getSession();
-            Client client = (Client) s.getAttribute("client");
-            int idMag = (Integer) s.getAttribute("idMag");
+            Client client = (Client)s.getAttribute("client");
+            int idMag = (Integer)s.getAttribute("idMag");
             /*----- Lecture de liste de mots dans la BD -----*/
             List<Disponibilite> lCreneau = TestHibernate.chercherCreneaux(idMag);
 

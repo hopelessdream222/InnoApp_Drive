@@ -546,13 +546,13 @@ public class TestHibernate
                 float pu = p.getPrixUnitaireP();
                 float pourcentage = p.getProm().getPourcentageProm();
                 if (libelleProm == 1) {
-                    economie = pu * pourcentage;
+                    economie = pu * (1-pourcentage);
 //                    System.out.println("libelleProm == 1: " + economie);
                 } else if (libelleProm == 2) {
-                    economie = (pu * pourcentage+ pu)/2 ;
+                    economie = pu-(pu * pourcentage+ pu)/2 ;
 //                    System.out.println("libelleProm == 2: " + economie);
                 } else if (libelleProm == 3) {
-                    economie = (pu * pourcentage+ 2*pu)/3;
+                    economie = pu-(pu * pourcentage+ 2*pu)/3;
 //                    System.out.println("libelleProm == 3: " + economie);
                 }
             } catch (NullPointerException npe) {
@@ -635,7 +635,7 @@ public class TestHibernate
         //insertProduitPanier();
         //TestHibernate.afficherLabels("");
         //TestHibernate.obtenirRecettes();
-        TestHibernate.chercherIngRecette(1);
+        //TestHibernate.chercherIngRecette(1);
         /*----- Exit -----*/
         System.exit(0);
     }
