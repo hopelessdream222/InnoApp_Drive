@@ -72,6 +72,11 @@ public class Produit {
     @ManyToOne(fetch =FetchType.EAGER)
     @JoinColumn(name = "idIng")
     private Ingredient ingredient;
+    
+    // Relation <Preferer>
+    @OneToMany(mappedBy = "produit",cascade=CascadeType.ALL)
+    @MapKeyJoinColumn(name = "idCli")
+    private Map<Client, Preferer> preference=new HashMap(0);
 
     public Produit() {
     }
@@ -225,11 +230,20 @@ public class Produit {
         this.ingredient = ingredient;
     }
 
+    public Map<Client, Preferer> getPreference() {
+        return preference;
+    }
+
+    public void setPreference(Map<Client, Preferer> preference) {
+        this.preference = preference;
+    }
+
     @Override
     public String toString() {
-        return "libelle:" + libelleP + ", prix Unitaire:" + prixUnitaireP + ", prix/kg:" + prixKGP + ", nutri Score:" + nutriScoreP;
+        return "Produit{" + "idP=" + idP + ", libelleP=" + libelleP + ", prixUnitaireP=" + prixUnitaireP + ", prixKGP=" + prixKGP + ", nutriScoreP=" + nutriScoreP + ", photoP=" + photoP + ", labelP=" + labelP + ", formatP=" + formatP + ", conditionnementP=" + conditionnementP + ", tailleReferenceP=" + tailleReferenceP + ", compositionP=" + compositionP + ", categorieP=" + categorieP + ", ligneCommandes=" + ligneCommandes + ", stockages=" + stockages + ", comportements=" + comportements + ", Prom=" + Prom + ", ingredient=" + ingredient + ", preference=" + preference + '}';
     }
     
+
     @Override
     public int hashCode() {
         int hash = 7;
