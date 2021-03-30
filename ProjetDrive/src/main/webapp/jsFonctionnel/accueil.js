@@ -320,7 +320,7 @@ function rechercher() {
             if (xhr.status === 200) {
                 var elt2 = document.getElementById("prod_ou_sonDetail");
                 if (xhr.responseXML.getElementsByTagName("res")[0].firstChild.nodeValue === "reussi") {
-                    console.log("Trouvï¿½!");
+                    console.log("Trouvé!");
                     //Modification page
 
                     elt2.innerHTML = "<h2 class='title text-center' id='nosProds'>NOS PRODUITS</h2>"+
@@ -347,7 +347,7 @@ function rechercher() {
                     }
 
                 } else {
-                    alert("Oups! Aucun r&#xE9;sultat! ");
+                    alert("Oups! Aucun résultat! ");
                     document.getElementById("zonSaisi").innerHTML = "";
                     elt2.innerHTML = "<h2 class='title text-center' id='nosProds'>NOS PRODUITS</h2>"+
                                 "<div id='produitsTous'></div>";
