@@ -7,6 +7,7 @@ package metier.action;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DecimalFormat;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -47,16 +48,28 @@ public class ServletRechercheProdUnCate extends HttpServlet {
             List<Produit> lProduits = miage.dao.TestHibernate.obtenirProduits(idCate);
                     
             for (Produit produit : lProduits){
-               out.println("<src>image/" + produit.getIdP() +".jpg</src><idProd>"+ produit.getIdP() +
+                
+                Float economie = miage.dao.TestHibernate.calculerEconomiePromotionClientUnProd(produit.getIdP());
+  
+                String prixPromo = "nonPrixPromo";
+                String infoPromo = "nonpromotion";
+                if(economie != 0){
+                    
+                    System.out.println("bu deng yu 0");
+                    Float prixPromoLong = produit.getPrixUnitaireP()-economie;
+                    DecimalFormat df= new  DecimalFormat( "0.00" ); 
+
+                    prixPromo = df.format(prixPromoLong);
+                    infoPromo = miage.dao.TestHibernate.chercherProduitPromotion(produit.getIdP());
+                }
+                
+                out.println("<src>image/" + produit.getIdP() +".jpg</src><idProd>"+ produit.getIdP() +
                         "</idProd><libProd>"+produit.getLibelleP()+"</libProd>"+
                         "<formatProd>"+produit.getFormatP()+"</formatProd>"+
                         "<prixKGProd>"+produit.getPrixKGP()+"</prixKGProd>"+
-                        "<prixUniteProd>"+produit.getPrixUnitaireP()+"</prixUniteProd>");
-                if(produit.getProm() == null){
-                    out.println("<promotionProd>nonpromotion</promotionProd>");
-                }else{
-                    out.println("<promotionProd>"+produit.getProm().getPourcentageProm()+"</promotionProd>");
-                }
+                        "<prixUniteProd>"+produit.getPrixUnitaireP()+"</prixUniteProd>"+ 
+                        "<prixPromo>"+prixPromo+"</prixPromo>"+
+                        "<promotionProd>"+infoPromo+"</promotionProd>");
             }
                    
             out.println("</liste_produit>");

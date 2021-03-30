@@ -26,7 +26,9 @@ function afficheDetail() {
                 var libProd = xhr.responseXML.getElementsByTagName("libProd")[i].firstChild.nodeValue;
                 var idProd = xhr.responseXML.getElementsByTagName("idProd")[i].firstChild.nodeValue;
                 var promoProd = xhr.responseXML.getElementsByTagName("promotionProd")[i].firstChild.nodeValue;
-                var text = creerModuleProduit(i, src, prixUniteProd, libProd, idProd, promoProd);
+                var prixPromo = xhr.responseXML.getElementsByTagName("prixPromo")[i].firstChild.nodeValue;
+                
+                var text = creerModuleProduit(i, src, prixUniteProd, libProd, idProd, promoProd,prixPromo);
                 // El�ment html que l'on va mettre � jour.
                 elt.insertAdjacentHTML("beforeend",text);
             }
@@ -108,18 +110,27 @@ function creerModuleRecette(recetteId, recetteSrc, recetteLib) {
             +"</div>");
 }
 
-function creerModuleProduit(i, src, prixUniteProd, libProd, idProd,promo) {
+function creerModuleProduit(i, src, prixUniteProd, libProd, idProd, promo, prixPromo) {
+    var infoPromo = " ";
+    var promotion = " ";
     if(promo === "nonpromotion"){
         var imgPromo = "";
+        var pu = prixUniteProd+"&#0128";
     }else{
         var imgPromo = "<img src='image/promo.png' class='new' alt='' />";
+        var pu = "<s>" + prixUniteProd + "&#0128</s>";
+        infoPromo = promo;
+        if(prixPromo !== prixUniteProd){
+            var promotion = prixPromo+"&#0128";
+        }       
     }
     return ("<div class='col-sm-4'>"
             + "<div class='product-image-wrapper'>"
             + "<div class='single-products'>"
             + "<div class='productinfo text-center'>"
             + "<div id='image" + i + "'><img src='" + src + "' width=200px hight=150px>"
-            + "<h2>Prix Unitaire: " + prixUniteProd + "&#0128</h2>"
+            + "<p style='color:red;'>"+infoPromo+"</p>"
+            + "<h2>PU: " + pu +" "+ promotion +"</h2>"
             + "<div height='50px'><p>" + libProd + "</p></div></div>"
             + "</div>"
             + "<div class='product-overlay'>"
@@ -244,7 +255,8 @@ function afficherProduits() {
                 var libProd = xhr.responseXML.getElementsByTagName("libProd")[i].firstChild.nodeValue;
                 var idProd = xhr.responseXML.getElementsByTagName("idProd")[i].firstChild.nodeValue;
                 var promoProd = xhr.responseXML.getElementsByTagName("promotionProd")[i].firstChild.nodeValue;
-                var text = creerModuleProduit(i, src, prixUniteProd, libProd, idProd, promoProd);
+                var prixPromo = xhr.responseXML.getElementsByTagName("prixPromo")[i].firstChild.nodeValue;
+                var text = creerModuleProduit(i, src, prixUniteProd, libProd, idProd, promoProd,prixPromo);
                 // El�ment html que l'on va mettre � jour.
                 elt2.insertAdjacentHTML("beforeend", text);
             }
@@ -319,7 +331,8 @@ function rechercher() {
                         var libProd = xhr.responseXML.getElementsByTagName("libProd")[i].firstChild.nodeValue;
                         var idProd = xhr.responseXML.getElementsByTagName("idProd")[i].firstChild.nodeValue;
                         var promoProd = xhr.responseXML.getElementsByTagName("promotionProd")[i].firstChild.nodeValue;
-                        var text = creerModuleProduit(i, src, prixUniteProd, libProd, idProd, promoProd);
+                        var prixPromo = xhr.responseXML.getElementsByTagName("prixPromo")[i].firstChild.nodeValue;               
+                        var text = creerModuleProduit(i, src, prixUniteProd, libProd, idProd, promoProd,prixPromo);
                         // El�ment html que l'on va mettre � jour.
                         elt2.insertAdjacentHTML("beforeend", text);
                     }

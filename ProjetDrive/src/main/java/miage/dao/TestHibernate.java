@@ -283,16 +283,17 @@ public class TestHibernate
             try (Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
                 Transaction t = session.beginTransaction();
                 Produit p = session.get(Produit.class, idP);
+                
                 int libelleProm = p.getProm().getLibelleProm();
                 float pourcentage = p.getProm().getPourcentageProm();
                 if (libelleProm == 1) {
-                    res = pourcentage * 100 + " % sur premier Achete";
+                    res = "Promo: "+ pourcentage * 100 + "%";
                     System.out.println(res);
                 } else if (libelleProm == 2) {
-                    res = pourcentage * 100 + " % sur deuxieme Achete";
+                    res = "Le deuxième à "+pourcentage * 100 + "%";
                     System.out.println(res);
                 } else if (libelleProm == 3) {
-                    res = pourcentage * 100 + " % sur troisieme Achete";
+                    res = "Le troisième à "+pourcentage * 100 + "%";
                     System.out.println(res);
                 }
             } catch (NullPointerException npe) {
@@ -524,6 +525,33 @@ public class TestHibernate
                 economie += 0;
             }
         }
+        return economie;
+    }
+    public static float calculerEconomiePromotionClientUnProd(int idProd) {
+
+        float economie = 0.00f;
+        int libelleProm = 0;
+        try (Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
+                Transaction t = session.beginTransaction();
+                
+                Produit p = session.get(Produit.class, idProd);
+                libelleProm = p.getProm().getLibelleProm();
+                float pu = p.getPrixUnitaireP();
+                float pourcentage = p.getProm().getPourcentageProm();
+                if (libelleProm == 1) {
+                    economie = pu * pourcentage;
+//                    System.out.println("libelleProm == 1: " + economie);
+                } else if (libelleProm == 2) {
+                    economie = pu -(pu * (1-pourcentage)+ pu)/2 ;
+//                    System.out.println("libelleProm == 2: " + economie);
+                } else if (libelleProm == 3) {
+                    economie = pu - (pu * (1-pourcentage)+ 2*pu)/3;
+//                    System.out.println("libelleProm == 3: " + economie);
+                }
+            } catch (NullPointerException npe) {
+                 economie = 0.00f;
+            }
+        
         return economie;
     }
     /*----- Chercher le prix bloqué par les points difilite d'un client pour sa commande-----*/

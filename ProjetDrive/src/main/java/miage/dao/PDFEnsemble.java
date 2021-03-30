@@ -69,7 +69,7 @@ public class PDFEnsemble {
         pdf.saveToFile("src\\facturation.pdf");
         pdf.dispose();
         
-        envoyerEmail(idCli);
+        //envoyerEmail(idCli);
      
      }
 
