@@ -23,6 +23,7 @@ public class Disponibilite {
     private DisponibiliteId dispoId;
     private int nbPlaceTotal;
     private int nbPlaceRest;
+    private Date dateCren;
     
     @ManyToOne
     @JoinColumn(name="idMag",insertable=false,updatable=false)
@@ -82,10 +83,19 @@ public class Disponibilite {
         this.creneaux = creneaux;
     }
 
+    public Date getDateCren() {
+        return dateCren;
+    }
+
+    public void setDateCren(Date dateCren) {
+        this.dateCren = dateCren;
+    }
+
     @Override
     public String toString() {
-        return "Disponibilite{" + "dispoId=" + dispoId + ", nbPlaceTotal=" + nbPlaceTotal + ", nbPlaceRest=" + nbPlaceRest + ", magasins=" + magasins + ", creneaux=" + creneaux + '}';
+        return "Disponibilite{" + "dispoId=" + dispoId + ", nbPlaceTotal=" + nbPlaceTotal + ", nbPlaceRest=" + nbPlaceRest + ", dateCren=" + dateCren + ", magasins=" + magasins + ", creneaux=" + creneaux + '}';
     }
+    
 
     @Override
     public int hashCode() {

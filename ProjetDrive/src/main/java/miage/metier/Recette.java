@@ -28,6 +28,7 @@ public class Recette implements Serializable{
     @Column(name="idRect")        
     private int idRect;
     private String libelleRect;
+    private String MoyenRect;
 
     public Recette() {
     }
@@ -65,6 +66,15 @@ public class Recette implements Serializable{
     public void setNecessiters(Map<Ingredient, Necessiter> necessiters) {
         this.necessiters = necessiters;
     }
+
+    public String getMoyenRect() {
+        return MoyenRect;
+    }
+
+    public void setMoyenRect(String MoyenRect) {
+        this.MoyenRect = MoyenRect;
+    }
+    
 
     @Override
     public int hashCode() {
