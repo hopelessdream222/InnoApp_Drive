@@ -6,6 +6,7 @@ miage\metier\Stocker.class
 metier\action\ServletSupprimerTousProdPanier.class
 metier\action\ServletLirePanier.class
 metier\action\ServletStockerCre.class
+miage\metier\Preferer.class
 miage\metier\StockerId.class
 metier\action\ServletDetailRecette.class
 metier\action\ServletChoisirCreneau.class
@@ -26,6 +27,7 @@ miage\dao\TestHibernate.class
 miage\metier\NecessiterId.class
 miage\metier\Client.class
 miage\metier\Fournir.class
+metier\action\ServletAfficherNb.class
 miage\metier\DisponibiliteId.class
 miage\metier\Ingredient.class
 metier\action\ServletAccueil.class
@@ -34,6 +36,7 @@ miage\metier\Magasin.class
 metier\action\ServletFinaliserPanier.class
 miage\metier\Categorie.class
 miage\dao\PDFEnsemble.class
+miage\metier\PrefererId.class
 miage\metier\Produit.class
 miage\metier\Creneau.class
 metier\action\ServletAfficherSession.class

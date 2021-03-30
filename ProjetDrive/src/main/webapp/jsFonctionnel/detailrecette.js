@@ -49,6 +49,7 @@ function afficheDetailRecette() {
                 elt2.innerHTML = "Bienvenue! " + xhr.responseXML.getElementsByTagName("client")[0].firstChild.nodeValue;
                 document.getElementById("btn_re_ajouter").style.disabled=false;
                 //elt2.insertAdjacentHTML("afterbegin",xhr.responseXML.getElementsByTagName("client")[0].firstChild.nodeValue);
+                
                 afficherQte();
             }
             
@@ -124,19 +125,25 @@ function creerModuleTable (reSrc,recetteLib, text,moyenRec){
 }
 
 function ajouterRecette(){
-    // Objet XMLHttpRequest.
-    var xhr = new XMLHttpRequest();
-    // Requ?te au serveur avec les param?tres ?ventuels.
-    xhr.open("GET", "ServletDetailRecette?method=ajouter");
+    var result = confirm("Vous voulez ajouter cette recette au panier ?");
 
-    // On pr?cise ce que l'on va faire quand on aura re?u la r?ponse du serveur.
-    xhr.onload = function () {
-        // Si la requ?te http s'est bien pass?e.
-        if (xhr.status === 200) {
-            afficherQte();
-        }
-    };
+    if (result){
+        // Objet XMLHttpRequest.
+        var xhr = new XMLHttpRequest();
 
+        // Requ?te au serveur avec les param?tres ?ventuels.
+        xhr.open("GET", "ServletDetailRecette?method=ajouter");
+
+        // On pr?cise ce que l'on va faire quand on aura re?u la r?ponse du serveur.
+        xhr.onload = function () {
+            // Si la requ?te http s'est bien pass?e.
+            if (xhr.status === 200) {
+                var result2 = alert("La recette est bien ajoute dans le panier");
+                afficherQte();
+            }
+        };
+        
+    }
     // Envoie de la requ?te.
     xhr.send();
 }

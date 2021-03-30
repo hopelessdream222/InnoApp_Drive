@@ -225,7 +225,7 @@ function afficherQte() {
     // Objet XMLHttpRequest.
     var xhr = new XMLHttpRequest();
 
-        xhr.open("GET", "ServletAccueil?method=afficherNbPanier");
+        xhr.open("GET", "ServletAfficherNb");
 
         //On précise ce que l'on va faire quand on aura reçu la réponse du serveur.
         xhr.onload = function () {

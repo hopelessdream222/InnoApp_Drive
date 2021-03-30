@@ -272,7 +272,7 @@ public class TestHibernate
             Map<Ingredient, Necessiter> m = r.getNecessiters();
             Ingredient ing = session.get(Ingredient.class, idIng);
             float qte=m.get(ing).getQteRI();
-            Query query = session.createQuery("from Produit where idIng=:Ing and prixUnitaireP/prixKGP >:n order by prixUnitaireP/prixKGP ASC, prixUnitaireP ASC");
+            Query query = session.createQuery("from Produit where idIng=:Ing and prixUnitaireP/prixKGP >=:n order by prixUnitaireP/prixKGP ASC, prixUnitaireP ASC");
             query.setParameter("Ing", idIng);
             query.setParameter("n", qte);
             List<Produit> liste = query.list();

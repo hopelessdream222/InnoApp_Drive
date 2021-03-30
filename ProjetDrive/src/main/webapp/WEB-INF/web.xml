@@ -57,10 +57,6 @@
         <servlet-class>metier.action.ServletChoisirCreneau</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ServletFinaliserPanier</servlet-name>
-        <servlet-class>metier.action.ServletFinaliserPanier</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>ServletGenererCommande</servlet-name>
         <servlet-class>metier.action.ServletGenererCommande</servlet-class>
     </servlet>
@@ -83,6 +79,14 @@
     <servlet>
         <servlet-name>ServletAccueil</servlet-name>
         <servlet-class>metier.action.ServletAccueil</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServletAfficherNb</servlet-name>
+        <servlet-class>metier.action.ServletAfficherNb</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServletFinaliserPanier</servlet-name>
+        <servlet-class>metier.action.ServletFinaliserPanier</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Accueil</servlet-name>
@@ -141,10 +145,6 @@
         <url-pattern>/ServletChoisirCreneau</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ServletFinaliserPanier</servlet-name>
-        <url-pattern>/ServletFinaliserPanier</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>ServletGenererCommande</servlet-name>
         <url-pattern>/ServletGenererCommande</url-pattern>
     </servlet-mapping>
@@ -167,6 +167,14 @@
     <servlet-mapping>
         <servlet-name>ServletAccueil</servlet-name>
         <url-pattern>/ServletAccueil</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletAfficherNb</servlet-name>
+        <url-pattern>/ServletAfficherNb</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletFinaliserPanier</servlet-name>
+        <url-pattern>/ServletFinaliserPanier</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

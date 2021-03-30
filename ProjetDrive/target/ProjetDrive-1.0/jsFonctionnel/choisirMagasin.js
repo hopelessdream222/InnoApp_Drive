@@ -79,6 +79,6 @@ function choisirMag(){
  */
 document.addEventListener("DOMContentLoaded", () => {
 
-    document.getElementById("btnChoisirMag").addEventListener("click",choisirMag);
+    //document.getElementById("btnChoisirMag").addEventListener("click",choisirMag);
 });
 

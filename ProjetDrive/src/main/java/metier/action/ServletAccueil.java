@@ -50,14 +50,11 @@ public class ServletAccueil extends HttpServlet {
             case "afficherProdParRecherche":
                 afficherProdParRecherche(request, response);
                 break;
-            case "choisirRecette":
+            case "ChoisirRecette":
                 choisirRecette(request,response);
                 break;
             case "rechercherCate":
                 rechercherCate(request,response);
-                break;
-            case "afficherNbPanier":
-                afficherNbPanier(request,response);
                 break;
             case "ajouterPanier":
                 ajouterPanier(request,response);
@@ -276,37 +273,6 @@ public class ServletAccueil extends HttpServlet {
         }
     }
     
-    protected void afficherNbPanier(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
-        /*----- Type de la réponse -----*/
-        response.setContentType("application/xml;charset=UTF-8");
-        response.setCharacterEncoding("UTF-8");
-        try (PrintWriter out = response.getWriter()){
-            /*----- Ecriture de la page XML -----*/
-            out.println("<?xml version=\"1.0\"?>");
-            out.println("<liste_produit>");
- 
-            /*----- Récupération le session de client -----*/
-            HttpSession s = request.getSession();
-            if(s.getAttribute("client")!=null){
-                Client client = (Client)s.getAttribute("client");
-                
-                int quantitePanier = miage.dao.TestHibernate.chercherQuantitePanierClient(client.getIdCli());
-                out.println("<client>"+client.getEmailCli()+"</client><quantitePanier>"+quantitePanier+"</quantitePanier>");
-                System.out.println("****************"+quantitePanier);
-
-                
-            }else{
-                //System.out.println("-------");
-                //System.out.println("****************"+client.getNomCli());
-                out.println("<client>horsConnection</client>");
-            }
-            
-       
-            
-            out.println("</liste_produit>");
-        }
-    } 
-   
     protected void ajouterPanier(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         /*----- Type de la rÃponse -----*/
         response.setContentType("application/xml;charset=UTF-8");

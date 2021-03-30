@@ -42,6 +42,7 @@ public class Produit {
     private String tailleReferenceP;
     private String compositionP;
 
+
     
     // Relation <Appartenir>
     @ManyToOne(fetch =FetchType.EAGER) 
@@ -72,6 +73,12 @@ public class Produit {
     @ManyToOne(fetch =FetchType.EAGER)
     @JoinColumn(name = "idIng")
     private Ingredient ingredient;
+    
+    // Relation <Preferer>
+    @OneToMany(mappedBy = "produit",cascade=CascadeType.ALL)
+    @MapKeyJoinColumn(name = "idCli")
+    private Map<Client, Preferer> preference=new HashMap(0);
+
 
     public Produit() {
     }
@@ -89,6 +96,23 @@ public class Produit {
         this.categorieP = categorieP;
     }
 
+    public Produit(int idP, String libelleP, float prixUnitaireP, float prixKGP, String nutriScoreP, Blob photoP, String labelP, String formatP, String conditionnementP, String tailleReferenceP, String compositionP, Categorie categorieP, Promotion Prom, Ingredient ingredient) {
+        this.idP = idP;
+        this.libelleP = libelleP;
+        this.prixUnitaireP = prixUnitaireP;
+        this.prixKGP = prixKGP;
+        this.nutriScoreP = nutriScoreP;
+        this.photoP = photoP;
+        this.labelP = labelP;
+        this.formatP = formatP;
+        this.conditionnementP = conditionnementP;
+        this.tailleReferenceP = tailleReferenceP;
+        this.compositionP = compositionP;
+        this.categorieP = categorieP;
+        this.Prom = Prom;
+        this.ingredient = ingredient;
+    }
+
     public int getIdP() {
         return idP;
     }
@@ -97,6 +121,14 @@ public class Produit {
         this.idP = idP;
     }
 
+    public Map<Client, Preferer> getPreference() {
+        return preference;
+    }
+
+    public void setPreference(Map<Client, Preferer> preference) {
+        this.preference = preference;
+    }
+    
     public String getLibelleP() {
         return libelleP;
     }

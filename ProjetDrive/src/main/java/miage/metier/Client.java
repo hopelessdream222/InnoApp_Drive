@@ -5,7 +5,9 @@
  */
 package miage.metier;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -15,6 +17,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.MapKeyJoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
@@ -34,14 +37,21 @@ public class Client {
     private String mdpCli;
     private String telCli;
     private int pointCli;
-    
+
+  
     // relation <Passer>
     @OneToMany(mappedBy = "clientCmd", cascade= CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Commande> commandes = new HashSet<>(0);
-
+    
+    // Relation <Posseder>
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="panier_fk")
     private Panier panier;
+    
+    // Relation <Preferer>
+    @OneToMany(mappedBy = "client",cascade=CascadeType.ALL)
+    @MapKeyJoinColumn(name = "idP")
+    private Map<Produit,Preferer> preferences=new HashMap<>(0);
         
     public Client() {
     }
@@ -64,6 +74,19 @@ public class Client {
         this.telCli = telCli;
         this.pointCli = pointCli;
     }
+
+    public Client(int idCli, String nomCli, String prenomCli, String emailCli, String mdpCli, String telCli, int pointCli, Panier panier) {
+        this.idCli = idCli;
+        this.nomCli = nomCli;
+        this.prenomCli = prenomCli;
+        this.emailCli = emailCli;
+        this.mdpCli = mdpCli;
+        this.telCli = telCli;
+        this.pointCli = pointCli;
+        this.panier = panier;
+    }
+    
+    
 
     public String getMdpCli() {
         return mdpCli;
@@ -104,7 +127,15 @@ public class Client {
     public void setEmailCli(String emailCli) {
         this.emailCli = emailCli;
     }
+    
+    public Map<Produit, Preferer> getPreferences() {
+        return preferences;
+    }
 
+    public void setPreferences(Map<Produit, Preferer> preferences) {
+        this.preferences = preferences;
+    }
+    
     public String getTelCli() {
         return telCli;
     }
