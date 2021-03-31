@@ -130,11 +130,13 @@ public class ServletAccueil extends HttpServlet {
         List<String> labels = miage.dao.TestHibernate.afficherLabels(produit.getLabelP());
         System.out.println("label:"+labels);
         if(labels.size() != 0){
+            infoProd = infoProd + "<label>";
             for (String srcLabel : labels){
-                if(!srcLabel.isEmpty()){
-                    infoProd = infoProd + "<label><srcLabel>image/labelscore/" + srcLabel +".jpg</srcLabel></label>";    
+                if(!srcLabel.isEmpty()){ 
+                    infoProd = infoProd + "<srcLabel>image/labelscore/" + srcLabel +".jpg</srcLabel>";    
                 }
-            }    
+            }
+            infoProd = infoProd + "</label>";
         }else{
             infoProd = infoProd + "<label><srcLabel>nonlabel</srcLabel></label>";
         }           
