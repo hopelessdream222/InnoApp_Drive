@@ -152,7 +152,7 @@ function ajouterListe(){
                 lstDeroulante = lstDeroulante+"<option name ='ing' value='"+xhr.responseXML.getElementsByTagName("idIng")[i].firstChild.nodeValue+"'>"
                     +xhr.responseXML.getElementsByTagName("libIng")[i].firstChild.nodeValue+"</option>";
             }
-            lstDeroulante = lstDeroulante+"</select><button id='btnAjouterPostIt'>Ajouter</button>";
+            lstDeroulante = lstDeroulante+"</select><br/><button class='btn' id='btnAjouterPostIt'>Ajouter</button>";
             //inserer la liste derouante a HTML
             var elt = document.getElementById("post-it-context");
             
@@ -166,7 +166,7 @@ function ajouterListe(){
 }
 //fonction pour ajouter un post-it a une liste de courses
 function ajouterPostIt(idIng){
-    alert(idIng);
+    alert("id111111"+idIng);
 //    xhr.open("GET", "ServletListeCourses?method=AjouterListeCourses&nomLst="+nomLst);
 //    // On pr?cise ce que l'on va faire quand on aura re?u la r?ponse du serveur.
 //    xhr.onload = function () {
