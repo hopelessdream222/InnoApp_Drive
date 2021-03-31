@@ -52,6 +52,9 @@ public class Client {
     @OneToMany(mappedBy = "client",cascade=CascadeType.ALL)
     @MapKeyJoinColumn(name = "idP")
     private Map<Produit,Preferer> preferences=new HashMap<>(0);
+    
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<ListeCourse> listecourses = new HashSet<>(0);
         
     public Client() {
     }
@@ -166,6 +169,14 @@ public class Client {
 
     public void setPanier(Panier panier) {
         this.panier = panier;
+    }
+
+    public Set<ListeCourse> getListecourses() {
+        return listecourses;
+    }
+
+    public void setListecourses(Set<ListeCourse> listecourses) {
+        this.listecourses = listecourses;
     }
     
 

@@ -43,7 +43,7 @@ public class HibernateUtil
             configuration.addAnnotatedClass(miage.metier.StockerId.class); 
             configuration.addAnnotatedClass(miage.metier.Stocker.class);
             configuration.addAnnotatedClass(miage.metier.Comporter.class); 
-            configuration.addAnnotatedClass(miage.metier.ComporterId.class);  
+            configuration.addAnnotatedClass(miage.metier.ComporterId.class);
             configuration.addAnnotatedClass(miage.metier.Promotion.class); 
             configuration.addAnnotatedClass(miage.metier.Creneau.class);
             configuration.addAnnotatedClass(miage.metier.Disponibilite.class);
@@ -55,6 +55,12 @@ public class HibernateUtil
             configuration.addAnnotatedClass(miage.metier.Panier.class); 
             configuration.addAnnotatedClass(miage.metier.PrefererId.class);
             configuration.addAnnotatedClass(miage.metier.Preferer.class);
+            configuration.addAnnotatedClass(miage.metier.ListeCourse.class);
+            configuration.addAnnotatedClass(miage.metier.Concerner.class);
+            configuration.addAnnotatedClass(miage.metier.ConcernerId.class);
+            configuration.addAnnotatedClass(miage.metier.ComposerId.class);
+            configuration.addAnnotatedClass(miage.metier.Composer.class);
+            
 
             ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
             System.out.println("Hibernate serviceRegistry created");

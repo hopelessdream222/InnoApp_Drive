@@ -7,6 +7,7 @@ package miage.metier;
 
 import java.sql.Blob;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -79,6 +80,11 @@ public class Produit {
     @MapKeyJoinColumn(name = "idCli")
     private Map<Client, Preferer> preference=new HashMap(0);
 
+    // Relation <Concerner>
+    @OneToMany(mappedBy = "produit",cascade=CascadeType.ALL)
+    @MapKeyJoinColumn(name = "idListe")
+    private Map<ListeCourse, Concerner> concerner=new HashMap(0);
+    
 
     public Produit() {
     }
@@ -256,6 +262,15 @@ public class Produit {
     public void setIngredient(Ingredient ingredient) {
         this.ingredient = ingredient;
     }
+
+    public Map<ListeCourse, Concerner> getConcerner() {
+        return concerner;
+    }
+
+    public void setConcerner(Map<ListeCourse, Concerner> concerner) {
+        this.concerner = concerner;
+    }
+    
 
     @Override
     public String toString() {

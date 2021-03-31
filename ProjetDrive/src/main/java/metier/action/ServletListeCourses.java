@@ -18,6 +18,7 @@ import javax.ws.rs.core.Request;
 import miage.dao.TestHibernate;
 import miage.metier.Categorie;
 import miage.metier.Client;
+import miage.metier.ListeCourse;
 import miage.metier.Produit;
 import miage.metier.Rayon;
 import miage.metier.Recette;
@@ -45,94 +46,70 @@ public class ServletListeCourses extends HttpServlet {
                 afficherListeCourses(request, response);
                 break;
             case "AjouterListeCourses":
+                System.out.println("jin case le");
                 AjouterListeCourses(request, response);
                 break;
-            
-                    
-        }
-        
-    }
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected String creerModuleProduit(Produit produit){
-        String infoProd = "";
-        //id, reporatoire de l'image,libelle, format, prix unitaire, prix kg
-        infoProd = "<idProd>"+produit.getIdP()+"</idProd>"+
-                "<libProd>"+produit.getLibelleP()+"</libProd>"+
-                "<src>image/" + produit.getIdP() +".jpg</src>"+
-                "<formatProd>"+produit.getFormatP()+"</formatProd>"+
-                "<prixKGProd>"+produit.getPrixKGP()+"</prixKGProd>"+
-                "<prixUniteProd>"+produit.getPrixUnitaireP()+"</prixUniteProd>";
-        
-        //information de promotion et prix après la promo 
-        Float economie = miage.dao.TestHibernate.calculerEconomiePromotionClientUnProd(produit.getIdP());
-        System.out.println(produit.getIdP()+"- economie"+economie);
-        String prixPromo = "nonPrixPromo";
-        String infoPromo = "nonpromotion";
-        //si un produit a une promotion
-        if(economie != 0){
-            Float prixPromoLong = produit.getPrixUnitaireP()-economie;
-            DecimalFormat df= new  DecimalFormat( "0.00" ); 
-
-            prixPromo = df.format(prixPromoLong);
-            infoPromo = miage.dao.TestHibernate.chercherProduitPromotion(produit.getIdP());
-        }
-        infoProd = infoProd + "<prixPromo>"+prixPromo+"</prixPromo>"+
-                            "<promotionProd>"+infoPromo+"</promotionProd>";
-        
-        //nutriScore d'un produit
-       if(!produit.getNutriScoreP().isEmpty()){
-            infoProd = infoProd + "<srcNutriScore>image/labelscore/" + produit.getNutriScoreP() +".jpg</srcNutriScore>";
-        }else{
-           infoProd = infoProd + "<srcNutriScore>nonNS</srcNutriScore>";
-        }
-        
-        //composition, taille de référence et conditionnement
-        String compo = "noncomposition";
-        String tailleRef = "nontaille";
-        String cond = "noncoditionnement";
-        
-        if(produit.getCompositionP() != null){
-            compo = produit.getCompositionP();
-        }
-        if(produit.getTailleReferenceP() != null){
-            tailleRef = produit.getTailleReferenceP();
-        }
-        if(produit.getConditionnementP() != null){
-            cond = produit.getConditionnementP();
-        }
-        infoProd = infoProd +"<compositionProd>"+compo+"</compositionProd>"+
-                              "<tailleProd>"+tailleRef+"</tailleProd>"+
-                              "<condProd>"+cond+"</condProd>";        
-        
-        //labels d'un produit
-        List<String> labels = miage.dao.TestHibernate.afficherLabels(produit.getLabelP());
-        System.out.println("label:"+labels);
-        if(labels.size() != 0){
-            for (String srcLabel : labels){
-                if(!srcLabel.isEmpty()){
-                    infoProd = infoProd + "<label><srcLabel>image/labelscore/" + srcLabel +".jpg</srcLabel></label>";    
-                }
-            }    
-        }else{
-            infoProd = infoProd + "<label><srcLabel>nonlabel</srcLabel></label>";
-        }           
-        
-        return infoProd;
-    }
-    protected void afficherListeCourses(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
        
+        }
+        
+    }
+    
+    protected void afficherListeCourses(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+        /*----- Type de la réponse -----*/
+        response.setContentType("application/xml;charset=UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        try (PrintWriter out = response.getWriter()){
+            /*----- Ecriture de la page XML -----*/
+            out.println("<?xml version=\"1.0\"?>");
+            out.println("<liste_produit>");
+ 
+            /*----- Récupération le session de client -----*/
+            HttpSession s = request.getSession();
+            Client client = (Client)s.getAttribute("client");
+            out.println("<client>"+client.getEmailCli()+"</client>");
+            /*----- Lecture de liste de mots dans la BD -----*/
+
+            List<ListeCourse> lListeCourse = miage.dao.TestHibernate.chercherListeCourseClient(client.getIdCli());  
+            
+            for (ListeCourse lc : lListeCourse){
+                out.println("<lcLib>" + lc.getLibelleListe() +"</lcLib><idLc>" + lc.getIdListe() +"</idLc>");                
+                System.out.println("<lcLib>" + lc.getLibelleListe() +"</lcLib><idLc>" + lc.getIdListe() +"</idLc>");
+            }
+           
+            out.println("</liste_produit>");
+        }
     }
     
     protected void AjouterListeCourses(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
-       
+         String nomLst = (String)request.getParameter("nomLst");
+        System.out.println("____________"+nomLst);
+        /*----- Type de la réponse -----*/
+        response.setContentType("application/xml;charset=UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        try (PrintWriter out = response.getWriter()){
+            /*----- Ecriture de la page XML -----*/
+            out.println("<?xml version=\"1.0\"?>");
+            out.println("<Liste>");
+ 
+            /*----- Inserer une liste de course dans la BD -----*/
+            
+            out.println("<insertion>reussi</insertion>");
+            out.println("<insertion>echec</insertion>");
+            
+             /*----- Récupération le session de client -----*/
+            HttpSession s = request.getSession();
+            if(s.getAttribute("client")!=null){
+                Client client = (Client)s.getAttribute("client");
+                out.println("<client>"+client.getEmailCli()+"</client>");
+                TestHibernate.insertListeCoursesClient(client.getIdCli(),nomLst);
+                System.out.println("reussi222222222222");
+            }else{
+                out.println("<client>horsConnection</client>");
+            }
+            
+            out.println("</Liste>");
+            
+        }
     }
 
     /**

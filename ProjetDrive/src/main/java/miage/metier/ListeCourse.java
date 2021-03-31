@@ -39,7 +39,12 @@ public class ListeCourse {
     // Relation <Concerner>
     @OneToMany(mappedBy = "listecourse",cascade=CascadeType.ALL)
     @MapKeyJoinColumn(name = "idP")
-    private Map<Produit, Concerner> concerner=new HashMap(0);  
+    private Map<Produit, Concerner> concerner=new HashMap(0); 
+    
+    // Relation <Composer>
+    @OneToMany(mappedBy = "listeCourse",cascade=CascadeType.ALL)
+    @MapKeyJoinColumn(name = "idIng")
+    private Map<Ingredient, Composer> composers=new HashMap(0);
 
     public ListeCourse() {
     }
@@ -81,6 +86,15 @@ public class ListeCourse {
         this.concerner = concerner;
     }
 
+    public Map<Ingredient, Composer> getComposers() {
+        return composers;
+    }
+
+    public void setComposers(Map<Ingredient, Composer> composers) {
+        this.composers = composers;
+    }
+
+    
     @Override
     public String toString() {
         return "ListeCourse{" + "idListe=" + idListe + ", libelleListe=" + libelleListe + ", client=" + client + ", concerner=" + concerner + '}';

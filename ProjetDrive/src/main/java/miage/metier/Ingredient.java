@@ -41,9 +41,14 @@ public class Ingredient implements Serializable{
     
     
     // Relation <Necessiter>
-    @OneToMany(mappedBy = "ingredient",cascade=CascadeType.ALL)
+    @OneToMany(mappedBy = "ingredient", cascade = CascadeType.ALL)
     @MapKeyJoinColumn(name = "idRect")
-    private Map<Recette, Necessiter> necessiters=new HashMap(0);
+    private Map<Recette, Necessiter> necessiters = new HashMap(0);
+    
+    // Relation <Composer>
+    @OneToMany(mappedBy = "ingredient", cascade = CascadeType.ALL)
+    @MapKeyJoinColumn(name = "idListe")
+    private Map<ListeCourse, Composer> composers = new HashMap(0);
 
     public Ingredient() {
     } 
@@ -91,6 +96,14 @@ public class Ingredient implements Serializable{
 
     public void setUnitedMesureIng(String UnitedMesureIng) {
         this.UnitedMesureIng = UnitedMesureIng;
+    }
+
+    public Map<ListeCourse, Composer> getComposers() {
+        return composers;
+    }
+
+    public void setComposers(Map<ListeCourse, Composer> composers) {
+        this.composers = composers;
     }
 
     @Override

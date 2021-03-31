@@ -2573,4 +2573,14 @@ h2.title {
     background-color:orange;
     color:white;
 }
-
+.post-it{
+    color:white;
+    border-radius:25px;
+    padding:20px;
+    margin-bottom: 20px;
+    width:180px;
+    height:150px;
+    background-color: orange; 
+    text-align: center;
+    font-size: 17px;
+}

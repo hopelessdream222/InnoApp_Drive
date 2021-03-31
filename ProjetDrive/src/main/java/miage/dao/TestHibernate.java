@@ -26,6 +26,7 @@ import miage.metier.Disponibilite;
 import miage.metier.Ingredient;
 import miage.metier.LigneCommande;
 import miage.metier.LigneCommandeId;
+import miage.metier.ListeCourse;
 import miage.metier.Magasin;
 import miage.metier.Necessiter;
 import miage.metier.Panier;
@@ -605,25 +606,48 @@ public class TestHibernate
             return listeRes;
         }
     }
-	/**
-	 * Affichage d'une liste de tableaux d'objets.
-	 */
-	private static void affichage (List l)
-		{
-		Iterator e = l.iterator();
-		while (e.hasNext())
-			{
-			Object[] tab_obj = ((Object[]) e.next());
-
-			for (Object obj : tab_obj)
-				System.out.print(obj + " ");
-
-			System.out.println("");
-			}
-		}
+    public static void insertListeCoursesClient(int idCli, String lib) {
+        try ( Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
+            /*----- Ouverture d'une transaction -----*/
+            Transaction t = session.beginTransaction();
+            Client c = session.get(Client.class, idCli);
+            ListeCourse l = new ListeCourse(lib,c);
+//            Set<ListeCourse> lstC=c.getListecourses();
+//            lstC.add(l);
+            session.save(l);
+            t.commit(); 
+        }
+    }
+    public static List<ListeCourse> chercherListeCourseClient(int idCli) {
+        try ( Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
+            /*----- Ouverture d'une transaction -----*/
+            Transaction t = session.beginTransaction();
+            Client c = session.get(Client.class, idCli);
+            Set<ListeCourse> lstC=c.getListecourses();
+            List<ListeCourse> lstCourse=new ArrayList<>();
+            for(ListeCourse lc:lstC){
+                //System.out.println(lc.getLibelleListe());
+                lstCourse.add(lc);
+            }
+            return lstCourse;
+        }
+    }
     
-    
-     
+    public static List<Ingredient> obtenirIngredient() {
+        List<Ingredient> lstIng=new ArrayList<>();
+        /*----- Ouverture de la session -----*/
+        try ( Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
+            /*----- Ouverture d'une transaction -----*/
+            Transaction t = session.beginTransaction();
+            List<Ingredient> liste = session.createQuery("from Ingredient").list();
+            for (int i = 0; i < liste.size(); i++) {
+                Ingredient Ing = session.get(Ingredient.class, liste.get(i).getIdIng());
+                //System.out.println("Ingredient: " + Ing.getIdIng());
+                lstIng.add(Ing);
+            }
+        }
+         return lstIng;
+    }
     /**
      * Programme de test.
      */
