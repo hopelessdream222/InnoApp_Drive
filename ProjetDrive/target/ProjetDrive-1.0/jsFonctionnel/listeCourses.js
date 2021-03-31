@@ -107,9 +107,33 @@ function afficherQte() {
     // Envoie de la requ?te.
     xhr.send();
 }
-
+//function creerListeDeroulante(){
+//    var lstDeroulante = "";
+//    // Objet XMLHttpRequest.
+//    var xhr = new XMLHttpRequest();
+//    // Requete au serveur avec les param?tres ?ventuels.
+//    xhr.open("GET", "ServletListeCourses?method=ObtenirPostIts");
+//    // On pr?cise ce que l'on va faire quand on aura re?u la r?ponse du serveur.
+//    xhr.onload = function () {
+//        // Si la requ?te http s'est bien pass?e.
+//        if (xhr.status === 200) {
+//            lstDeroulante = "<select id='lstDeroulante'>";
+//            var tabIng = xhr.responseXML.getElementsByTagName("libIng");
+//            for(i=0; i<tabIng.length; i++){
+//                lstDeroulante = lstDeroulante+"<option name ='ing' id='"+xhr.responseXML.getElementsByTagName("idIng")[i].firstChild.nodeValue+"'>"
+//                    +xhr.responseXML.getElementsByTagName("libIng")[i].firstChild.nodeValue+"</option>";
+//            }
+//            lstDeroulante = lstDeroulante+"</select>";
+//            console.log(lstDeroulante);
+//        }
+//    }; 
+//    xhr.send();
+//    return lstDeroulante;
+//}
 function ajouterListe(){
     //r?cup?rer le nom de la liste
+    //var listeDeroulante = creerListeDeroulante();
+    //console.log(listeDeroulante);
     var nomLst = document.getElementById("zonSaisiListe").value;
     // Objet XMLHttpRequest.
     var xhr = new XMLHttpRequest();
@@ -120,26 +144,59 @@ function ajouterListe(){
     xhr.onload = function () {
         // Si la requ?te http s'est bien pass?e.
         if (xhr.status === 200) {
-            alert("+++++++++++++++++++");
+            alert("200");
+            //obtenir liste deroulante
+            lstDeroulante = "<select id='lstDeroulante'>";
+            var tabIng = xhr.responseXML.getElementsByTagName("libIng");
+            for(i=0; i<tabIng.length; i++){
+                lstDeroulante = lstDeroulante+"<option name ='ing' value='"+xhr.responseXML.getElementsByTagName("idIng")[i].firstChild.nodeValue+"'>"
+                    +xhr.responseXML.getElementsByTagName("libIng")[i].firstChild.nodeValue+"</option>";
+            }
+            lstDeroulante = lstDeroulante+"</select><button id='btnAjouterPostIt'>Ajouter</button>";
+            //inserer la liste derouante a HTML
             var elt = document.getElementById("post-it-context");
-            afficherListeGauche();
-            var text = creerModulePostIt("wuwuwu");
             
-            elt.insertAdjacentHTML("beforeend",text);
+            elt.insertAdjacentHTML("beforeend",creerModulePostIt(lstDeroulante));
+            document.getElementById("btnAjouterPostIt").disabled = true;
+            document.getElementById("lstDeroulante").addEventListener("change", verifierListeChoisie);
+            
         }
     }; 
     xhr.send();
 }
-
-function creerModulePostIt(libPostIt) {
-    return ("<div class='col-sm-4><div class='post-it'>"+libPostIt+"</div></div>");
+//fonction pour ajouter un post-it a une liste de courses
+function ajouterPostIt(idIng){
+    alert(idIng);
+//    xhr.open("GET", "ServletListeCourses?method=AjouterListeCourses&nomLst="+nomLst);
+//    // On pr?cise ce que l'on va faire quand on aura re?u la r?ponse du serveur.
+//    xhr.onload = function () {
+//        // Si la requ?te http s'est bien pass?e.
+//        if (xhr.status === 200) {
+//           
+//        }
+//    }; 
+//    xhr.send();
 }
+function creerModulePostIt(libPostIt) {
+    return ("<div class='col-sm-4'><div class='post-it'>"+libPostIt+"</div></div>");
+}
+function verifierListeChoisie(){
+        //determiner si la liste deroulante a ete choisie ou pas
+//        var mySelect = document.getElementById("lstDeroulante");
+        var index = this.selectedIndex;
+        console.log("selected index"+index);
 
+        document.getElementById("btnAjouterPostIt").disabled = false;
+        var idIng = this.options[index].value;
+        document.getElementById("btnAjouterPostIt").addEventListener("click", function(){ajouterPostIt(idIng);});
+        
+}
 /**
  * Lancement apr?s le chargement du DOM.
  */
 document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("btnAjouterListe").addEventListener("click", ajouterListe);
+    
 });
 
 

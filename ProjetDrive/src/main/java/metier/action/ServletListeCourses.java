@@ -18,6 +18,7 @@ import javax.ws.rs.core.Request;
 import miage.dao.TestHibernate;
 import miage.metier.Categorie;
 import miage.metier.Client;
+import miage.metier.Ingredient;
 import miage.metier.ListeCourse;
 import miage.metier.Produit;
 import miage.metier.Rayon;
@@ -47,11 +48,9 @@ public class ServletListeCourses extends HttpServlet {
                 break;
             case "AjouterListeCourses":
                 System.out.println("jin case le");
-                AjouterListeCourses(request, response);
+                AjouterListeCourses(request, response);                
                 break;
-       
-        }
-        
+        }   
     }
     
     protected void afficherListeCourses(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
@@ -90,11 +89,6 @@ public class ServletListeCourses extends HttpServlet {
             /*----- Ecriture de la page XML -----*/
             out.println("<?xml version=\"1.0\"?>");
             out.println("<Liste>");
- 
-            /*----- Inserer une liste de course dans la BD -----*/
-            
-            out.println("<insertion>reussi</insertion>");
-            out.println("<insertion>echec</insertion>");
             
              /*----- Récupération le session de client -----*/
             HttpSession s = request.getSession();
@@ -103,12 +97,36 @@ public class ServletListeCourses extends HttpServlet {
                 out.println("<client>"+client.getEmailCli()+"</client>");
                 TestHibernate.insertListeCoursesClient(client.getIdCli(),nomLst);
                 System.out.println("reussi222222222222");
-            }else{
-                out.println("<client>horsConnection</client>");
+         
             }
-            
+            //obtenir liste ingredient
+            List<Ingredient> lstIng = TestHibernate.obtenirIngredient();
+            for(Ingredient ing : lstIng){
+                out.println("<libIng>"+ing.getLibelleIng()+"</libIng>"+
+                            "<idIng>"+ing.getIdIng()+"</idIng>");
+                System.out.println("lib ing "+ing.getLibelleIng());
+            }
             out.println("</Liste>");
             
+        }
+    }
+    
+    protected void ObtenirPostIts(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+        /*----- Type de la réponse -----*/
+        response.setContentType("application/xml;charset=UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        List<Ingredient> lstIng = TestHibernate.obtenirIngredient();
+        try (PrintWriter out = response.getWriter()){
+            /*----- Ecriture de la page XML -----*/
+            out.println("<?xml version=\"1.0\"?>");
+            out.println("<Liste_ing>");
+            /*----- Inserer une liste de course dans la BD -----*/
+            for(Ingredient ing : lstIng){
+                out.println("<libIng>"+ing.getLibelleIng()+"</libIng>");
+                System.out.println("lib ing "+ing.getLibelleIng());
+            }
+            
+            out.println("</Liste_ing>");   
         }
     }
 
