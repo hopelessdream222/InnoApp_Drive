@@ -152,7 +152,7 @@ function ajouterListe(){
                 lstDeroulante = lstDeroulante+"<option name ='ing' value='"+xhr.responseXML.getElementsByTagName("idIng")[i].firstChild.nodeValue+"'>"
                     +xhr.responseXML.getElementsByTagName("libIng")[i].firstChild.nodeValue+"</option>";
             }
-            lstDeroulante = lstDeroulante+"</select><br/><button class='btn' id='btnAjouterPostIt'>Ajouter</button>";
+            lstDeroulante = lstDeroulante+"</select><br/><br/><button class='btn' id='btnAjouterPostIt'>Ajouter</button>";
             //inserer la liste derouante a HTML
             var elt = document.getElementById("post-it-context");
             
