@@ -88,6 +88,14 @@
         <servlet-name>Accueil</servlet-name>
         <jsp-file>/html/Accueil.html</jsp-file>
     </servlet>
+    <servlet>
+        <servlet-name>ListeCourses</servlet-name>
+        <jsp-file>/html/ListeCourses.html</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>ServletListeCourses</servlet-name>
+        <servlet-class>metier.action.ServletListeCourses</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ServletConnexion</servlet-name>
         <url-pattern>/ServletConnexion</url-pattern>
@@ -175,6 +183,14 @@
     <servlet-mapping>
         <servlet-name>Accueil</servlet-name>
         <url-pattern>/Accueil</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ListeCourses</servlet-name>
+        <url-pattern>/ListeCourses</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletListeCourses</servlet-name>
+        <url-pattern>/ServletListeCourses</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

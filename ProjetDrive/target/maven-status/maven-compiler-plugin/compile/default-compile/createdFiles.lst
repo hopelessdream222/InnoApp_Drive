@@ -10,6 +10,7 @@ miage\metier\Preferer.class
 miage\metier\StockerId.class
 metier\action\ServletDetailRecette.class
 metier\action\ServletChoisirCreneau.class
+miage\metier\ConcernerId.class
 miage\metier\Promotion.class
 miage\dao\HibernateUtil.class
 miage\metier\Necessiter.class
@@ -19,8 +20,10 @@ metier\action\ServletAfficherMagasins.class
 miage\metier\Commande.class
 miage\dao\EnvoyerEmail.class
 metier\action\ServletSupprimerProdPanier.class
+miage\metier\ListeCourse.class
 miage\metier\Fournisseur.class
 metier\action\ServletConnexion.class
+miage\metier\Concerner.class
 miage\metier\FournirId.class
 miage\metier\Recette.class
 miage\dao\TestHibernate.class
