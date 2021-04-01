@@ -1,0 +1,52 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Confirmer</title>
+        <link rel="stylesheet" type="text/css" href="css/Commande.css"/>  
+        <!--<script type="text/javascript" src="newjavascript.js"></script>-->
+        <script type="text/javascript" src="jsFonctionnel/lireCommande.js"></script>
+    </head>
+    <body>
+        <div class="header">
+            <div class="container">
+                <div class="header-title" id="J_miniHeaderTitle">
+                    <h2 style="font-size: 30px;">Confirmer</h2>
+                </div>
+                <div class="topbar-info" id="J_userInfo">   
+                </div>
+            </div>
+        </div>
+        <div class = "retrait">
+            <div class="info left">
+                <div id="magasin"><br/></div>
+                <div id="heure"><br/></div>
+                <div id="date"><br/></div>
+            </div>
+        </div>
+        <div id="car" class="car">
+
+            <div class="head_row hid">
+                <div class="idP left">idP</div>
+                <div class="img left">Photo</div>
+                <div class="name left">Libelle</div>
+                <div class="price left">Prix Unitaire</div>
+                <div class="prixreel left">Nouveau Prix</div>
+                <div class="number left">Qte</div>
+                <div class="subtotal left">Sous-Total</div>
+                <div class="ctrl left">Disponibilite</div>
+            </div>
+
+        </div>
+        <div id="sum_area">
+            <div id="pay_economie">Economie : <span id="price_eco">0</span> euro</div>
+            <div id="point"><input type="checkbox" id="pointf" value="point" checked>Point fidelite : <span id="pointspan">0</span></div>
+        </div>
+        <div id="pied">
+            <a href="Accueil"><button id="valider">Valider</button></a>
+            <a href="Remplacer"><button id="btnremplacer">Remplacer</button></a>
+            <!--<button id="btnremplacer">Remplacer</button>-->
+            <div id="pay_amout">Total : <span id="price_num">0</span> euro</div>
+            <a href="Accueil"><button id="accueil">Page Accueil</button></a>
+        </div>
+    </body>
+</html>
