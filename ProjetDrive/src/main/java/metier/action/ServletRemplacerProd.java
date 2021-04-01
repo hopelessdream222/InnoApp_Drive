@@ -7,6 +7,7 @@ package metier.action;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DecimalFormat;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -68,17 +69,18 @@ public class ServletRemplacerProd extends HttpServlet {
                     List<Produit> lProduits = miage.dao.TestHibernate.chercherProduitRemplacementClient(client.getIdCli(), idp[j],idMag);
                     for (Produit produit : lProduits) {
                         System.out.println("for :" + produit.toString());
-                        out.println("<src>image/produits/" + produit.getIdP() + ".jpg</src><idProd>" + produit.getIdP()
-                                + "</idProd><libProd>" + produit.getLibelleP() + "</libProd>"
-                                + "<formatProd>" + produit.getFormatP() + "</formatProd>"
-                                + "<prixKGProd>" + produit.getPrixKGP() + "</prixKGProd>"
-                                + "<prixUniteProd>" + produit.getPrixUnitaireP() + "</prixUniteProd>");
-                        // Promotion
-                    if (produit.getProm().getIdProm() == 0) {
-                        out.println("<promotionProd> </promotionProd>");
-                    } else {
-                        out.println("<promotionProd>" + produit.getProm().getPourcentageProm() + "</promotionProd>");
-                    }
+                        out.println(creerModuleProduit(produit));
+//                        out.println("<src>image/produits/" + produit.getIdP() + ".jpg</src><idProd>" + produit.getIdP()
+//                                + "</idProd><libProd>" + produit.getLibelleP() + "</libProd>"
+//                                + "<formatProd>" + produit.getFormatP() + "</formatProd>"
+//                                + "<prixKGProd>" + produit.getPrixKGP() + "</prixKGProd>"
+//                                + "<prixUniteProd>" + produit.getPrixUnitaireP() + "</prixUniteProd>");
+//                        // Promotion
+//                    if (produit.getProm().getIdProm() == 0) {
+//                        out.println("<promotionProd> </promotionProd>");
+//                    } else {
+//                        out.println("<promotionProd>" + produit.getProm().getPourcentageProm() + "</promotionProd>");
+//                    }
                     }
                     miage.dao.TestHibernate.supprimerProduitPanier(idCli,idp[j]);
                 }
@@ -86,18 +88,19 @@ public class ServletRemplacerProd extends HttpServlet {
                 int idp = Integer.parseInt(lidp);
                 List<Produit> lProduits = miage.dao.TestHibernate.chercherProduitRemplacementClient(client.getIdCli(), idp,idMag);
                 for (Produit produit : lProduits) {
-                    System.out.println("for :" + produit.toString());
-                    out.println("<src>image/produits/" + produit.getIdP() + ".jpg</src><idProd>" + produit.getIdP()
-                            + "</idProd><libProd>" + produit.getLibelleP() + "</libProd>"
-                            + "<formatProd>" + produit.getFormatP() + "</formatProd>"
-                            + "<prixKGProd>" + produit.getPrixKGP() + "</prixKGProd>"
-                            + "<prixUniteProd>" + produit.getPrixUnitaireP() + "</prixUniteProd>");
-                    // Promotion
-                    if (produit.getProm().getIdProm() == 0) {
-                        out.println("<promotionProd> </promotionProd>");
-                    } else {
-                        out.println("<promotionProd>" + produit.getProm().getPourcentageProm() + "</promotionProd>");
-                    }
+                    out.println(creerModuleProduit(produit));
+//                    System.out.println("for :" + produit.toString());
+//                    out.println("<src>image/produits/" + produit.getIdP() + ".jpg</src><idProd>" + produit.getIdP()
+//                            + "</idProd><libProd>" + produit.getLibelleP() + "</libProd>"
+//                            + "<formatProd>" + produit.getFormatP() + "</formatProd>"
+//                            + "<prixKGProd>" + produit.getPrixKGP() + "</prixKGProd>"
+//                            + "<prixUniteProd>" + produit.getPrixUnitaireP() + "</prixUniteProd>");
+//                    // Promotion
+//                    if (produit.getProm().getIdProm() == 0) {
+//                        out.println("<promotionProd> </promotionProd>");
+//                    } else {
+//                        out.println("<promotionProd>" + produit.getProm().getPourcentageProm() + "</promotionProd>");
+//                    }
                 }
                 miage.dao.TestHibernate.supprimerProduitPanier(idCli,idp);
             }
@@ -106,6 +109,84 @@ public class ServletRemplacerProd extends HttpServlet {
         }
     }
 
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    protected String creerModuleProduit(Produit produit){
+        String infoProd = "";
+        //id, reporatoire de l'image,libelle, format, prix unitaire, prix kg
+        infoProd = "<idProd>"+produit.getIdP()+"</idProd>"+
+                "<libProd>"+produit.getLibelleP()+"</libProd>"+
+                "<src>image/produits/" + produit.getIdP() +".jpg</src>"+
+                "<formatProd>"+produit.getFormatP()+"</formatProd>"+
+                "<prixKGProd>"+produit.getPrixKGP()+"</prixKGProd>"+
+                "<prixUniteProd>"+produit.getPrixUnitaireP()+"</prixUniteProd>";
+        
+        //information de promotion et prix après la promo 
+        Float economie = miage.dao.TestHibernate.calculerEconomiePromotionClientUnProd(produit.getIdP());
+        System.out.println(produit.getIdP()+"- economie"+economie);
+        String prixPromo = "nonPrixPromo";
+        String infoPromo = "nonpromotion";
+        //si un produit a une promotion
+        if(economie != 0){
+            Float prixPromoLong = produit.getPrixUnitaireP()-economie;
+            DecimalFormat df= new  DecimalFormat( "0.00" ); 
+
+            prixPromo = df.format(prixPromoLong);
+            infoPromo = miage.dao.TestHibernate.chercherProduitPromotion(produit.getIdP());
+        }
+        infoProd = infoProd + "<prixPromo>"+prixPromo+"</prixPromo>"+
+                            "<promotionProd>"+infoPromo+"</promotionProd>";
+        
+        //nutriScore d'un produit
+       if(!produit.getNutriScoreP().isEmpty()){
+            infoProd = infoProd + "<srcNutriScore>image/labelscore/" + produit.getNutriScoreP() +".jpg</srcNutriScore>";
+        }else{
+           infoProd = infoProd + "<srcNutriScore>nonNS</srcNutriScore>";
+        }
+        
+        //composition, taille de référence et conditionnement
+        String compo = "noncomposition";
+        String tailleRef = "nontaille";
+        String cond = "noncoditionnement";
+        
+        if(produit.getCompositionP() != null){
+            compo = produit.getCompositionP();
+        }
+        if(produit.getTailleReferenceP() != null){
+            tailleRef = produit.getTailleReferenceP();
+        }
+        if(produit.getConditionnementP() != null){
+            cond = produit.getConditionnementP();
+        }
+        infoProd = infoProd +"<compositionProd>"+compo+"</compositionProd>"+
+                              "<tailleProd>"+tailleRef+"</tailleProd>"+
+                              "<condProd>"+cond+"</condProd>";        
+        
+        //labels d'un produit
+        List<String> labels = miage.dao.TestHibernate.afficherLabels(produit.getLabelP());
+        System.out.println("label:"+labels);
+        if(labels.size() != 0){
+            infoProd = infoProd + "<label>";
+            for (String srcLabel : labels){
+                if(!srcLabel.isEmpty()){ 
+                    infoProd = infoProd + "<srcLabel>image/labelscore/" + srcLabel +".jpg</srcLabel>";    
+                }
+            }
+            infoProd = infoProd + "</label>";
+        }else{
+            infoProd = infoProd + "<label><srcLabel>nonlabel</srcLabel></label>";
+        }           
+        
+        return infoProd;
+    }
+    
     /**
      * Returns a short description of the servlet.
      *

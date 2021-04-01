@@ -13,7 +13,7 @@ function afficherPanier()
         {
 
             var elt2 = document.getElementById("J_userInfo");
-            elt2.innerHTML = "Bonjour " + xhr.responseXML.getElementsByTagName("emailCli")[0].firstChild.nodeValue;
+            elt2.innerHTML = "Bienvenue! " + xhr.responseXML.getElementsByTagName("emailCli")[0].firstChild.nodeValue;
 
 
             // Elément html que l'on va mettre à jour.

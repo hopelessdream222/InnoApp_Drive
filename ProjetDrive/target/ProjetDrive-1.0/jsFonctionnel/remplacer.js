@@ -26,32 +26,35 @@ function afficheDetail() {
                 afficherQte();
             }
             
-            // Obtenir les infos d'un produit
+            //charger les produits
             var elt = document.getElementById("prod_ou_sonDetail");
-            elt.innerHTML = "<h2 class='title text-center' id='nosProds'>NOS PRODUITS</h2>" +
-                    "<div id='produitsTous'>";
-
+            elt.innerHTML = "<h2 class='title text-center' id='nosProds'>NOS PRODUITS</h2>"+
+                            "<div id='produitsTous'>";
             for (var i = 0; i < xhr.responseXML.getElementsByTagName("src").length; i++) {
                 var src = xhr.responseXML.getElementsByTagName("src")[i].firstChild.nodeValue;
                 var prixUniteProd = xhr.responseXML.getElementsByTagName("prixUniteProd")[i].firstChild.nodeValue;
                 var libProd = xhr.responseXML.getElementsByTagName("libProd")[i].firstChild.nodeValue;
                 var idProd = xhr.responseXML.getElementsByTagName("idProd")[i].firstChild.nodeValue;
                 var promoProd = xhr.responseXML.getElementsByTagName("promotionProd")[i].firstChild.nodeValue;
-                var text = creerModuleProduit(i, src, prixUniteProd, libProd, idProd, promoProd);
-                // El�ment html que l'on va mettre � jour.
-                elt.insertAdjacentHTML("beforeend", text);
+                var prixPromo = xhr.responseXML.getElementsByTagName("prixPromo")[i].firstChild.nodeValue;
+                var tabLabel = xhr.responseXML.getElementsByTagName("label")[i];
+                //determiner si ce produit possede des labels ou pas
+                var srcLabel = "nonlabel";
+                if (tabLabel.getElementsByTagName("srcLabel")[0].firstChild.nodeValue !== "nonlabel") {
+                    srcLabel = "";
+                    for (j = 0; j < tabLabel.getElementsByTagName("srcLabel").length; j++) {
+                        srcLabel = srcLabel + "<img src='" +tabLabel.getElementsByTagName("srcLabel")[j].firstChild.nodeValue + "' width='50px' height='50px'/>";
+                    }
+                }
+                var text = creerModuleProduit(i, src, prixUniteProd, libProd, idProd, promoProd,prixPromo,srcLabel);
+                // Element html que l'on va mettre e jour.
+                elt.insertAdjacentHTML("beforeend",text);
             }
-            elt.insertAdjacentHTML("beforeend", "</div>");
-            
-            // Quand on clique sur le bouton Ajouter au panier
-            var qte1 = 1;
+            elt.insertAdjacentHTML("beforeend","</div>");
             for (var i = 0; i < xhr.responseXML.getElementsByTagName("src").length; i++) {
                 var idProd = xhr.responseXML.getElementsByTagName("idProd")[i].firstChild.nodeValue;
-                document.getElementById("btn_ajouter" + idProd).addEventListener("click", function () {
-                    ajouter(qte1);
-                });
-                document.getElementById("btn_detail" + idProd).addEventListener("click", plusDetail);
-            }
+                document.getElementById("btn_ajouter" + idProd).addEventListener("click", function(){ajouter(1);});               
+            }           
         }
     };
 
@@ -59,19 +62,45 @@ function afficheDetail() {
     xhr.send();
 }
 
-// Module pour afficher chaque produit
-function creerModuleProduit(i, src, prixUniteProd, libProd, idProd, promo) {
-    if (promo === "nonpromotion") {
+/**
+ * structure pour creer un produit
+ * @param {int} i indice d'un produit
+ * @param {String} src repertoire de l'image d'un produit
+ * @param {float} prixUniteProd
+ * @param {String} libProd
+ * @param {int} idProd
+ * @param {String} promo
+ * @param {String} prixPromo
+ * @param {String} srcLabel
+ * @return {String}
+ */
+function creerModuleProduit(i, src, prixUniteProd, libProd, idProd, promo, prixPromo,srcLabel) {
+    var infoPromo = " ";
+    var promotion = " ";
+    
+    console.log(srcLabel);
+    if(srcLabel === "nonlabel"){
+        srcLabel = " ";
+    }
+    console.log(srcLabel);
+    if(promo === "nonpromotion"){
         var imgPromo = "";
-    } else {
+        var pu = prixUniteProd+"&#0128";
+    }else{
         var imgPromo = "<img src='image/promo.png' class='new' alt='' />";
+        var pu = "<s>" + prixUniteProd + "&#0128</s>";
+        infoPromo = promo;
+        if(prixPromo !== prixUniteProd){
+            var promotion = prixPromo+"&#0128";
+        }       
     }
     return ("<div class='col-sm-3'>"
             + "<div class='product-image-wrapper'>"
             + "<div class='single-products'>"
             + "<div class='productinfo text-center'>"
             + "<div id='image" + i + "'><img src='" + src + "' width=200px hight=150px>"
-            + "<h2>Prix Unitaire: " + prixUniteProd + "&#0128</h2>"
+            + "<p style='color:red;'>"+infoPromo+"</p>"
+            + "<h2>PU: " + pu +" "+ promotion +"</h2>"
             + "<div height='50px'><p>" + libProd + "</p></div></div>"
             + "</div>"
             + "<div class='product-overlay'>"
@@ -81,6 +110,7 @@ function creerModuleProduit(i, src, prixUniteProd, libProd, idProd, promo) {
             + "</div>"
             + imgPromo
             + "</div>"
+            +"<div>"+srcLabel+"</div>"
             + "</div>"
             + "</div>");
 }
