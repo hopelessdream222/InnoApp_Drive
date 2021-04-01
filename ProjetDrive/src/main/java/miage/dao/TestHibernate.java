@@ -21,6 +21,9 @@ import miage.metier.Client;
 import miage.metier.Commande;
 import miage.metier.Comporter;
 import miage.metier.ComporterId;
+import miage.metier.Composer;
+import miage.metier.ComposerId;
+import miage.metier.Concerner;
 import miage.metier.Creneau;
 import miage.metier.Disponibilite;
 import miage.metier.Ingredient;
@@ -546,14 +549,16 @@ public class TestHibernate
                 libelleProm = p.getProm().getLibelleProm();
                 float pu = p.getPrixUnitaireP();
                 float pourcentage = p.getProm().getPourcentageProm();
-                if (libelleProm == 1) {
+                if (libelleProm == 0) {
+                    economie = 0;
+                } else if (libelleProm == 1) {
                     economie = pu * (1-pourcentage);
 //                    System.out.println("libelleProm == 1: " + economie);
                 } else if (libelleProm == 2) {
-                    economie = pu-(pu * pourcentage+ pu)/2 ;
+                    economie = pu - (pu * pourcentage+ pu)/2 ;
 //                    System.out.println("libelleProm == 2: " + economie);
                 } else if (libelleProm == 3) {
-                    economie = pu-(pu * pourcentage+ 2*pu)/3;
+                    economie = pu - (pu * pourcentage+ 2*pu)/3;
 //                    System.out.println("libelleProm == 3: " + economie);
                 }
             } catch (NullPointerException npe) {
@@ -647,6 +652,55 @@ public class TestHibernate
             }
         }
          return lstIng;
+    }
+        public static List<Ingredient> obtenirPostitListeCourse(int idListe) {
+        /*----- Ouverture de la session -----*/
+        List<Ingredient> lstIng = new ArrayList<>();
+        try ( Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
+            /*----- Ouverture d'une transaction -----*/
+            Transaction t = session.beginTransaction();
+            ListeCourse lc = session.get(ListeCourse.class, idListe);
+            Map<Ingredient, Composer> m = lc.getComposers();
+            for (Ingredient ing : m.keySet()) {
+                System.out.println(ing.getLibelleIng());
+                lstIng.add(ing);
+            }
+        }
+        return lstIng;
+    }
+        public static String inserPostitListeCourses(int idList, int idInt) {
+        String res = "";
+        List<Ingredient> lstIng = obtenirPostitListeCourse(idList);
+        try ( Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
+            /*----- Ouverture d'une transaction -----*/
+            Transaction t = session.beginTransaction();
+            Ingredient ing = session.get(Ingredient.class, idInt);
+            if (lstIng.contains(ing)) {
+                res = "existe";
+            } else {
+                Composer com = new Composer(new ComposerId(idInt, idList));
+                session.save(com);              
+                t.commit();
+                res="success";
+            }
+        }
+        return res;
+    }
+        
+    public static List<Produit> obtenirProduitListeCourse(int idListe) {
+        /*----- Ouverture de la session -----*/
+        List<Produit> lstP = new ArrayList<>();
+        try ( Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
+            /*----- Ouverture d'une transaction -----*/
+            Transaction t = session.beginTransaction();
+            ListeCourse lc = session.get(ListeCourse.class, idListe);
+            Map<Produit, Concerner> m = lc.getConcerner();
+            for (Produit p : m.keySet()) {
+                System.out.println(p.getLibelleP());
+                lstP.add(p);
+            }
+        }
+        return lstP;
     }
     /**
      * Programme de test.

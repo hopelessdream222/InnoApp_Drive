@@ -8,6 +8,7 @@ package metier.action;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -47,10 +48,26 @@ public class ServletListeCourses extends HttpServlet {
                 afficherListeCourses(request, response);
                 break;
             case "AjouterListeCourses":
-                System.out.println("jin case le");
-                AjouterListeCourses(request, response);                
+                //System.out.println("jin case le");
+                ajouterListeCourses(request, response);
                 break;
-        }   
+            case "AfficherPostIt":
+                //System.out.println("jin case le");
+                afficherPostIt(request, response);
+                break;
+            case "AfficherProduit":
+                //System.out.println("jin case le");
+                afficherProduit(request, response);
+                break;    
+            case "AjouterPostIt":
+                //System.out.println("jin case le");
+                ajouterPostIt(request, response);
+                break;     
+            case "SaisirSession":
+                //System.out.println("jin case le");
+                saisirSession(request, response);
+                break; 
+        }
     }
     
     protected void afficherListeCourses(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
@@ -79,7 +96,7 @@ public class ServletListeCourses extends HttpServlet {
         }
     }
     
-    protected void AjouterListeCourses(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+    protected void ajouterListeCourses(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
          String nomLst = (String)request.getParameter("nomLst");
         System.out.println("____________"+nomLst);
         /*----- Type de la réponse -----*/
@@ -88,7 +105,6 @@ public class ServletListeCourses extends HttpServlet {
         try (PrintWriter out = response.getWriter()){
             /*----- Ecriture de la page XML -----*/
             out.println("<?xml version=\"1.0\"?>");
-            out.println("<Liste>");
             
              /*----- Récupération le session de client -----*/
             HttpSession s = request.getSession();
@@ -99,37 +115,200 @@ public class ServletListeCourses extends HttpServlet {
                 System.out.println("reussi222222222222");
          
             }
+//            //obtenir liste ingredient
+//            List<Ingredient> lstIng = TestHibernate.obtenirIngredient();
+//            for(Ingredient ing : lstIng){
+//                out.println("<libIng>"+ing.getLibelleIng()+"</libIng>"+
+//                            "<idIng>"+ing.getIdIng()+"</idIng>");
+//                System.out.println("lib ing "+ing.getLibelleIng());
+//            }
+//            out.println("</Liste>");
+            
+        }
+    }
+    
+    protected void saisirSession(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+        HttpSession s = request.getSession();
+        Client client = (Client)s.getAttribute("client");
+        
+        List<ListeCourse> lstC = miage.dao.TestHibernate.chercherListeCourseClient(client.getIdCli());        
+            
+        int idLst = Integer.parseInt(request.getParameter("idLst")); 
+        s.setAttribute("Liste", idLst);
+        
+        String libLst = "nonLib";
+        for(ListeCourse l : lstC){
+            if(l.getIdListe() == idLst){
+                libLst = l.getLibelleListe();
+                break;
+            }
+        }
+        
+        try (PrintWriter out = response.getWriter()){
+            /*----- Ecriture de la page XML -----*/
+            out.println("<?xml version=\"1.0\"?>");
+            out.println("<libListe>"+libLst+"</libListe>");
+        }        
+    }
+    
+   
+    protected void afficherProduit(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+        HttpSession s1 = request.getSession();
+        int idLc = (Integer)s1.getAttribute("Liste");
+        /*----- Type de la réponse -----*/
+        response.setContentType("application/xml;charset=UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        try (PrintWriter out = response.getWriter()){
+            /*----- Ecriture de la page XML -----*/
+            out.println("<?xml version=\"1.0\"?>");
+            out.println("<liste_produit>");
+ 
+            /*----- Lecture de liste de mots dans la BD -----*/
+            //Appeler la fonction dans DAO
+            List<Produit> lProduits = miage.dao.TestHibernate.obtenirProduitListeCourse(idLc);
+                    
+            for (Produit produit : lProduits){
+                out.println(creerModuleProduit(produit));
+            }
+                   
+            out.println("</liste_produit>");
+        }
+    }
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    protected String creerModuleProduit(Produit produit){
+        String infoProd = "";
+        //id, reporatoire de l'image,libelle, format, prix unitaire, prix kg
+        infoProd = "<idProd>"+produit.getIdP()+"</idProd>"+
+                "<libProd>"+produit.getLibelleP()+"</libProd>"+
+                "<src>image/" + produit.getIdP() +".jpg</src>"+
+                "<formatProd>"+produit.getFormatP()+"</formatProd>"+
+                "<prixKGProd>"+produit.getPrixKGP()+"</prixKGProd>"+
+                "<prixUniteProd>"+produit.getPrixUnitaireP()+"</prixUniteProd>";
+        
+        //information de promotion et prix après la promo 
+        Float economie = miage.dao.TestHibernate.calculerEconomiePromotionClientUnProd(produit.getIdP());
+        System.out.println(produit.getIdP()+"- economie"+economie);
+        String prixPromo = "nonPrixPromo";
+        String infoPromo = "nonpromotion";
+        //si un produit a une promotion
+        if(economie != 0){
+            Float prixPromoLong = produit.getPrixUnitaireP()-economie;
+            DecimalFormat df= new  DecimalFormat( "0.00" ); 
+
+            prixPromo = df.format(prixPromoLong);
+            infoPromo = miage.dao.TestHibernate.chercherProduitPromotion(produit.getIdP());
+        }
+        infoProd = infoProd + "<prixPromo>"+prixPromo+"</prixPromo>"+
+                            "<promotionProd>"+infoPromo+"</promotionProd>";
+        
+        //nutriScore d'un produit
+       if(!produit.getNutriScoreP().isEmpty()){
+            infoProd = infoProd + "<srcNutriScore>image/labelscore/" + produit.getNutriScoreP() +".jpg</srcNutriScore>";
+        }else{
+           infoProd = infoProd + "<srcNutriScore>nonNS</srcNutriScore>";
+        }
+        
+        //composition, taille de référence et conditionnement
+        String compo = "noncomposition";
+        String tailleRef = "nontaille";
+        String cond = "noncoditionnement";
+        
+        if(produit.getCompositionP() != null){
+            compo = produit.getCompositionP();
+        }
+        if(produit.getTailleReferenceP() != null){
+            tailleRef = produit.getTailleReferenceP();
+        }
+        if(produit.getConditionnementP() != null){
+            cond = produit.getConditionnementP();
+        }
+        infoProd = infoProd +"<compositionProd>"+compo+"</compositionProd>"+
+                              "<tailleProd>"+tailleRef+"</tailleProd>"+
+                              "<condProd>"+cond+"</condProd>";        
+        
+        //labels d'un produit
+        List<String> labels = miage.dao.TestHibernate.afficherLabels(produit.getLabelP());
+        System.out.println("label:"+labels);
+        if(labels.size() != 0){
+            for (String srcLabel : labels){
+                if(!srcLabel.isEmpty()){
+                    infoProd = infoProd + "<label><srcLabel>image/labelscore/" + srcLabel +".jpg</srcLabel></label>";    
+                }
+            }    
+        }else{
+            infoProd = infoProd + "<label><srcLabel>nonlabel</srcLabel></label>";
+        }           
+        
+        return infoProd;
+    }
+    protected void afficherPostIt(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+        
+        HttpSession s1 = request.getSession();
+        int idLc = (Integer)s1.getAttribute("Liste");
+        
+        /*----- Type de la réponse -----*/
+        response.setContentType("application/xml;charset=UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        try (PrintWriter out = response.getWriter()){
+            /*----- Ecriture de la page XML -----*/
+            out.println("<?xml version=\"1.0\"?>");
+            out.println("<liste_produit>");
+ 
+            /*----- Lecture de liste de mots dans la BD -----*/
+
+            List<Ingredient> lIngredients = miage.dao.TestHibernate.obtenirPostitListeCourse(idLc);  
+            
+            for (Ingredient ing : lIngredients){
+                out.println("<ingLib>" + ing.getLibelleIng() +"</ingLib><idIng>" + ing.getIdIng()+"</idIng>");                
+                System.out.println("<ingLib>" + ing.getLibelleIng() +"</ingLib><idIng>" + ing.getIdIng()+"</idIng>");
+            }
             //obtenir liste ingredient
             List<Ingredient> lstIng = TestHibernate.obtenirIngredient();
+            out.println("<tousIng>");
             for(Ingredient ing : lstIng){
                 out.println("<libIng>"+ing.getLibelleIng()+"</libIng>"+
                             "<idIng>"+ing.getIdIng()+"</idIng>");
                 System.out.println("lib ing "+ing.getLibelleIng());
             }
+            out.println("</tousIng>");
+            
+            out.println("</liste_produit>");
+        }
+    }
+    protected void ajouterPostIt(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+        int idPostit = Integer.parseInt(request.getParameter("idPostIt"));
+        HttpSession s1 = request.getSession();
+        int idLc = (Integer)s1.getAttribute("Liste");
+                
+                
+        //System.out.println("____________"+nomLst);
+        /*----- Type de la réponse -----*/
+        response.setContentType("application/xml;charset=UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        try (PrintWriter out = response.getWriter()){
+            /*----- Ecriture de la page XML -----*/
+            out.println("<?xml version=\"1.0\"?>");
+            out.println("<Liste>");
+ 
+                       
+            //Ajouter post it
+            String res = TestHibernate.inserPostitListeCourses(idLc,idPostit);
+            /*----- Inserer une liste de course dans la BD -----*/
+            
+            out.println("<res>"+res+"</res>");
+                        
             out.println("</Liste>");
             
         }
     }
-    
-    protected void ObtenirPostIts(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
-        /*----- Type de la réponse -----*/
-        response.setContentType("application/xml;charset=UTF-8");
-        response.setCharacterEncoding("UTF-8");
-        List<Ingredient> lstIng = TestHibernate.obtenirIngredient();
-        try (PrintWriter out = response.getWriter()){
-            /*----- Ecriture de la page XML -----*/
-            out.println("<?xml version=\"1.0\"?>");
-            out.println("<Liste_ing>");
-            /*----- Inserer une liste de course dans la BD -----*/
-            for(Ingredient ing : lstIng){
-                out.println("<libIng>"+ing.getLibelleIng()+"</libIng>");
-                System.out.println("lib ing "+ing.getLibelleIng());
-            }
-            
-            out.println("</Liste_ing>");   
-        }
-    }
-
     /**
      * Returns a short description of the servlet.
      *
