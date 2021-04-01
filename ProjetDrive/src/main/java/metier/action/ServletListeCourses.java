@@ -71,7 +71,7 @@ public class ServletListeCourses extends HttpServlet {
                 //System.out.println("jin case le");
                 SaisirSessionIng(request, response);
                 break;
-            case "afficherNomListe":
+            case "AfficherNomListe":
                 //System.out.println("jin case le");
                 afficherNomListe(request, response);
                 break;
@@ -157,6 +157,7 @@ public class ServletListeCourses extends HttpServlet {
         HttpSession s1 = request.getSession();
         Client client = (Client)s1.getAttribute("client");
         int idLc = (Integer)s1.getAttribute("Liste");
+        
         /*----- Type de la réponse -----*/
         response.setContentType("application/xml;charset=UTF-8");
         response.setCharacterEncoding("UTF-8");

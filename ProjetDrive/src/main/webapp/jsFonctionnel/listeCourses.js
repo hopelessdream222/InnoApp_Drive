@@ -133,12 +133,13 @@ function ajouterListe(){
     var xhr = new XMLHttpRequest();
     // Requ?te au serveur avec les param?tres ?ventuels.
     xhr.open("GET", "ServletListeCourses?method=AjouterListeCourses&nomLst="+nomLst);
-    alert(nomLst);
+    console.log(nomLst);
     // On pr?cise ce que l'on va faire quand on aura re?u la r?ponse du serveur.
     xhr.onload = function () {
         // Si la requ?te http s'est bien pass?e.
         if (xhr.status === 200) {
-            alert("200");
+            console.log("200");
+            afficherListeGauche();
 //            //obtenir liste deroulante
 //            lstDeroulante = "<select id='lstDeroulante'>";
 //            var tabIng = xhr.responseXML.getElementsByTagName("libIng");
@@ -167,10 +168,10 @@ function afficherNomListe(){
     //alert(idLst);
     // On pr�cise ce que l'on va faire quand on aura re�u la r�ponse du serveur.
     xhr.onload = function () {
-        alert("hqokun");
+        console.log("hqokun");
         // Si la requ�te http s'est bien pass�e.
         if (xhr.status === 200) {
-            alert("200 afficher post it");
+            console.log("200 afficher post it");
             var libLst = xhr.responseXML.getElementsByTagName("libListe")[0].firstChild.nodeValue;
             document.getElementById("libListe-h2").innerHTML = "Liste : "+libLst;
         }
@@ -194,7 +195,7 @@ function afficherPostIt(){
             
             elt.innerHTML = "";
             var tab = xhr2.responseXML.getElementsByTagName("idIng");
-            alert(tab);
+            console.log(tab);
             for (var x = 0; x < tab.length; x++) {
                 // El�ment html que l'on va mettre � jour.
                 var idIng = xhr2.responseXML.getElementsByTagName("idIng")[x].firstChild.nodeValue;

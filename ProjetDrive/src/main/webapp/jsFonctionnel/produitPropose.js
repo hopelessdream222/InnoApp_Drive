@@ -68,27 +68,44 @@ function afficherProduit() {
     xhr.send();
 }
 
-function creerModuleProduit(i, src, prixUniteProd, libProd, idProd, promo) {
-    if (promo === "nonpromotion") {
-        var imgPromo = "";
-    } else {
-        var imgPromo = "<img src='image/promo.png' class='new' alt='' />";
+function creerModuleProduit(i, src, prixUniteProd, libProd, idProd, promo, prixPromo,srcLabel) {
+    var infoPromo = " ";
+    var promotion = " ";
+    
+    console.log(srcLabel);
+    if(srcLabel === "nonlabel"){
+        srcLabel = " ";
     }
-    return ("<div class='col-sm-3'>"
+    console.log(srcLabel);
+    if(promo === "nonpromotion"){
+        var imgPromo = "";
+        var pu = prixUniteProd+"&#0128";
+    }else{
+        var imgPromo = "<img src='image/promo.png' class='new' alt='' />";
+        var pu = "<s>" + prixUniteProd + "&#0128</s>";
+        infoPromo = promo;
+        if(prixPromo !== prixUniteProd){
+            var promotion = prixPromo+"&#0128";
+        }       
+    }
+    return ("<div class='col-sm-4'>"
             + "<div class='product-image-wrapper'>"
             + "<div class='single-products'>"
             + "<div class='productinfo text-center'>"
             + "<div id='image" + i + "'><img src='" + src + "' width=200px hight=150px>"
-            + "<h2>Prix Unitaire: " + prixUniteProd + "&#0128</h2>"
+//            + "<span>"+srcLabel+"</span>"
+            + "<p style='color:red;'>"+infoPromo+"</p>"
+            + "<h2>PU: " + pu +" "+ promotion +"</h2>"
             + "<div height='50px'><p>" + libProd + "</p></div></div>"
             + "</div>"
             + "<div class='product-overlay'>"
             + "<div class='overlay-content'>"
-            + "<a href='#' class='btn btn-default add-to-cart' name='" + idProd + "' id='btn_ajouter_liste" + idProd + "'><i class='fa fa-shopping-cart'></i>Ajouter à la liste</a>"
+            + "<a href='#' class='btn btn-default add-to-cart' name='" + idProd + "' id='btn_ajouter" + idProd + "'><i class='fa fa-shopping-cart'></i>Ajouter au panier</a>"
             + "</div>"
             + "</div>"
             + imgPromo
             + "</div>"
+            +"<div>"+srcLabel+"</div>"
             + "</div>"
             + "</div>");
 }
