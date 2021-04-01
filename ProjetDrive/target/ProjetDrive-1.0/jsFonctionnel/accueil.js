@@ -442,6 +442,11 @@ function plusDetail() {
     xhr.onload = function () {
         // Si la requete http s'est bien passee.
         if (xhr.status === 200) {
+            //determiner si le client se connecte ou pas
+            var verifierConnexion = "horsConnection";
+            if (xhr.responseXML.getElementsByTagName("client")[0].firstChild.nodeValue !== "horsConnection") {
+                verifierConnexion = "connexion";
+            }
             //obtenir le tableau de label
             var tabLabel = xhr.responseXML.getElementsByTagName("srcLabel");
 
@@ -517,9 +522,11 @@ function plusDetail() {
                 "</div>" +
                 "</div><!--/product-details-->";
         eltRight.innerHTML = txt;
-        document.getElementById("btn_detail_ajouter").addEventListener("click", function () {
-            ajouter(document.getElementById("detail_qte").value);
-        });
+        if(verifierConnexion === "horsConnection"){
+            document.getElementById("btn_detail_ajouter").addEventListener("click", function(){window.location.href = "Connexion";});
+        }else{
+            document.getElementById("btn_detail_ajouter").addEventListener("click", function(){ajouter(document.getElementById("detail_qte").value);});
+        }
 
     };
     // Envoie de la requete.

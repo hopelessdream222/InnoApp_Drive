@@ -300,9 +300,6 @@ public class ServletAccueil extends HttpServlet {
             TestHibernate.insertProduitPanier(client.getIdCli(), idP, qte);
             //out.println("<client>"+client.getEmailCli()+"</client>");
             //System.out.println("****************"+client.getNomCli());
-        } else {
-            //System.out.println("-------");
-            //System.out.println("****************"+client.getNomCli());
         }
 
     }
@@ -324,6 +321,14 @@ public class ServletAccueil extends HttpServlet {
             out.println("<?xml version=\"1.0\"?>");
             out.println("<responseRecherche>");
             out.println(creerModuleProduit(produit));
+            /*----- Récupération le session de client -----*/
+            HttpSession s = request.getSession();
+            if(s.getAttribute("client")!=null){
+                Client client = (Client)s.getAttribute("client");
+                out.println("<client>"+client.getEmailCli()+"</client>");
+            }else{
+                out.println("<client>horsConnection</client>");
+            }
             out.println("</responseRecherche>");                 
         }
         
