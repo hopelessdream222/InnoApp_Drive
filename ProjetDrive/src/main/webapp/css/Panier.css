@@ -2,7 +2,7 @@
 * {
     margin: 0;
     padding: 0;
-    font-family: "微软雅黑";
+    font-family: "Arial";
     list-style: none;
     color: #666;
     text-decoration: none;
@@ -20,10 +20,11 @@ color: #b0b0b0;
 position: relative;
 z-index: 20;
 height: 100px;
+margin: 20px auto;
 }
 .header .container {
 position: relative;
-width: 1226px;
+/*width: 1226px;*/
 margin-right: auto;
 margin-left: auto;
 }
@@ -55,12 +56,12 @@ text-decoration: none;
     background: #FFF;
 }
 .car .idP{
-    width: 5%;
-    background: blueviolet;
+    width: 3%;
+    /*background: blueviolet;*/
     visibility:hidden;
 }
 .car .img {
-    width: 15%;
+    width: 13%;
     margin-right: 2.5%;
     text-align:center;
 }
@@ -77,13 +78,14 @@ text-decoration: none;
 }
 .car .name span {
     line-height: 1;
-    margin-top: 8px;
+/*    margin-top: 8px;*/
     margin-bottom: 8px;
-    font-size: 18px;
+    font-size: 14px;
     font-weight: normal;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+    text-align:left;
 }
 .car .price {
     width: 8%;
@@ -95,7 +97,7 @@ text-decoration: none;
     color: #ff6700;
     font-size: 16px;
 }
-.car .number{
+.car .item_count_i{
     width: 10%;
     margin-right: 2%;
     text-align:center;
@@ -115,10 +117,6 @@ text-decoration: none;
     margin-top: 10%;
     height: 60%;
     width:100%;
-/*    text-align: center;*/
-/*    float: right;*/
-/*    line-height: 60px;*/
-/*    font-size: 19px;*/
     background: #FF4B00;
     color: white;
 }
@@ -139,6 +137,7 @@ text-decoration: none;
 .head_row {
     height: 70px;
     line-height: 70px;
+    margin: 20px auto;
 }
 .head_row, .row {
     border-bottom: solid 1px #e0e0e0;

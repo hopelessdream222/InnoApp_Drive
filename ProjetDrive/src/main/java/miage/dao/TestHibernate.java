@@ -10,6 +10,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -762,6 +763,154 @@ public class TestHibernate
             t.commit();
         }
     }
+    
+    
+    //-----------------------------------------------
+    
+    public static Magasin chercherMagasin(int idMag) {
+        try (Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
+            /*----- Ouverture d'une transaction -----*/
+            Transaction t = session.beginTransaction();
+            Magasin mag = session.get(Magasin.class, idMag);
+            return mag;
+        }
+    }
+    
+       /*----- Chercher les creneaux et le nombre de places disponibles dans un magasin-----*/
+    public static List<Disponibilite> chercherCreneaux(int idMag, String dateR) throws ParseException {
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        Transaction t = session.beginTransaction();
+
+        Magasin mag = session.get(Magasin.class, idMag);
+
+        List<Disponibilite> liste = new ArrayList();
+        for (Disponibilite disponibilite : mag.getCreneaux().values()) {
+            Date DateCren = disponibilite.getDateCren();
+            SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
+            String date = formatDate.format(DateCren);
+            if (date.equals(dateR)) {
+                liste.add(disponibilite);
+            }
+        }
+        return liste;
+    }
+    
+    /*----- Calculer le nouveau prix d'un produit dans le panier d'un client-----*/
+    public static double calculerEconomiePromProduitPanierClient(int idCli, int idP) {
+        double qtePan = 0;
+        double libelleProm = 0;
+        double PUApresProm = 0;
+        try (Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
+            /*----- Ouverture d'une transaction -----*/
+            Transaction t = session.beginTransaction();
+            Client c = session.get(Client.class, idCli);
+            Produit p = session.get(Produit.class, idP);
+
+            qtePan = c.getPanier().getComportements().get(p).getQtePP();
+            libelleProm = p.getProm().getLibelleProm();
+            t.commit();
+            if (libelleProm > 0) {
+                PUApresProm = (calculerEconomiePromotionClientUnProd(idP) * qtePan / libelleProm + p.getPrixUnitaireP() * (qtePan - qtePan / libelleProm)) / qtePan; //??
+            } else if (libelleProm == 0) {
+                PUApresProm = p.getPrixUnitaireP();
+            }
+            return PUApresProm;
+        }
+    }
+    
+    /*----- Comparer la quantite d'un produit dans le panier et le stokage de magasin -----*/
+    public static Map comparerQtePanierQteStockClient(int idCli, int idP, int idMag) {
+        Map res = new HashMap();
+        try (Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
+            /*----- Ouverture d'une transaction -----*/
+            Transaction t = session.beginTransaction();
+            Client c = session.get(Client.class, idCli);
+            Produit p = session.get(Produit.class, idP);
+            Magasin mag = session.get(Magasin.class, idMag);
+            int qtePan = 0;
+            int qteStock = 0;
+
+            qtePan = c.getPanier().getComportements().get(p).getQtePP();
+            qteStock = mag.getStockages().get(p).getQteSP();
+
+            System.out.println(qteStock);
+
+            if (qteStock >= qtePan) {
+                res.put(p, 1);
+            } else {
+                res.put(p, 0);
+            }
+            System.out.println(res.get(p));
+
+        } catch (NullPointerException npe) {
+            try (Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
+                /*----- Ouverture d'une transaction -----*/
+                Transaction t = session.beginTransaction();
+                Produit p = session.get(Produit.class, idP);
+                res.put(p, 0);
+            }
+        }
+        return res;
+    }
+    
+    /*----- Chercher les produits de remplacement pour un client -----*/
+    public static List<Produit> chercherProduitRemplacementClient(int idCli, int idP, int idMag) {
+        List<Produit> produitRemplacement = new ArrayList<>();
+        try (Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
+            /*----- Ouverture d'une transaction -----*/
+            Transaction t = session.beginTransaction();
+            Client c = session.get(Client.class, idCli);
+            Produit p = session.get(Produit.class, idP);
+            Magasin m = session.get(Magasin.class, idMag);
+            
+            // Chercher des produits de remplacement parmi les produits preferes
+            for (Produit produitPref : c.getPreferences().keySet()) {
+                if (produitPref.getIngredient() == p.getIngredient()) { // meme ingredient
+                    if (produitPref.getIdP() != idP) {     // pas de prod de remplacement
+                        if (m.getStockages().get(produitPref).getQteSP() > 0) { //assez de stackage
+                            
+                            int i = 0;
+                            List<Produit> listeProdPan = new ArrayList<>();
+                            for (Produit prodPan : c.getPanier().getComportements().keySet()) { // pas dans le panier                            
+                                if (prodPan.getIdP() == produitPref.getIdP()) {
+                                    listeProdPan.add(produitPref);
+                                }
+                            }
+                            if (listeProdPan.isEmpty()) {
+                                produitRemplacement.add(produitPref);
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Chercher des produits de remplacement parmi tous les produits
+            if (produitRemplacement.size() >= 0) {
+                List<Produit> listeTousProduit = session.createQuery("from Produit").list();
+                for (Produit produit : listeTousProduit) {
+                    if (produitRemplacement.contains(produit) == false) { // pas dans la prefeference
+                        if (produit.getIngredient() == p.getIngredient()) {  // meme ingrediant
+                            if (produit.getIdP() != idP) { // pas de meme produit
+                                if (m.getStockages().get(produit).getQteSP() > 0) { //assez de stackage
+                                    List<Produit> prodP = new ArrayList<>();
+                                    for (Produit prodPan : c.getPanier().getComportements().keySet()) { // pas dans le panier                                       
+                                        if (prodPan.getIdP() == produit.getIdP()) {
+                                            prodP.add(prodPan);
+                                        }
+                                    }
+                                    if (prodP.isEmpty()) {
+                                        produitRemplacement.add(produit);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return produitRemplacement;
+    }
+
     
     /**
      * Programme de test.

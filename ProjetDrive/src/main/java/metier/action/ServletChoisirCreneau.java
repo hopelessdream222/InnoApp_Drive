@@ -7,18 +7,21 @@ package metier.action;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import miage.dao.HibernateUtil;
 import miage.dao.TestHibernate;
-import static miage.dao.TestHibernate.chercherCreneaux;
 import miage.metier.Client;
-import miage.metier.Comporter;
-import miage.metier.Creneau;
 import miage.metier.Disponibilite;
+import miage.metier.Magasin;
+import org.hibernate.Session;
 
 /**
  *
@@ -26,20 +29,7 @@ import miage.metier.Disponibilite;
  */
 public class ServletChoisirCreneau extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-    }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -58,34 +48,33 @@ public class ServletChoisirCreneau extends HttpServlet {
             /*----- Ecriture de la page XML -----*/
             out.println("<?xml version=\"1.0\"?>");
             out.println("<liste_creneau>");
-
+//            int idMag = Integer.parseInt(request.getParameter("idMag"));
+//            String nomMag = request.getParameter("nomMag")
+//            String date = request.getParameter("date");
             /*----- Récupération le session de client -----*/
-            HttpSession s = request.getSession();
-            Client client = (Client)s.getAttribute("client");
-            int idMag = (Integer)s.getAttribute("idMag");
-            /*----- Lecture de liste de mots dans la BD -----*/
-            List<Disponibilite> lCreneau = TestHibernate.chercherCreneaux(idMag);
+            HttpSession s1 = request.getSession();
+            int idMag = (Integer)s1.getAttribute("idMag");
+            String dater = (String)s1.getAttribute("date");
+//            HttpSession s2 = request.getSession();
+//            String nomMag = (String)s2.getAttribute("nomMag");
+//            HttpSession s3 = request.getSession();
+//            Client client = (Client) s3.getAttribute("client");
+//            out.println("<emailCli>" + client.getEmailCli() + "</emailCli><nomMag>"+nomMag+"</nomMag>");
+////            out.println("<emailCli>" + client.getEmailCli() + "</emailCli><nomMag>" + nomMag + "</nomMag><idMag>"+idMag+"</idMag>");
+//
+////           
+            /*----- Lecture de liste de mots dans la BD -----*/           
+            List<Disponibilite> lCreneau = TestHibernate.chercherCreneaux(idMag,dater);
 
             for (Disponibilite d : lCreneau) {
-                out.println("<idCre>" + d.getCreneaux().getIdCren() + "</idCre><dureeCreneau>" + d.getCreneaux().getDureeCren() + "</dureeCreneau><nbPlaceCreneau>" + d.getNbPlaceRest() + "</nbPlaceCreneau><emailCli>" + client.getEmailCli() + "</emailCli>");
+                out.println("<idCre>" + d.getCreneaux().getIdCren() + "</idCre><dureeCreneau>"+d.getCreneaux().getDureeCren()+"</dureeCreneau><nbPlaceCreneau>"+d.getNbPlaceRest()+"</nbPlaceCreneau>");
             }
 
             out.println("</liste_creneau>");
+        } catch (ParseException ex) {
+            Logger.getLogger(ServletChoisirCreneau.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
     }
 
     /**

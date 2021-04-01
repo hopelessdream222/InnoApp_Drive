@@ -31,6 +31,38 @@ public class Stocker implements Serializable{
         this.magasins = magasins;
     }
 
+    public StockerId getStockerId() {
+        return stockerId;
+    }
+
+    public void setStockerId(StockerId stockerId) {
+        this.stockerId = stockerId;
+    }
+
+    public int getQteSP() {
+        return qteSP;
+    }
+
+    public void setQteSP(int qteSP) {
+        this.qteSP = qteSP;
+    }
+
+    public Produit getProduits() {
+        return produits;
+    }
+
+    public void setProduits(Produit produits) {
+        this.produits = produits;
+    }
+
+    public Magasin getMagasins() {
+        return magasins;
+    }
+
+    public void setMagasins(Magasin magasins) {
+        this.magasins = magasins;
+    }
+
     @Override
     public String toString() {
         return "Stocker{" + "stockerId=" + stockerId + ", qteSP=" + qteSP + ", produits=" + produits + ", magasins=" + magasins + '}';

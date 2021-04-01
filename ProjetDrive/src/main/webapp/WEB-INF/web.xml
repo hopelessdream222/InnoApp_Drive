@@ -104,6 +104,38 @@
         <servlet-name>ServletProduitPropose</servlet-name>
         <servlet-class>metier.action.ServletProduitPropose</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ServletStockerMag</servlet-name>
+        <servlet-class>metier.action.ServletStockerMag</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServletLirePanierConfirmer</servlet-name>
+        <servlet-class>metier.action.ServletLirePanierConfirmer</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServletAfficherTousSession</servlet-name>
+        <servlet-class>metier.action.ServletAfficherTousSession</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServletStockerRemplacerProd</servlet-name>
+        <servlet-class>metier.action.ServletStockerRemplacerProd</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServletRemplacerProd</servlet-name>
+        <servlet-class>metier.action.ServletRemplacerProd</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServletLireFinalPanier</servlet-name>
+        <servlet-class>metier.action.ServletLireFinalPanier</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PanierRemProd</servlet-name>
+        <jsp-file>/html/PanierRemProd.html</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>Remplacer</servlet-name>
+        <jsp-file>/html/Remplacer.html</jsp-file>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ServletConnexion</servlet-name>
         <url-pattern>/ServletConnexion</url-pattern>
@@ -207,6 +239,38 @@
     <servlet-mapping>
         <servlet-name>ServletProduitPropose</servlet-name>
         <url-pattern>/ServletProduitPropose</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletStockerMag</servlet-name>
+        <url-pattern>/ServletStockerMag</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletLirePanierConfirmer</servlet-name>
+        <url-pattern>/ServletLirePanierConfirmer</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletAfficherTousSession</servlet-name>
+        <url-pattern>/ServletAfficherTousSession</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletStockerRemplacerProd</servlet-name>
+        <url-pattern>/ServletStockerRemplacerProd</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletRemplacerProd</servlet-name>
+        <url-pattern>/ServletRemplacerProd</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletLireFinalPanier</servlet-name>
+        <url-pattern>/ServletLireFinalPanier</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PanierRemProd</servlet-name>
+        <url-pattern>/PanierRemProd</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Remplacer</servlet-name>
+        <url-pattern>/Remplacer</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -5,7 +5,7 @@
 * {
     margin: 0;
     padding: 0;
-    font-family: "微软雅黑";
+    font-family: "Arial";
     list-style: none;
     color: #666;
     text-decoration: none;
@@ -23,22 +23,25 @@ color: #b0b0b0;
 position: relative;
 z-index: 20;
 height: 100px;
+margin: 20px auto;
 }
 .header .container {
 position: relative;
-width: 1226px;
+/*width: 1226px;*/
 margin-right: auto;
 margin-left: auto;
 }
 .header-title {
 float: left;
 margin-top: 26px;
+margin-left: 5%;
 font-size: 12px;
 }
 .topbar-info {
 float: right;
 margin-top: 30px;
 line-height: 40px;
+margin-right: 5%;
 }
 .link {
 padding: 0 5px;
@@ -61,7 +64,7 @@ text-decoration: none;
     margin-right:2.5%       
 }
 .car .heure {
-    width:25%; 
+    width:35%; 
     margin-right:2.5%
 }
 .car .heure span {
@@ -74,13 +77,10 @@ text-decoration: none;
     white-space: nowrap;
     overflow: hidden;
 }
-.car .date {
-    width:25%; 
-    margin-right:5%
-}
+
 .car .nbplace {
-    width:17%; 
-    margin-right:3%
+    width:35%; 
+    margin-right:5%
 }
 .head_row {
     height: 70px;
