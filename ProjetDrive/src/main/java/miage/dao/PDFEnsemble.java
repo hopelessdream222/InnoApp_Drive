@@ -69,13 +69,13 @@ public class PDFEnsemble {
         pdf.saveToFile("src\\facturation.pdf");
         pdf.dispose();
         
-        //envoyerEmail(idCli);
+        envoyerEmail(idCli);
      
      }
 
-    public static void main(String[] args) {
-
-   imprimerFacturation(2,36);
-    }
+//    public static void main(String[] args) {
+//
+//   imprimerFacturation(2,36);
+//    }
 
 }

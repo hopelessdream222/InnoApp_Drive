@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Choisir un magasin</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/Magasin.css" type="text/css" />
+    </head>
+    <body>
+        <form action="Creneau">
+            <div class="header">
+                <div class="container">
+                    <div class="header-title" id="J_miniHeaderTitle">
+                        <h2 style="font-size: 30px;">Magasin</h2>
+                    </div>
+                    <div class="topbar-info" id="J_userInfo">    
+                    </div>
+                </div>
+            </div>        
+            <hr/>
+            <div id="corps">
+                <div class ="lstMagasin hid">
+                    <!-- liste des magasins -->
+                    <div class="choisir left">idMag</div>
+                    <div class="name left">Nom</div>
+                    <div class="adresse left">Adresse</div>
+                    <div class="tel left">Tel</div>
+                    <div class="date left">Date</div>
+                </div>
+            </div>
+            <div id="pied">
+                <!--<button id="btnChoisirMag">Valider</button>-->
+                <a href="Creneau"><button id="btnChoisirMag">Valider</button></a>
+                <a href="Accueil"><button id="accueil">Page Accueil</button></a>
+            </div>
+            <script type="text/JavaScript" src="jsFonctionnel/choisirMagasin.js"></script>
+        </form>
+    </body>
+</html>

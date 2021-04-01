@@ -438,7 +438,7 @@ public class TestHibernate
 
         Client clientCmd = session.get(Client.class, idCli);
         Magasin magCmd = session.get(Magasin.class, idMag);
-        Creneau creneauCmd = session.get(Creneau.class, 1);
+        Creneau creneauCmd = session.get(Creneau.class, idCren);
 
         // Chercher des produits dans le panier
         List<Comporter> liste = new ArrayList();
@@ -447,7 +447,7 @@ public class TestHibernate
         }
 
         // Modifier la nombre de places disponible pour ce creneau ( moins 1)
-        magCmd.getCreneaux().get(creneauCmd).setNbPlaceRest(magCmd.getCreneaux().get(creneauCmd).getNbPlaceRest() - 1);
+        //magCmd.getCreneaux().get(creneauCmd).setNbPlaceRest(magCmd.getCreneaux().get(creneauCmd).getNbPlaceRest() - 1);
 
         // Generation d'une nouvelle commande
         Commande cmd = new Commande();
@@ -909,6 +909,19 @@ public class TestHibernate
             }
         }
         return produitRemplacement;
+    }
+    /*----- Modifier la quantite d'un produit dans le panier d'un client-----*/
+    public static void modifierQteProduitPanierClient(int idCli, int idP, int qte) {
+        try (Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
+            /*----- Ouverture d'une transaction -----*/
+            Transaction t = session.beginTransaction();
+            Client c = session.get(Client.class, idCli);
+            Produit p = session.get(Produit.class, idP);
+
+            c.getPanier().getComportements().get(p).setQtePP(qte);
+            session.save(c);
+            t.commit();
+        }
     }
 
     

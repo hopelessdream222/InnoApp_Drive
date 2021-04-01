@@ -61,9 +61,6 @@ public class ServletGenererCommande extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
 
 //        try (PrintWriter out = response.getWriter()) {
-        /*----- Ecriture de la page XML -----*/
-//            out.println("<?xml version=\"1.0\"?>");
-//            out.println("<liste_commande>");
         /*----- Récupération le session de client -----*/
         HttpSession s = request.getSession();
         Client client = (Client) s.getAttribute("client");
@@ -79,7 +76,6 @@ public class ServletGenererCommande extends HttpServlet {
             Logger.getLogger(ServletGenererCommande.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-//            out.println("</liste_commande>");
 //            
 //        } catch (ParseException ex) {
 //            Logger.getLogger(ServletGenererCommande.class.getName()).log(Level.SEVERE, null, ex);

@@ -24,9 +24,9 @@ public class EnvoyerEmail {
      */
 
     private static String SERVEUR_SMTP = "smtp.ut-capitole.fr";
-    private static String LOGIN = "21809051";
-    private static String FROM = "siyvan.zhou@ut-capitole.fr";
-    private static String MDP = "mdp";
+    private static String LOGIN = "21809089";
+    private static String FROM = "weihao.xu@ut-capitole.fr";
+    private static String MDP = "mima";
 
     public static void envoyerEmail(int idCli) {  //int idCli,int idCmd
         /**
@@ -66,8 +66,8 @@ public class EnvoyerEmail {
     /**
      * Programme principal.
      */
-    public static void main(String[] args) {
-//        envoyerEmail(2);
-    }
+//    public static void main(String[] args) {
+////        envoyerEmail(2);
+//    }
 
 } /*----- Fin de TpMail -----*/
