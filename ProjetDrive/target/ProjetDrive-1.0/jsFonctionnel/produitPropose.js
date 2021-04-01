@@ -111,7 +111,7 @@ function creerModuleProduit(i, src, prixUniteProd, libProd, idProd, promo, prixP
             + "</div>"
             + "<div class='product-overlay'>"
             + "<div class='overlay-content'>"
-            + "<a href='#' class='btn btn-default add-to-cart' name='" + idProd + "' id='btn_ajouter" + idProd + "'><i class='fa fa-shopping-cart'></i>Ajouter au panier</a>"
+            + "<a href='#' class='btn btn-default add-to-cart' name='" + idProd + "' id='btn_ajouter_liste" + idProd + "'><i class='fa fa-shopping-cart'></i>Ajouter \u00e0 la liste</a>"
             + "</div>"
             + "</div>"
             + imgPromo

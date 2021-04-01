@@ -57,6 +57,8 @@ function afficheDetail() {
             } else {
                 var elt2 = document.getElementById("connexion");
                 elt2.innerHTML = "Bienvenue! " + xhr.responseXML.getElementsByTagName("client")[0].firstChild.nodeValue;
+                document.getElementById("listeCourses").style.display = "block";
+                document.getElementById("panier").style.display = "block";
                 //elt2.insertAdjacentHTML("afterbegin",xhr.responseXML.getElementsByTagName("client")[0].firstChild.nodeValue);
                 afficherQte();
             }

@@ -16,7 +16,7 @@ function afficheDetailRecette() {
     xhr.onload = function () {
         // Si la requ?te http s'est bien pass?e.
         if (xhr.status === 200) {
-            console.log("detail re 2??");
+            
             //console.log("re src"+xhr.responseXML.getElementsByTagName("recetteLib")[0].firstChild.nodeValue);
            
             elt = document.getElementById("re_detail");
@@ -47,6 +47,8 @@ function afficheDetailRecette() {
             } else {
                 var elt2 = document.getElementById("connexion");
                 elt2.innerHTML = "Bienvenue! " + xhr.responseXML.getElementsByTagName("client")[0].firstChild.nodeValue;
+                document.getElementById("listeCourses").style.display = "block";
+                document.getElementById("panier").style.display = "block";
                 document.getElementById("btn_re_ajouter").style.disabled=false;
                 //elt2.insertAdjacentHTML("afterbegin",xhr.responseXML.getElementsByTagName("client")[0].firstChild.nodeValue);
                 
