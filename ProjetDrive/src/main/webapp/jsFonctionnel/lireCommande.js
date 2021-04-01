@@ -76,7 +76,7 @@ window.onload = function () {
             document.getElementById("pointspan").innerText = xhr.responseXML.getElementsByTagName("pointfi")[0].firstChild.nodeValue;
         }
 
-    }
+    };
     xhr.send();
 }
 
@@ -116,11 +116,13 @@ function genererCmd() {
     var xhr = new XMLHttpRequest();    
     // Requête au serveur avec les paramètres éventuels.
     xhr.open("GET", "ServletGenererCommande?economie="+economie);
+    alert("ServletGenererCommande?economie="+economie);
     // On précise ce que l'on va faire quand on aura reçu la réponse du serveur.
     xhr.onload = function () {
 
         // Si la requête http s'est bien passée.
         if (xhr.status === 200) {
+            alert("200");
             alert("La facture est ete envoye. ");
         } else {
             alert("envoye. ");

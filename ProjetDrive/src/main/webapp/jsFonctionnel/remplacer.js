@@ -81,11 +81,6 @@ function creerModuleProduit(i, src, prixUniteProd, libProd, idProd, promo) {
             + "</div>"
             + imgPromo
             + "</div>"
-            + "<div class='choose'>"
-            + "<ul class='av nav-pills nav-justified'>"
-            + "<li><a href='#' name='" + idProd + "' id='btn_detail" + idProd + "'><i class='fa fa-plus-square'></i>Plus de D&#xE9;tail</a></li>"
-            + "</ul>"
-            + "</div>"
             + "</div>"
             + "</div>");
 }
@@ -113,7 +108,7 @@ function afficherQte() {
 
 // Ajouter le produit dans le panier
 function ajouter(q) {
-    console.log("qte" + q);
+    console.log("qte"+q);
     var result = confirm("Vous voulez l'ajouter au panier ?");
 
     if (result) {
@@ -124,7 +119,7 @@ function ajouter(q) {
 
         console.log("produit" + produitchoisi);
 
-        xhr.open("GET", "ServletAjouterPanier?idP=" + produitchoisi + "&qte=" + q, true);
+        xhr.open("GET", "ServletAccueil?method=ajouterPanier&idP=" + produitchoisi + "&qte=" + q, true);
 
         // On pr�cise ce que l'on va faire quand on aura re�u la r�ponse du serveur.
         xhr.onload = function () {
@@ -135,7 +130,7 @@ function ajouter(q) {
             }
         };
     }
-    // Envoie de la requete.
+    // Envoie de la requ�te.
     xhr.send();
 }
 

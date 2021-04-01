@@ -24,19 +24,19 @@ public class EnvoyerEmail {
      */
 
     private static String SERVEUR_SMTP = "smtp.ut-capitole.fr";
-    private static String LOGIN = "21809099";
-    private static String FROM = "ling-chen.wang@ut-capitole.fr";
-    private static String MDP = "MOTDEPASS";
+    private static String LOGIN = "21809051";
+    private static String FROM = "siyvan.zhou@ut-capitole.fr";
+    private static String MDP = "mdp";
 
     public static void envoyerEmail(int idCli) {  //int idCli,int idCmd
         /**
          * Envoi un mail simple avec un fichier attaché.
          */
         Client c =new Client();
-         try (Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
-            Transaction t = session.beginTransaction();
-             c = session.get(Client.class, idCli);
-         }
+            try (Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
+               Transaction t = session.beginTransaction();
+                c = session.get(Client.class, idCli);
+            }
         /*----- Create the attachment -----*/
         EmailAttachment attachment = new EmailAttachment();
         attachment.setPath("src\\facturation.pdf");
