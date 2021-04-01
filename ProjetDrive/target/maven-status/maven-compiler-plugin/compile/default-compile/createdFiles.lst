@@ -21,6 +21,7 @@ miage\metier\Fournir.class
 metier\action\ServletAfficherNb.class
 miage\metier\DisponibiliteId.class
 metier\action\ServletAccueil.class
+metier\action\ServletProduitPropose.class
 miage\metier\Rayon.class
 miage\metier\Magasin.class
 metier\action\ServletFinaliserPanier.class

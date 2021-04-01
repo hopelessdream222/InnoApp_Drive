@@ -80,7 +80,7 @@ public class ServletAccueil extends HttpServlet {
         //id, reporatoire de l'image,libelle, format, prix unitaire, prix kg
         infoProd = "<idProd>"+produit.getIdP()+"</idProd>"+
                 "<libProd>"+produit.getLibelleP()+"</libProd>"+
-                "<src>image/" + produit.getIdP() +".jpg</src>"+
+                "<src>image/produits/" + produit.getIdP() +".jpg</src>"+
                 "<formatProd>"+produit.getFormatP()+"</formatProd>"+
                 "<prixKGProd>"+produit.getPrixKGP()+"</prixKGProd>"+
                 "<prixUniteProd>"+produit.getPrixUnitaireP()+"</prixUniteProd>";

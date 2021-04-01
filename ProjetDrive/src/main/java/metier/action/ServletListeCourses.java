@@ -66,8 +66,22 @@ public class ServletListeCourses extends HttpServlet {
             case "SaisirSession":
                 //System.out.println("jin case le");
                 saisirSession(request, response);
-                break; 
+                break;
+            case "SaisirSessionIng":
+                //System.out.println("jin case le");
+                SaisirSessionIng(request, response);
+                break;
+            case "afficherNomListe":
+                //System.out.println("jin case le");
+                afficherNomListe(request, response);
+                break;
         }
+    }
+    
+    protected void SaisirSessionIng(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+        int idIng = Integer.parseInt(request.getParameter("idIng"));        
+        HttpSession s = request.getSession();
+        s.setAttribute("Ingredient", idIng);     
     }
     
     protected void afficherListeCourses(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
@@ -91,7 +105,7 @@ public class ServletListeCourses extends HttpServlet {
                 out.println("<lcLib>" + lc.getLibelleListe() +"</lcLib><idLc>" + lc.getIdListe() +"</idLc>");                
                 System.out.println("<lcLib>" + lc.getLibelleListe() +"</lcLib><idLc>" + lc.getIdListe() +"</idLc>");
             }
-           
+            
             out.println("</liste_produit>");
         }
     }
@@ -113,43 +127,61 @@ public class ServletListeCourses extends HttpServlet {
                 out.println("<client>"+client.getEmailCli()+"</client>");
                 TestHibernate.insertListeCoursesClient(client.getIdCli(),nomLst);
                 System.out.println("reussi222222222222");
-         
-            }
-//            //obtenir liste ingredient
-//            List<Ingredient> lstIng = TestHibernate.obtenirIngredient();
-//            for(Ingredient ing : lstIng){
-//                out.println("<libIng>"+ing.getLibelleIng()+"</libIng>"+
-//                            "<idIng>"+ing.getIdIng()+"</idIng>");
-//                System.out.println("lib ing "+ing.getLibelleIng());
-//            }
-//            out.println("</Liste>");
-            
+            }            
         }
     }
     
     protected void saisirSession(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
         HttpSession s = request.getSession();
         Client client = (Client)s.getAttribute("client");
+
+        List<ListeCourse> lstC = miage.dao.TestHibernate.chercherListeCourseClient(client.getIdCli()); 
         
-        List<ListeCourse> lstC = miage.dao.TestHibernate.chercherListeCourseClient(client.getIdCli());        
-            
-        int idLst = Integer.parseInt(request.getParameter("idLst")); 
+        int idLst = Integer.parseInt(request.getParameter("idLst"));       
         s.setAttribute("Liste", idLst);
         
-        try (PrintWriter out = response.getWriter()){
+        try (PrintWriter out = response.getWriter()) {
             String libLst = "nonLib";
-            for(ListeCourse l : lstC){
-                if(l.getIdListe() == idLst){
+            for (ListeCourse l : lstC) {
+                if (l.getIdListe() == idLst) {
                     libLst = l.getLibelleListe();
                     break;
                 }
             }
             /*----- Ecriture de la page XML -----*/
-            out.println("<?xml version=\"1.0\"?>");
-            out.println("<libListe>"+libLst+"</libListe>");
-        }        
+            out.println("<libListe>" + libLst + "</libListe>");
+        }
     }
     
+    protected void afficherNomListe(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+        HttpSession s1 = request.getSession();
+        Client client = (Client)s1.getAttribute("client");
+        int idLc = (Integer)s1.getAttribute("Liste");
+        /*----- Type de la réponse -----*/
+        response.setContentType("application/xml;charset=UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        try (PrintWriter out = response.getWriter()){
+            /*----- Ecriture de la page XML -----*/
+            out.println("<?xml version=\"1.0\"?>");
+            out.println("<liste_produit>");
+ 
+            /*----- Lecture de liste de mots dans la BD -----*/
+            //Appeler la fonction dans DAO
+            List<ListeCourse> lstC = miage.dao.TestHibernate.chercherListeCourseClient(client.getIdCli());
+
+            String libLst = "Veuillez Choisir Liste";
+            for (ListeCourse l : lstC) {
+                if (l.getIdListe() == idLc) {
+                    libLst = l.getLibelleListe();
+                    break;
+                }
+            }
+            /*----- Ecriture de la page XML -----*/
+            out.println("<libListe>" + libLst + "</libListe>");
+        
+            out.println("</liste_produit>");
+        }
+    }
    
     protected void afficherProduit(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
         HttpSession s1 = request.getSession();
@@ -187,7 +219,7 @@ public class ServletListeCourses extends HttpServlet {
         //id, reporatoire de l'image,libelle, format, prix unitaire, prix kg
         infoProd = "<idProd>"+produit.getIdP()+"</idProd>"+
                 "<libProd>"+produit.getLibelleP()+"</libProd>"+
-                "<src>image/" + produit.getIdP() +".jpg</src>"+
+                "<src>image/produits/" + produit.getIdP() +".jpg</src>"+
                 "<formatProd>"+produit.getFormatP()+"</formatProd>"+
                 "<prixKGProd>"+produit.getPrixKGP()+"</prixKGProd>"+
                 "<prixUniteProd>"+produit.getPrixUnitaireP()+"</prixUniteProd>";
@@ -266,7 +298,8 @@ public class ServletListeCourses extends HttpServlet {
             List<Ingredient> lIngredients = miage.dao.TestHibernate.obtenirPostitListeCourse(idLc);  
             
             for (Ingredient ing : lIngredients){
-                out.println("<ingLib>" + ing.getLibelleIng() +"</ingLib><idIng>" + ing.getIdIng()+"</idIng>");                
+                out.println("<ingLib>" + ing.getLibelleIng() +"</ingLib><idIng>" + ing.getIdIng()+"</idIng>"); 
+                System.out.println("<ingLib>" + ing.getLibelleIng() +"</ingLib><idIng>" + ing.getIdIng()+"</idIng>");
             }
             //obtenir liste ingredient
             List<Ingredient> lstIng = TestHibernate.obtenirIngredient();

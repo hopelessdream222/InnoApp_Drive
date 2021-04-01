@@ -28,6 +28,10 @@ function afficheListe() {
                 afficherQte();
             }
             afficherListeGauche();
+            afficherNomListe();
+            afficherPostIt();
+            afficherProduit();
+                       
             console.log("reussi------");
         }
     };
@@ -87,13 +91,14 @@ function saisirSession(){
     xhr.onload = function () {
         // Si la requï¿½te http s'est bien passï¿½e.
         if (xhr.status === 200) {
-            var libLst = xhr.responseXML.getElementsByTagName("libListe")[0].firstChild.nodeValue;
-            document.getElementById("libListe-h2").innerHTML = "Liste : "+libLst;
+            afficherNomListe();
             afficherPostIt();
-            afficherProduit();     
+            afficherProduit();
+            
         }
     }; 
     xhr.send();
+     
 }
 
 function afficherQte() {
@@ -154,33 +159,59 @@ function ajouterListe(){
     xhr.send();
 }
 
-function afficherPostIt(){
+function afficherNomListe(){
     // Objet XMLHttpRequest.
     var xhr = new XMLHttpRequest();
     // Requï¿½te au serveur avec les paramï¿½tres ï¿½ventuels.
-    xhr.open("GET", "ServletListeCourses?method=AfficherPostIt");
+    xhr.open("GET", "ServletListeCourses?method=AfficherNomListe");
     //alert(idLst);
     // On prï¿½cise ce que l'on va faire quand on aura reï¿½u la rï¿½ponse du serveur.
     xhr.onload = function () {
+        alert("hqokun");
         // Si la requï¿½te http s'est bien passï¿½e.
         if (xhr.status === 200) {
-                       
+            alert("200 afficher post it");
+            var libLst = xhr.responseXML.getElementsByTagName("libListe")[0].firstChild.nodeValue;
+            document.getElementById("libListe-h2").innerHTML = "Liste : "+libLst;
+        }
+    }; 
+    xhr.send();
+}
+
+
+function afficherPostIt(){
+    // Objet XMLHttpRequest.
+    var xhr2 = new XMLHttpRequest();
+    // Requï¿½te au serveur avec les paramï¿½tres ï¿½ventuels.
+    xhr2.open("GET", "ServletListeCourses?method=AfficherPostIt");
+    //alert(idLst);
+    // On prï¿½cise ce que l'on va faire quand on aura reï¿½u la rï¿½ponse du serveur.
+    xhr2.onload = function () {
+        // Si la requï¿½te http s'est bien passï¿½e.
+        if (xhr2.status === 200) {
+            console.log("200 afficher post it");
             var elt = document.getElementById("post-it-context");
             
             elt.innerHTML = "";
-            
-            for (var x = 0; x < xhr.responseXML.getElementsByTagName("ingLib").length; x++) {
+            var tab = xhr2.responseXML.getElementsByTagName("idIng");
+            alert(tab);
+            for (var x = 0; x < tab.length; x++) {
                 // Elï¿½ment html que l'on va mettre ï¿½ jour.
-                var idIng = xhr.responseXML.getElementsByTagName("idIng")[x].firstChild.nodeValue;
+                var idIng = xhr2.responseXML.getElementsByTagName("idIng")[x].firstChild.nodeValue;
                 //elt3.insertAdjacentHTML("beforeend","<div name='lien' id='"+ xhr.responseXML.getElementsByTagName("rayonProd")[x].firstChild.nodeValue +"'>"+xhr.responseXML.getElementsByTagName("rayonProd")[x].firstChild.nodeValue+"</div><br/>");
-                var libIng = xhr.responseXML.getElementsByTagName("ingLib")[x].firstChild.nodeValue;
+                var libIng = xhr2.responseXML.getElementsByTagName("ingLib")[x].firstChild.nodeValue;
                 var txt = creerModulePostIt(libIng, idIng);
                 elt.insertAdjacentHTML("beforeend", txt);
             }
             
+            for (var y = 0; y < xhr2.responseXML.getElementsByTagName("idIng").length; y++) {
+                var idIng = xhr2.responseXML.getElementsByTagName("idIng")[y].firstChild.nodeValue;
+                document.getElementById("idPostit_" + idIng).addEventListener("click", saisirSessionIng);    
+            }
+            
             //obtenir liste deroulante
             lstDeroulante = "<select id='lstDeroulante'>";
-            var tabIng = xhr.responseXML.getElementsByTagName("tousIng");
+            var tabIng = xhr2.responseXML.getElementsByTagName("tousIng");
             for(i=0; i<tabIng[0].getElementsByTagName("TidIng").length; i++){
                 lstDeroulante = lstDeroulante+"<option name ='ing' value='"+tabIng[0].getElementsByTagName("TidIng")[i].firstChild.nodeValue+"'>"
                     +tabIng[0].getElementsByTagName("TlibIng")[i].firstChild.nodeValue+"</option>";
@@ -192,31 +223,50 @@ function afficherPostIt(){
             document.getElementById("lstDeroulante").addEventListener("change", verifierListeChoisie);    
         }
     }; 
-    xhr.send();
+    xhr2.send();
 }
 
-function afficherProduit(){
+function saisirSessionIng(){
+    //récupérer le nom de la liste
+    var idIng = event.srcElement.name;
+    // Objet XMLHttpRequest.
     var xhr = new XMLHttpRequest();
     // Requï¿½te au serveur avec les paramï¿½tres ï¿½ventuels.
-    xhr.open("GET", "ServletListeCourses?method=AfficherProduit");
+    xhr.open("GET", "ServletListeCourses?method=SaisirSessionIng&idIng="+idIng);
     //alert(idLst);
     // On prï¿½cise ce que l'on va faire quand on aura reï¿½u la rï¿½ponse du serveur.
     xhr.onload = function () {
         // Si la requï¿½te http s'est bien passï¿½e.
-        if (xhr.status === 200) {
+        if (xhr.status === 200) {           
+            console.log(idIng);
+            window.location.href="ProduitPropose";    
+        }
+    }; 
+    xhr.send();
+}
+
+function afficherProduit(){
+    var xhr3 = new XMLHttpRequest();
+    // Requï¿½te au serveur avec les paramï¿½tres ï¿½ventuels.
+    xhr3.open("GET", "ServletListeCourses?method=AfficherProduit");
+    //alert(idLst);
+    // On prï¿½cise ce que l'on va faire quand on aura reï¿½u la rï¿½ponse du serveur.
+    xhr3.onload = function () {
+        // Si la requï¿½te http s'est bien passï¿½e.
+        if (xhr3.status === 200) {
                        
             var elt = document.getElementById("produit-context");
             
             elt.innerHTML = " ";
             
-            for (var i = 0; i < xhr.responseXML.getElementsByTagName("src").length; i++) {
-                var src = xhr.responseXML.getElementsByTagName("src")[i].firstChild.nodeValue;
-                var prixUniteProd = xhr.responseXML.getElementsByTagName("prixUniteProd")[i].firstChild.nodeValue;
-                var libProd = xhr.responseXML.getElementsByTagName("libProd")[i].firstChild.nodeValue;
-                var idProd = xhr.responseXML.getElementsByTagName("idProd")[i].firstChild.nodeValue;
-                var promoProd = xhr.responseXML.getElementsByTagName("promotionProd")[i].firstChild.nodeValue;
-                var prixPromo = xhr.responseXML.getElementsByTagName("prixPromo")[i].firstChild.nodeValue;
-                var tabLabel = xhr.responseXML.getElementsByTagName("label")[i];
+            for (var i = 0; i < xhr3.responseXML.getElementsByTagName("src").length; i++) {
+                var src = xhr3.responseXML.getElementsByTagName("src")[i].firstChild.nodeValue;
+                var prixUniteProd = xhr3.responseXML.getElementsByTagName("prixUniteProd")[i].firstChild.nodeValue;
+                var libProd = xhr3.responseXML.getElementsByTagName("libProd")[i].firstChild.nodeValue;
+                var idProd = xhr3.responseXML.getElementsByTagName("idProd")[i].firstChild.nodeValue;
+                var promoProd = xhr3.responseXML.getElementsByTagName("promotionProd")[i].firstChild.nodeValue;
+                var prixPromo = xhr3.responseXML.getElementsByTagName("prixPromo")[i].firstChild.nodeValue;
+                var tabLabel = xhr3.responseXML.getElementsByTagName("label")[i];
                 
                 //determiner si ce produit possede des labels ou pas
                 var srcLabel = "nonlabel";
@@ -233,14 +283,14 @@ function afficherProduit(){
             }
             elt.insertAdjacentHTML("beforeend","</div>");
             //var qte1 = 1;
-            for (var i = 0; i < xhr.responseXML.getElementsByTagName("src").length; i++) {
-                var idProd = xhr.responseXML.getElementsByTagName("idProd")[i].firstChild.nodeValue;
+            for (var i = 0; i < xhr3.responseXML.getElementsByTagName("src").length; i++) {
+                var idProd = xhr3.responseXML.getElementsByTagName("idProd")[i].firstChild.nodeValue;
                 document.getElementById("btn_ajouter" + idProd).addEventListener("click", function(){ajouter(1);});
                 //document.getElementById("btn_detail"+idProd).addEventListener("click", plusDetail);
             }
         }
     }; 
-    xhr.send();
+    xhr3.send();
 }
 
 function ajouter(q) {
@@ -337,11 +387,11 @@ function creerModuleProduit(i, src, prixUniteProd, libProd, idProd, promo, prixP
 function creerModulePostIt(libPostIt, idIng) {
     var postIt = "";
     if(idIng === 0){
-        postIt = ("<div class='col-sm-4'><div class='post-it'>"+libPostIt+"</div></div>")
+        postIt = ("<div class='col-sm-4'><div class='post-it'>"+libPostIt+"</div></div>");
     }else{
         postIt = ("<div class='col-sm-4'><div class='post-it'>"+
-            "< a href='#' name='"+idIng+"' id='lcId_" + idIng + "'>"+libPostIt+"</a>"    
-            +"</div></div>")
+            "<a href='#' name='"+idIng+"' id='idPostit_" + idIng + "'style='color:white;'>"+libPostIt+"</a>"    
+            +"</div></div>");
     }
     return postIt;
 }

@@ -96,6 +96,14 @@
         <servlet-name>ServletListeCourses</servlet-name>
         <servlet-class>metier.action.ServletListeCourses</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ProduitPropose</servlet-name>
+        <jsp-file>/html/ProduitPropose.html</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>ServletProduitPropose</servlet-name>
+        <servlet-class>metier.action.ServletProduitPropose</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ServletConnexion</servlet-name>
         <url-pattern>/ServletConnexion</url-pattern>
@@ -191,6 +199,14 @@
     <servlet-mapping>
         <servlet-name>ServletListeCourses</servlet-name>
         <url-pattern>/ServletListeCourses</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProduitPropose</servlet-name>
+        <url-pattern>/ProduitPropose</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletProduitPropose</servlet-name>
+        <url-pattern>/ServletProduitPropose</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

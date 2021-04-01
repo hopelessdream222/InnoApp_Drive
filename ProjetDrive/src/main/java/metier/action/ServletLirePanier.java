@@ -55,7 +55,7 @@ public class ServletLirePanier extends HttpServlet {
                     float pourcentage = comporter.getProduits().getProm().getPourcentageProm();
                     if (libelleProm == 1) {
                         res = pourcentage * 100 + " % sur premierAchete";
-                        out.println("<src>image/" + comporter.getProduits().getIdP() + ".jpg</src><libelleP>" 
+                        out.println("<src>image/produits/" + comporter.getProduits().getIdP() + ".jpg</src><libelleP>" 
                                 + comporter.getProduits().getLibelleP() 
                                 + "</libelleP><promotion> (" + res + ")</promotion><PrixUnitaireP>" 
                                 + comporter.getProduits().getPrixUnitaireP() + "</PrixUnitaireP><Qte>" 

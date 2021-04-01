@@ -24,6 +24,7 @@ import miage.metier.ComporterId;
 import miage.metier.Composer;
 import miage.metier.ComposerId;
 import miage.metier.Concerner;
+import miage.metier.ConcernerId;
 import miage.metier.Creneau;
 import miage.metier.Disponibilite;
 import miage.metier.Ingredient;
@@ -702,6 +703,74 @@ public class TestHibernate
         }
         return lstP;
     }
+    
+     /*----- Chercher les produits proposés pour un post-it -----*/
+    public static List<Produit> chercherProduitProposePostit(int idCli, int idListe, int idIng) {
+        List<Produit> lstPPropose = new ArrayList<>();
+        //Liste de produits qui sont déjà existés dans cette liste de courses
+        List<Produit> lstPListeCourses = obtenirProduitListeCourse(idListe);
+        try ( Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
+            /*----- Ouverture d'une transaction -----*/
+            Transaction t = session.beginTransaction();
+            Client c = session.get(Client.class, idCli);
+            ListeCourse lc = session.get(ListeCourse.class, idListe);
+            Ingredient ing = session.get(Ingredient.class, idIng);
+            //tous les produits contenant cet ingrédient
+            Set<Produit> lstPIng = ing.getProduits();
+            //proposer premièrement les produits préférés par le client
+            for (Produit produitPref : c.getPreferences().keySet()) {
+                if (produitPref.getIngredient().getIdIng() == idIng) {
+                    lstPPropose.add(produitPref);
+                }
+            }
+            //puis proposer les produits qui ne sont pas dans la liste préférée
+            if (lstPPropose.size() > 0) {
+                for (Produit p : lstPIng) {
+                    if (!lstPPropose.contains(p)) {
+                        lstPPropose.add(p);
+                    }
+                }
+            } else {
+                for (Produit p : lstPIng) {
+                    lstPPropose.add(p);
+                }
+            }
+            for (Produit pro : lstPPropose) {
+                System.out.println("Pinggredient: " + pro.getIdP());
+            }
+            //enfin, supprimer tous les produits qui sont déjà dans la liste de courses
+            List<Produit> lstPSup = new ArrayList<>();
+            for (Produit PListeCourse : lstPListeCourses) {
+                for (Produit prod : lstPPropose) {
+                    if (prod.getIdP() == PListeCourse.getIdP()) {
+                        lstPSup.add(prod);
+                        //System.out.println("Remove: "+prod.getIdP());
+                    }
+                }
+            }
+            if (lstPSup.size() > 0) {
+                for (int i = 0; i < lstPSup.size(); i++) {
+                    lstPPropose.remove(lstPSup.get(i));
+                }
+            }
+        }       
+        for(int j=0;j<lstPPropose.size();j++){
+            System.out.println("Produit: "+lstPPropose.get(j).getIdP());
+        }
+        return lstPPropose;
+    }
+    
+    public static void inserProduitListeCourses(int idList, int idP) {
+        try ( Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
+            /*----- Ouverture d'une transaction -----*/
+            Transaction t = session.beginTransaction();
+            Produit p = session.get(Produit.class, idP);
+            Concerner con = new Concerner(new ConcernerId(idP, idList));
+            session.save(con);
+            t.commit();
+        }
+    }
+    
     /**
      * Programme de test.
      */

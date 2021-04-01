@@ -32,6 +32,10 @@ public class Concerner {
 
     public Concerner() {}
 
+    public Concerner(ConcernerId concernerid) {
+        this.concernerid = concernerid;
+    }
+
     
     public Concerner(ListeCourse listecourse, Produit produit) {
         this.listecourse = listecourse;
