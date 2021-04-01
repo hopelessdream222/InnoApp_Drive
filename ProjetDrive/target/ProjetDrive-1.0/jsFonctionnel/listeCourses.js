@@ -87,7 +87,7 @@ function saisirSession(){
     xhr.onload = function () {
         // Si la requ�te http s'est bien pass�e.
         if (xhr.status === 200) {
-            var libLst = xhr.responseXML.getElementsByTagName("libLst")[0].firstChild.nodeValue;
+            var libLst = xhr.responseXML.getElementsByTagName("libListe")[0].firstChild.nodeValue;
             document.getElementById("libListe-h2").innerHTML = "Liste : "+libLst;
             afficherPostIt();
             afficherProduit();     
@@ -181,9 +181,9 @@ function afficherPostIt(){
             //obtenir liste deroulante
             lstDeroulante = "<select id='lstDeroulante'>";
             var tabIng = xhr.responseXML.getElementsByTagName("tousIng");
-            for(i=0; i<tabIng.getElementsByTagName("idIng").length; i++){
-                lstDeroulante = lstDeroulante+"<option name ='ing' value='"+tabIng.getElementsByTagName("idIng")[i].firstChild.nodeValue+"'>"
-                    +tabIng.getElementsByTagName("libIng")[i].firstChild.nodeValue+"</option>";
+            for(i=0; i<tabIng[0].getElementsByTagName("TidIng").length; i++){
+                lstDeroulante = lstDeroulante+"<option name ='ing' value='"+tabIng[0].getElementsByTagName("TidIng")[i].firstChild.nodeValue+"'>"
+                    +tabIng[0].getElementsByTagName("TlibIng")[i].firstChild.nodeValue+"</option>";
             }
             lstDeroulante = lstDeroulante+"</select><br/><br/><button class='btn' id='btnAjouterPostIt'>Ajouter</button>";
             //inserer la liste derouante a HTML
@@ -207,7 +207,7 @@ function afficherProduit(){
                        
             var elt = document.getElementById("produit-context");
             
-            elt.innerHTML = "";
+            elt.innerHTML = " ";
             
             for (var i = 0; i < xhr.responseXML.getElementsByTagName("src").length; i++) {
                 var src = xhr.responseXML.getElementsByTagName("src")[i].firstChild.nodeValue;
@@ -335,9 +335,15 @@ function creerModuleProduit(i, src, prixUniteProd, libProd, idProd, promo, prixP
 }
 
 function creerModulePostIt(libPostIt, idIng) {
-    return ("<div class='col-sm-4'>"
-                +"<div class='post-it'>< a href='#' name='"+idIng+"' id='lcId_" + idIng + "'>"+libPostIt+"</a></div>"    
-            +"</div>");
+    var postIt = "";
+    if(idIng === 0){
+        postIt = ("<div class='col-sm-4'><div class='post-it'>"+libPostIt+"</div></div>")
+    }else{
+        postIt = ("<div class='col-sm-4'><div class='post-it'>"+
+            "< a href='#' name='"+idIng+"' id='lcId_" + idIng + "'>"+libPostIt+"</a>"    
+            +"</div></div>")
+    }
+    return postIt;
 }
 
 function verifierListeChoisie(){

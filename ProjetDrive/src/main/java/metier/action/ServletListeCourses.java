@@ -136,15 +136,14 @@ public class ServletListeCourses extends HttpServlet {
         int idLst = Integer.parseInt(request.getParameter("idLst")); 
         s.setAttribute("Liste", idLst);
         
-        String libLst = "nonLib";
-        for(ListeCourse l : lstC){
-            if(l.getIdListe() == idLst){
-                libLst = l.getLibelleListe();
-                break;
-            }
-        }
-        
         try (PrintWriter out = response.getWriter()){
+            String libLst = "nonLib";
+            for(ListeCourse l : lstC){
+                if(l.getIdListe() == idLst){
+                    libLst = l.getLibelleListe();
+                    break;
+                }
+            }
             /*----- Ecriture de la page XML -----*/
             out.println("<?xml version=\"1.0\"?>");
             out.println("<libListe>"+libLst+"</libListe>");
@@ -268,15 +267,13 @@ public class ServletListeCourses extends HttpServlet {
             
             for (Ingredient ing : lIngredients){
                 out.println("<ingLib>" + ing.getLibelleIng() +"</ingLib><idIng>" + ing.getIdIng()+"</idIng>");                
-                System.out.println("<ingLib>" + ing.getLibelleIng() +"</ingLib><idIng>" + ing.getIdIng()+"</idIng>");
             }
             //obtenir liste ingredient
             List<Ingredient> lstIng = TestHibernate.obtenirIngredient();
             out.println("<tousIng>");
             for(Ingredient ing : lstIng){
-                out.println("<libIng>"+ing.getLibelleIng()+"</libIng>"+
-                            "<idIng>"+ing.getIdIng()+"</idIng>");
-                System.out.println("lib ing "+ing.getLibelleIng());
+                out.println("<TlibIng>"+ing.getLibelleIng()+"</TlibIng>"+
+                            "<TidIng>"+ing.getIdIng()+"</TidIng>");
             }
             out.println("</tousIng>");
             
