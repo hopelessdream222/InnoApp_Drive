@@ -67,7 +67,7 @@ function afficheDetail() {
                 var idProd = xhr.responseXML.getElementsByTagName("idProd")[i].firstChild.nodeValue;
                 document.getElementById("btn_detail"+idProd).addEventListener("click", plusDetail);
                 if(verifierConnexion === "horsConnection"){
-                    document.getElementById("btn_ajouter"+idProd).addEventListener("click", function(){window.onload("Connexion");});
+                    document.getElementById("btn_ajouter"+idProd).addEventListener("click", function(){window.location.href = "Connexion";});
                 }else{
                     document.getElementById("btn_ajouter" + idProd).addEventListener("click", function(){ajouter(1);});
                 }
@@ -117,8 +117,8 @@ function afficheDetail() {
             for (var z = 0; z < xhr.responseXML.getElementsByTagName("recetteId").length; z++) {
                 var idRe = xhr.responseXML.getElementsByTagName("recetteId")[z].firstChild.nodeValue;
                 document.getElementById("btn_voir_detail" + idRe).addEventListener("click", allerDetailRecette);    
-            }
         }
+    }
     };
 
     // Envoie de la requï¿½te.
@@ -287,8 +287,6 @@ function afficherProduits() {
             //determiner si le client se connecte ou pas
             var verifierConnexion = "horsConnection";
             if (xhr.responseXML.getElementsByTagName("client")[0].firstChild.nodeValue !== "horsConnection") {
-            
-                var conn = document.getElementById("connexion");
                 verifierConnexion = "connexion";
             }
             var elt2 = document.getElementById("prod_ou_sonDetail");
@@ -323,7 +321,7 @@ function afficherProduits() {
                 var idProd = xhr.responseXML.getElementsByTagName("idProd")[i - 1].firstChild.nodeValue;
                 document.getElementById("btn_detail"+idProd).addEventListener("click", plusDetail);
                 if(verifierConnexion === "horsConnection"){
-                    document.getElementById("btn_ajouter"+idProd).addEventListener("click", function(){alert("Veuillez se connecter!");});
+                    document.getElementById("btn_ajouter"+idProd).addEventListener("click", function(){window.location.href = "Connexion";});
                 }else{
                     document.getElementById("btn_ajouter" + idProd).addEventListener("click", function(){ajouter(1);});
                 }
@@ -370,7 +368,7 @@ function rechercher() {
     var nomProd = document.getElementById("zonSaisi").value;
     if (nomProd === "") {
         alert("Veuillez saisir un produit");
-    } else {
+    } else {            
         // Requï¿½te au serveur avec les paramï¿½tres ï¿½ventuels.
         xhr.open("GET", "ServletAccueil?method=afficherProdParRecherche&nomProd=" + nomProd);
         var elt2 = document.getElementById("prod_ou_sonDetail");
@@ -378,6 +376,12 @@ function rechercher() {
         xhr.onload = function () {
             // Si la requï¿½te http s'est bien passï¿½e.
             if (xhr.status === 200) {
+                //determiner si le client se connecte ou pas
+                var verifierConnexion = "horsConnection";
+                if (xhr.responseXML.getElementsByTagName("client")[0].firstChild.nodeValue !== "horsConnection") {
+                    verifierConnexion = "connexion";
+                }
+                
                 var elt2 = document.getElementById("prod_ou_sonDetail");
                 if (xhr.responseXML.getElementsByTagName("res")[0].firstChild.nodeValue === "reussi") {
                     console.log("Trouvé!");
@@ -413,10 +417,13 @@ function rechercher() {
                     //var qte1 = 1;
                     for (var i = 0; i < xhr.responseXML.getElementsByTagName("src").length; i++) {
                         var idProd = xhr.responseXML.getElementsByTagName("idProd")[i].firstChild.nodeValue;
-                        document.getElementById("btn_ajouter" + idProd).addEventListener("click", function(){ajouter(1);});
                         document.getElementById("btn_detail"+idProd).addEventListener("click", plusDetail);
+                        if(verifierConnexion === "horsConnection"){
+                            document.getElementById("btn_ajouter"+idProd).addEventListener("click", function(){window.location.href = "Connexion";});
+                        }else{
+                            document.getElementById("btn_ajouter" + idProd).addEventListener("click", function(){ajouter(1);});
+                        } 
                     }
-
                 } else {
                     alert("Oups! Aucun résultat! ");
                     document.getElementById("zonSaisi").innerHTML = "";

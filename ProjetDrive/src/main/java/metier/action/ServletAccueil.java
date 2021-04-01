@@ -221,41 +221,38 @@ public class ServletAccueil extends HttpServlet {
    
     protected void afficherProdParRecherche(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException{
         String nomProd = request.getParameter("nomProd");
-
+        /*----- Type de la réponse -----*/
+        response.setContentType("application/xml;charset=UTF-8");
+        response.setCharacterEncoding("UTF-8");
         //nomProd fangjinqu
         List<Produit> lProduits = miage.dao.TestHibernate.searchProduits(nomProd);
+        try (PrintWriter out = response.getWriter()){
+            /*----- Ecriture de la page XML -----*/
+            out.println("<?xml version=\"1.0\"?>");
+            out.println("<responseRecherche>");  
+            if(lProduits.size()==0){
+                /*----- Ecriture de la page XML -----*/
+                //Si on trouve pas de client, on fait une response de "echec"
+                out.println("<res>echec</res>");  
 
-        if(lProduits.size()==0){
-            /*----- Type de la réponse -----*/
-            response.setContentType("application/xml;charset=UTF-8");
-            response.setCharacterEncoding("UTF-8");
-            try (PrintWriter out = response.getWriter()){
+            }else{
+                System.out.println("---reussi---");
                 /*----- Ecriture de la page XML -----*/
                 //Si on trouve pas de client, on fait une response de "echec"
-                out.println("<?xml version=\"1.0\"?>");
-                out.println("<responseRecherche>");
-                out.println("<res>echec</res>");
-                
-                System.out.println("---echec---");
-                out.println("</responseRecherche>");
-            }
-        }else{
-            System.out.println("---reussi---");
-            
-            /*----- Type de la réponse -----*/
-            response.setContentType("application/xml;charset=UTF-8");
-            response.setCharacterEncoding("UTF-8");
-            try (PrintWriter out = response.getWriter()){
-                /*----- Ecriture de la page XML -----*/
-                //Si on trouve pas de client, on fait une response de "echec"
-                out.println("<?xml version=\"1.0\"?>");
-                out.println("<responseRecherche><res>reussi</res>");
+                out.println("<res>reussi</res>");
                 for (Produit produit : lProduits){
                     out.println(creerModuleProduit(produit));
-                }
-                out.println("</responseRecherche>");
-                
+                }   
             }
+        /*----- Récupération le session de client -----*/
+            HttpSession s = request.getSession();
+            if(s.getAttribute("client")!=null){
+                Client client = (Client)s.getAttribute("client");
+                out.println("<client>"+client.getEmailCli()+"</client>");
+            }else{
+                out.println("<client>horsConnection</client>");
+            }
+            out.println("</responseRecherche>");
         }
     }
     

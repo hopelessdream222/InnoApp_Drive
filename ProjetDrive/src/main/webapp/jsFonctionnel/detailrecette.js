@@ -41,10 +41,11 @@ function afficheDetailRecette() {
             elt.innerHTML = txt;
             //elt.insertAdjacentHTML("beforeend","");
             //Client
-            document.getElementById("btn_re_ajouter").addEventListener("click", ajouterRecette);
+            
             if (xhr.responseXML.getElementsByTagName("client")[0].firstChild.nodeValue === "horsConnection") {
-                document.getElementById("btn_re_ajouter").style.disabled=true;
+                document.getElementById("btn_re_ajouter").addEventListener("click", function(){window.location.href = "Connexion";});
             } else {
+                document.getElementById("btn_re_ajouter").addEventListener("click", ajouterRecette);
                 var elt2 = document.getElementById("connexion");
                 elt2.innerHTML = "Bienvenue! " + xhr.responseXML.getElementsByTagName("client")[0].firstChild.nodeValue;
                 document.getElementById("listeCourses").style.display = "block";
