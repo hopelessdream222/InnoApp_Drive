@@ -48,25 +48,39 @@ function afficherPanier()
                 for (var k = 0; k < i_btn.length; k++) {
                     i_btn[k].onclick = function () {
                         bt = this;
-                        //?????? sous total
+                        //pour trouver sous total
                         at = this.parentElement.parentElement.nextElementSibling;
-                        //?????? prix unitaire
+                        //pour trouver prix unitaire
                         pt = this.parentElement.parentElement.previousElementSibling;
-                        //?????  cliquer + pour augmenter la quantite de produit
+                        //cliquer + pour augmenter la quantite de produit
                         node = bt.parentNode.childNodes[1];
                         //console.log(node);
                         num = node.innerText;
                         num = parseInt(num);
                         num++;
                         node.innerText = num;
-                        //????
+                        idpele = pt.previousElementSibling.previousElementSibling.previousElementSibling;
+                        idpmodifier=idpele.childNodes[0].textContent;
+                        //console.log(idp);
+                        //console.log(num);
+                        var xhrajouter = new XMLHttpRequest();
+                        // Requête au serveur avec les paramètres éventuels.
+                        xhrajouter.open("GET", "ServletModifierQte?idP=" + idpmodifier+"&qte="+num);
+                        // On précise ce que l'on va faire quand on aura reçu la réponse du serveur.
+                        xhrajouter.onload = function () {
+                            // Si la requête http s'est bien passée.
+                            if (xhrajouter.status === 200) {
+                                //alert("Attention ! Il faut actualiser votre web !");
+                            }
+                        };
+                        xhrajouter.send();
+                        //le prix unitaire sous le format string
                         price = pt.innerText;
                         price = price.substring(0, price.length - 5);
-                        //price = (price).toFixed(2);
-                        //?????
+                        //calculer soustotal
                         var soustotal = toDecimal2(price * num);
                         at.innerText = soustotal + " euro";
-                        //?????
+                        //metter a jour le prix total
                         getAmount();
                     };
                 }
@@ -77,11 +91,11 @@ function afficherPanier()
                 for (k = 0; k < i_btn.length; k++) {
                     d_btn[k].onclick = function () {
                         bt = this;
-                        //??????
+                        //获取小计节点
                         at = this.parentElement.parentElement.nextElementSibling;
-                        //??????
+                        //获取单价节点
                         pt = this.parentElement.parentElement.previousElementSibling;
-                        //??c_num??
+                        //获取c_num节点
                         node = bt.parentNode.childNodes[1];
                         num = node.innerText;
                         num = parseInt(num);
@@ -89,14 +103,29 @@ function afficherPanier()
                             num--;
                         }
                         node.innerText = num;
-                        //????
+                        idpele = pt.previousElementSibling.previousElementSibling.previousElementSibling;
+                        idpmodifier=idpele.childNodes[0].textContent;
+                        //console.log(idp);
+                        //console.log(num);
+                        var xhrdiminuer = new XMLHttpRequest();
+                        // Requête au serveur avec les paramètres éventuels.
+                        xhrdiminuer.open("GET", "ServletModifierQte?idP=" + idpmodifier+"&qte="+num);
+                        // On précise ce que l'on va faire quand on aura reçu la réponse du serveur.
+                        xhrdiminuer.onload = function () {
+                            // Si la requête http s'est bien passée.
+                            if (xhrdiminuer.status === 200) {
+                                //alert("Attention ! Il faut actualiser votre web !");
+                            }
+                        };
+                        xhrdiminuer.send();
+                        //获取单价
                         price = pt.innerText;
                         price = price.substring(0, price.length - 5);
                         //price = (price).toFixed(2);
-                        //?????
+                        //计算小计值
                         var soustotal = toDecimal2(price * num);
                         at.innerText = soustotal + " euro";
-                        //?????
+                        //计算总计值
                         getAmount();
                     }
                 }

@@ -447,7 +447,7 @@ public class TestHibernate
         }
 
         // Modifier la nombre de places disponible pour ce creneau ( moins 1)
-        //magCmd.getCreneaux().get(creneauCmd).setNbPlaceRest(magCmd.getCreneaux().get(creneauCmd).getNbPlaceRest() - 1);
+        magCmd.getCreneaux().get(creneauCmd).setNbPlaceRest(magCmd.getCreneaux().get(creneauCmd).getNbPlaceRest() - 1);
 
         // Generation d'une nouvelle commande
         Commande cmd = new Commande();
