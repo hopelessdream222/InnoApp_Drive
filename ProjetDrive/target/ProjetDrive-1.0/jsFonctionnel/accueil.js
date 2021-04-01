@@ -59,6 +59,8 @@ function afficheDetail() {
                 elt2.innerHTML = "Bienvenue! " + xhr.responseXML.getElementsByTagName("client")[0].firstChild.nodeValue;
                 document.getElementById("listeCourses").style.display = "block";
                 document.getElementById("panier").style.display = "block";
+                document.getElementById("listeCourses").style.display = "block";
+                document.getElementById("cartcounter").style.display = "block";
                 //elt2.insertAdjacentHTML("afterbegin",xhr.responseXML.getElementsByTagName("client")[0].firstChild.nodeValue);
                 afficherQte();
             }
