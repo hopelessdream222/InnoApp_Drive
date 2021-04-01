@@ -7,7 +7,7 @@
     <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/innoapp</property>
     <!--localhost:3307/db_21809099-->
     <property name="hibernate.connection.username">root</property>
-    <property name="hibernate.connection.password"></property>
+    <property name="hibernate.connection.password">380681</property>
 
     <!-- Parseur HQL -->
     <property name="hibernate.query.factory_class">org.hibernate.hql.internal.classic.ClassicQueryTranslatorFactory</property>

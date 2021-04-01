@@ -315,14 +315,6 @@ public class TestHibernate
         return res;
     }
     
-    public static String libIngerdient(int idIng) {
-        try (Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
-            /*----- Ouverture d'une transaction -----*/
-            Transaction t = session.beginTransaction();
-            Ingredient Ing = session.get(Ingredient.class, idIng);
-            return Ing.getLibelleIng();
-        }
-    }
     
      public static List<Necessiter> chercherIngRecette(int id) { //Client client
         /*----- Ouverture de la session -----*/

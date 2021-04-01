@@ -158,5 +158,3 @@ function ajouterRecette(){
 document.addEventListener("DOMContentLoaded", () => {
     //document.getElementById("btn_re_ajouter").addEventListener("click", ajouterRecette);
 });
-
-                           
