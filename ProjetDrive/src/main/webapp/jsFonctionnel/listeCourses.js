@@ -274,7 +274,7 @@ function afficherProduit(){
                 if (tabLabel.getElementsByTagName("srcLabel")[0].firstChild.nodeValue !== "nonlabel") {
                     for (j = 0; j < tabLabel.getElementsByTagName("srcLabel").length; j++) {
                         srcLabel = "";
-                        srcLabel = srcLabel + "< img src='" +tabLabel.getElementsByTagName("srcLabel")[j].firstChild.nodeValue + "' width='50px' height='50px'/>";
+                        srcLabel = srcLabel + "<img src='" +tabLabel.getElementsByTagName("srcLabel")[j].firstChild.nodeValue + "' width='50px' height='50px'/>";
                     }
                 }
                 

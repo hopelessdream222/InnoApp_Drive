@@ -44,14 +44,25 @@ function afficherProduit() {
             console.log("reussi");
             var elt = document.getElementById("produitsTous");
             elt.innerHTML = "";
-            for (var i = 0; i < xhr.responseXML.getElementsByTagName("src").length; i++) {
+            for (var i = 0; i < xhr.responseXML.getElementsByTagName("idProd").length; i++) {
                 var src = xhr.responseXML.getElementsByTagName("src")[i].firstChild.nodeValue;
                 var prixUniteProd = xhr.responseXML.getElementsByTagName("prixUniteProd")[i].firstChild.nodeValue;
                 var libProd = xhr.responseXML.getElementsByTagName("libProd")[i].firstChild.nodeValue;
                 var idProd = xhr.responseXML.getElementsByTagName("idProd")[i].firstChild.nodeValue;
+                var prixPromo = xhr.responseXML.getElementsByTagName("prixPromo")[i].firstChild.nodeValue;
                 var promoProd = xhr.responseXML.getElementsByTagName("promotionProd")[i].firstChild.nodeValue;
-                var text = creerModuleProduit(i, src, prixUniteProd, libProd, idProd, promoProd);
+                var tabLabel = xhr.responseXML.getElementsByTagName("label")[i];
+                
+                //determiner si ce produit possede des labels ou pas
+                var srcLabel = "nonlabel";
+                if (tabLabel.getElementsByTagName("srcLabel")[0].firstChild.nodeValue !== "nonlabel") {
+                    for (j = 0; j < tabLabel.getElementsByTagName("srcLabel").length; j++) {
+                        srcLabel = "";
+                        srcLabel = srcLabel + "<img src='" +tabLabel.getElementsByTagName("srcLabel")[j].firstChild.nodeValue + "' width='50px' height='50px'/>";
+                    }
+                }
                 // El?ment html que l'on va mettre ? jour.
+                var text = creerModuleProduit(i, src, prixUniteProd, libProd, idProd, promoProd,prixPromo,srcLabel);
                 elt.insertAdjacentHTML("beforeend", text);
             }
             
