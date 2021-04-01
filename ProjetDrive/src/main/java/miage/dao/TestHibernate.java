@@ -300,13 +300,13 @@ public class TestHibernate
                 int libelleProm = p.getProm().getLibelleProm();
                 float pourcentage = p.getProm().getPourcentageProm();
                 if (libelleProm == 1) {
-                    res = "Promo: "+ pourcentage * 100 + "%";
+                    res = "Promo: - "+ pourcentage * 100 + "%";
                     System.out.println(res);
                 } else if (libelleProm == 2) {
-                    res = "Le deuxième à "+pourcentage * 100 + "%, soit un";
+                    res = "Le deuxième - "+pourcentage * 100 + "%, soit un";
                     System.out.println(res);
                 } else if (libelleProm == 3) {
-                    res = "Le troisième à "+pourcentage * 100 + "%, soit un";
+                    res = "Le troisième - "+pourcentage * 100 + "%, soit un";
                     System.out.println(res);
                 }
             } catch (NullPointerException npe) {
