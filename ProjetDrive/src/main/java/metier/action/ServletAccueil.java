@@ -198,7 +198,15 @@ public class ServletAccueil extends HttpServlet {
             /*----- Ecriture de la page XML -----*/
             out.println("<?xml version=\"1.0\"?>");
             out.println("<liste_produit>");
- 
+            
+            /*----- Récupération le session de client -----*/
+            HttpSession s = request.getSession();
+            if(s.getAttribute("client")!=null){
+                Client client = (Client)s.getAttribute("client");
+                out.println("<client>"+client.getEmailCli()+"</client>");
+            }else{
+                out.println("<client>horsConnection</client>");
+            }
             /*----- Lecture de liste de mots dans la BD -----*/
             //Appeler la fonction dans DAO
             List<Produit> lProduits = miage.dao.TestHibernate.obtenirProduits(idCate);

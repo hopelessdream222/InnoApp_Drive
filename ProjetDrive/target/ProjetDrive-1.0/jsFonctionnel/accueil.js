@@ -18,6 +18,23 @@ function afficheDetail() {
         // Si la requ�te http s'est bien pass�e.
         if (xhr.status === 200) {
             console.log("reussi");
+            
+            //determiner si le client se connecte ou pas
+            var verifierConnexion = "horsConnection";
+            if (xhr.responseXML.getElementsByTagName("client")[0].firstChild.nodeValue !== "horsConnection") {
+            
+                var conn = document.getElementById("connexion");
+                conn.innerHTML = "Bienvenue! " + xhr.responseXML.getElementsByTagName("client")[0].firstChild.nodeValue;
+                document.getElementById("listeCourses").style.display = "block";
+                document.getElementById("panier").style.display = "block";
+                document.getElementById("listeCourses").style.display = "block";
+                document.getElementById("cartcounter").style.display = "block";
+                //elt2.insertAdjacentHTML("afterbegin",xhr.responseXML.getElementsByTagName("client")[0].firstChild.nodeValue);
+                afficherQte();
+                
+                verifierConnexion = "connexion";
+            }
+            
             var elt = document.getElementById("prod_ou_sonDetail");
             elt.innerHTML = "<h2 class='title text-center' id='nosProds'>NOS PRODUITS</h2>"+
                             "<div id='produitsTous'>";
@@ -48,21 +65,12 @@ function afficheDetail() {
             //var qte1 = 1;
             for (var i = 0; i < xhr.responseXML.getElementsByTagName("src").length; i++) {
                 var idProd = xhr.responseXML.getElementsByTagName("idProd")[i].firstChild.nodeValue;
-                document.getElementById("btn_ajouter" + idProd).addEventListener("click", function(){ajouter(1);});
                 document.getElementById("btn_detail"+idProd).addEventListener("click", plusDetail);
-            }
-
-            //Client
-            if (xhr.responseXML.getElementsByTagName("client")[0].firstChild.nodeValue === "horsConnection") {
-            } else {
-                var elt2 = document.getElementById("connexion");
-                elt2.innerHTML = "Bienvenue! " + xhr.responseXML.getElementsByTagName("client")[0].firstChild.nodeValue;
-                document.getElementById("listeCourses").style.display = "block";
-                document.getElementById("panier").style.display = "block";
-                document.getElementById("listeCourses").style.display = "block";
-                document.getElementById("cartcounter").style.display = "block";
-                //elt2.insertAdjacentHTML("afterbegin",xhr.responseXML.getElementsByTagName("client")[0].firstChild.nodeValue);
-                afficherQte();
+                if(verifierConnexion === "horsConnection"){
+                    document.getElementById("btn_ajouter"+idProd).addEventListener("click", function(){window.onload("Connexion");});
+                }else{
+                    document.getElementById("btn_ajouter" + idProd).addEventListener("click", function(){ajouter(1);});
+                }
             }
 
             var elt3 = document.getElementById("accordian");
@@ -276,6 +284,13 @@ function afficherProduits() {
     xhr.onload = function () {
         // Si la requ�te http s'est bien pass�e.
         if (xhr.status === 200) {
+            //determiner si le client se connecte ou pas
+            var verifierConnexion = "horsConnection";
+            if (xhr.responseXML.getElementsByTagName("client")[0].firstChild.nodeValue !== "horsConnection") {
+            
+                var conn = document.getElementById("connexion");
+                verifierConnexion = "connexion";
+            }
             var elt2 = document.getElementById("prod_ou_sonDetail");
             elt2.innerHTML = "<h2 class='title text-center' id='nosProds'>NOS PRODUITS</h2>"+
                             "<div id='produitsTous'>";
@@ -306,8 +321,12 @@ function afficherProduits() {
             //var qte1 = 1;
             for (var i = 1; i <= xhr.responseXML.getElementsByTagName("src").length; i++) {
                 var idProd = xhr.responseXML.getElementsByTagName("idProd")[i - 1].firstChild.nodeValue;
-                document.getElementById("btn_ajouter" + idProd).addEventListener("click", function(){ajouter(1);});
                 document.getElementById("btn_detail"+idProd).addEventListener("click", plusDetail);
+                if(verifierConnexion === "horsConnection"){
+                    document.getElementById("btn_ajouter"+idProd).addEventListener("click", function(){alert("Veuillez se connecter!");});
+                }else{
+                    document.getElementById("btn_ajouter" + idProd).addEventListener("click", function(){ajouter(1);});
+                }
             }
 
         }
