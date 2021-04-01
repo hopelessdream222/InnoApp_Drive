@@ -56,7 +56,7 @@ window.onload = function () {
                 if(disponibilite[i].firstChild.nodeValue == 1){
                     afficherdis = "disponible";
                 }else if(disponibilite[i].firstChild.nodeValue == 0){
-                    afficherdis = "<input type='checkbox' id='"+idP[i].firstChild.nodeValue+"' name='dispon'>";
+                    afficherdis = "<input type='checkbox' id='"+idP[i].firstChild.nodeValue+"' name='dispon' style = 'display : none'>indisponible";
                 }   
 
                 oDiv.innerHTML += '<div class="ctrl left"><span>'+afficherdis+'</span></div>';
