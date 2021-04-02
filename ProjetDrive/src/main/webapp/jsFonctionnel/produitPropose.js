@@ -123,7 +123,7 @@ function creerModuleProduit(i, src, prixUniteProd, libProd, idProd, promo, prixP
 
 
 function ajouterALaliste() {
-    alert(event.srcElement.name);
+    console.log(event.srcElement.name);
     //récupérer le nom de la liste
     //---------------------------chuan idPost------------------------------
     var idPro = event.srcElement.name;

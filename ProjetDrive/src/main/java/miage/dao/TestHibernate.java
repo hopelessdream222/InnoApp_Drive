@@ -944,8 +944,13 @@ public class TestHibernate
         //TestHibernate.afficherLabels("");
         //TestHibernate.obtenirRecettes();
         //TestHibernate.chercherIngRecette(1);
+        Map res = new HashMap();
+        for (miage.metier.Comporter comporter : TestHibernate.chercherPanierClient(1)) {        
+            res=comparerQtePanierQteStockClient(1,comporter.getProduits().getIdP(),1);
+            System.out.println(res.get(comporter.getProduits()));
+        }
         /*----- Exit -----*/
-        System.exit(0);
+//        System.exit(0);
     }
 
 }

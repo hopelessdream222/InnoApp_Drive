@@ -134,9 +134,9 @@ function genererCmd() {
 
         // Si la requÃªte http s'est bien passÃe.
         if (xhr.status === 200) {
-            alert("La facture est ete envoye. ");
+            alert("La facture est ete envoyé.");
         } else {
-            alert("pb");
+            alert("problème inconnu");
         }
     };
     xhr.send();

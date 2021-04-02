@@ -334,7 +334,7 @@ function ajouterPostIt(idPostIt) {
         if (xhr.status === 200) {
             var res = xhr.responseXML.getElementsByTagName("res")[0].firstChild.nodeValue;
             if (res === "existe") {
-                alert("Ce post-it est d&#xE9;j&#xE0; exist!");
+                alert("Ce post-it est déjà exist!");
             } else {
                 afficherPostIt();
             }

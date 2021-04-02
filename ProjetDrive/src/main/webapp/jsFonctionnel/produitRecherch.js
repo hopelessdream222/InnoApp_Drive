@@ -18,10 +18,10 @@ function afficheProds (){
         xhr.onload = function(){
             // Si la requête http s'est bien passée.
             if (xhr.status === 200){  
-                alert("200");
+                console.log("200");
                 var elt = document.getElementById("corps");                
                 if(xhr.responseXML.getElementsByTagName("res")[0].firstChild.nodeValue==="reussi"){
-                    alert("zhaodaole!");                    
+                    console.log("zhaodaole!");                    
                     for(var i=0;i<xhr.responseXML.getElementsByTagName("src").length;i++){
                        elt.insertAdjacentHTML("afterbegin","<div class='left'><img src='"
                                +xhr.responseXML.getElementsByTagName("src")[i].firstChild.nodeValue+
@@ -36,7 +36,7 @@ function afficheProds (){
                     }
 
                 }else{
-                    alert("meizhaodao!");
+                    console.log("meizhaodao!");
                     document.getElementById("zonSaisi").innerHTML="";
                     elt.innerHTML="";
                 }               

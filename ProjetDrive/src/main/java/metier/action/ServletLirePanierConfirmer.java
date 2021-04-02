@@ -64,17 +64,17 @@ public class ServletLirePanierConfirmer extends HttpServlet {
             /*----- Recuperation le session de client -----*/
             HttpSession s = request.getSession();
             Client client = (Client) s.getAttribute("client");
-            
+            System.out.println("cccccccc"+client.getIdCli());
             int idMag = (Integer) s.getAttribute("idMag");
-
+            System.out.println("mmmmmmmmmmmmm"+idMag);
             
             // Calculer le point fidelite utilisable pour une commande
             int pointfi = TestHibernate.chercherPointfideliteUtilisableClient(client.getIdCli());
             pointfi = pointfi * 10;
-            
+            System.out.println("ppppppppppp"+pointfi);
             // Calculer l'economie totale d'une commande
             float economie = TestHibernate.calculerEconomiePromotionClient(client.getIdCli());
-            
+            System.out.println("eeeeeeeeeeeeeeeeeee"+economie);
             /*----- Lecture de liste de produit dans le panier de client dans la BD -----*/
             for (miage.metier.Comporter comporter : TestHibernate.chercherPanierClient(client.getIdCli())) {
                 String res = " ";
