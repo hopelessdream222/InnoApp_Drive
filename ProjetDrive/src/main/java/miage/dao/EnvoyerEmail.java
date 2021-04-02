@@ -24,9 +24,9 @@ public class EnvoyerEmail {
      */
 
     private static String SERVEUR_SMTP = "smtp.ut-capitole.fr";
-    private static String LOGIN = "21809089";
-    private static String FROM = "weihao.xu@ut-capitole.fr";
-    private static String MDP = "mima";
+    private static String LOGIN = "21809051";
+    private static String FROM = "siyvan.zhou@ut-capitole.fr";
+    private static String MDP = "zhousiyuan960114";
 
     public static void envoyerEmail(int idCli) {  //int idCli,int idCmd
         /**

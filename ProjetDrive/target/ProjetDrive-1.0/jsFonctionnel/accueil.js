@@ -333,6 +333,32 @@ function afficherProduits() {
  */
 function ajouter(q) {
     var produitchoisi = event.srcElement.name;
+    alert(produitchoisi);
+    var result = confirm("Vous voulez l'ajouter au panier ?");
+    if (result) {
+        // Objet XMLHttpRequest.
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "ServletAccueil?method=ajouterPanier&idP=" + produitchoisi + "&qte=" + q, true);
+        // On precise ce que l'on va faire quand on aura recu la reponse du serveur.
+        xhr.onload = function () {
+            // Si la requete http s'est bien passee.
+            if (xhr.status === 200) {
+                var result2 = alert("Le produit est bien ajoute dans le panier");
+                afficherQte();
+            }
+        };
+    }
+    // Envoie de la requete.
+    xhr.send();
+}
+
+/**
+ * ajouter au panier avec une quantite q
+ * @param {type} q quantite
+ */
+function ajouterDetail(q) {
+    var produitchoisi = document.getElementById("btn_detail_ajouter").name;
+    alert(produitchoisi);
     var result = confirm("Vous voulez l'ajouter au panier ?");
     if (result) {
         // Objet XMLHttpRequest.
@@ -521,10 +547,11 @@ function plusDetail() {
                 "</div>" +
                 "</div><!--/product-details-->";
         eltRight.innerHTML = txt;
+        console.log(txt);
         if(verifierConnexion === "horsConnection"){
             document.getElementById("btn_detail_ajouter").addEventListener("click", function(){window.location.href = "Connexion";});
         }else{
-            document.getElementById("btn_detail_ajouter").addEventListener("click", function(){ajouter(document.getElementById("detail_qte").value);});
+            document.getElementById("btn_detail_ajouter").addEventListener("click", function(){ajouterDetail(document.getElementById("detail_qte").value);});
         }
 
     };
