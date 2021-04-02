@@ -69,7 +69,7 @@ function choisirCre() {
         }
     }
 
-    alert(heure + "  " + idCre);
+    //alert(heure + "  " + idCre);
     // Objet XMLHttpRequest.
     var xhr = new XMLHttpRequest();
     // Requête au serveur avec les paramètres éventuels.

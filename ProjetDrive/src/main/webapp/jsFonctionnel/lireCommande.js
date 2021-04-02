@@ -23,7 +23,7 @@ window.onload = function () {
                     eltDate.innerHTML = "Date : " + xhr2.responseXML.getElementsByTagName("date")[0].firstChild.nodeValue;
                     var elt2 = document.getElementById("J_userInfo");
                     elt2.innerHTML = "Bonjour " + xhr2.responseXML.getElementsByTagName("emailCli")[0].firstChild.nodeValue;
-            
+
                 }
             };
             xhr2.send();
@@ -37,7 +37,7 @@ window.onload = function () {
             var promotion = xhr.responseXML.getElementsByTagName("promotion");
             var nouveauprix = xhr.responseXML.getElementsByTagName("nouveauprix");
             var disponibilite = xhr.responseXML.getElementsByTagName("disponibilite");
-       
+
             var oCar = document.getElementById("car");
 
 
@@ -49,26 +49,26 @@ window.onload = function () {
                 oDiv.innerHTML += '<div class="img left"><img src="' + image[i].firstChild.nodeValue + '" width="80" height="80"></div>';
                 oDiv.innerHTML += '<div class="name left"><span>' + libelleP[i].firstChild.nodeValue + '<br/>' + promotion[i].firstChild.nodeValue + '</span></div>';
                 oDiv.innerHTML += '<div class="price left"><span>' + toDecimal2(PrixUnitaireP[i].firstChild.nodeValue) + ' euro</span></div>';
-                oDiv.innerHTML += '<div class="prixreel left"><span>'+toDecimal2(nouveauprix[i].firstChild.nodeValue)+' euro</span></div>';
+                oDiv.innerHTML += '<div class="prixreel left"><span>' + toDecimal2(nouveauprix[i].firstChild.nodeValue) + ' euro</span></div>';
                 oDiv.innerHTML += ' <div class="number left"><span>' + Qte[i].firstChild.nodeValue + '</span> </div>';
                 oDiv.innerHTML += '<div class="subtotal left"><span>' + toDecimal2(nouveauprix[i].firstChild.nodeValue * Qte[i].firstChild.nodeValue) + ' euro</span></div>';
-                var afficherdis = "";     
-                if(disponibilite[i].firstChild.nodeValue == 1){
+                var afficherdis = "";
+                if (disponibilite[i].firstChild.nodeValue == 1) {
                     afficherdis = "disponible";
-                }else if(disponibilite[i].firstChild.nodeValue == 0){
-                    afficherdis = "<input type='checkbox' id='"+idP[i].firstChild.nodeValue+"' name='dispon' style = 'display : none'>indisponible";
-                }   
+                } else if (disponibilite[i].firstChild.nodeValue == 0) {
+                    afficherdis = "<input type='checkbox' id='" + idP[i].firstChild.nodeValue + "' name='dispon' style = 'display : none'>indisponible";
+                }
 
-                oDiv.innerHTML += '<div class="ctrl left"><span>'+afficherdis+'</span></div>';
+                oDiv.innerHTML += '<div class="ctrl left"><span>' + afficherdis + '</span></div>';
                 oCar.appendChild(oDiv);
                 getAmount();
 
             }
             var eltdispon = document.getElementsByName("dispon");
-            if (eltdispon.length == 0){
+            if (eltdispon.length == 0) {
                 document.getElementById("btnremplacer").style.display = "none";
                 document.getElementById("valider").style.display = "block";
-            }else if(eltdispon.length > 0){
+            } else if (eltdispon.length > 0) {
                 document.getElementById("btnremplacer").style.display = "block";
                 document.getElementById("valider").style.display = "none";
             }
@@ -82,8 +82,8 @@ window.onload = function () {
 
 // calculer le prix total
 function getAmount() {
-    ns = document.getElementsByClassName("name left");
     sum = 0;
+    ns = document.getElementsByClassName("name left");
     document.getElementById("price_num").innerText = sum;
     for (y = 1; y < ns.length; y++) {
         amount_info = ns[y].parentElement.lastElementChild.previousElementSibling;
@@ -92,9 +92,14 @@ function getAmount() {
         document.getElementById("price_num").innerText = sum;
     }
     sum = toDecimal2(sum);
-    document.getElementById("price_num").innerText = sum;
+    var check = document.getElementById("pointf");
+    if (check.checked) {
+        document.getElementById("price_num").innerText = sum - document.getElementById("pointspan").innerText / 10;
+    } else {
+        document.getElementById("price_num").innerText = sum;
+    }
 }
-function toDecimal2(x) { 
+function toDecimal2(x) {
     if (isNaN(x)) {
         return false;
     }
@@ -113,10 +118,10 @@ function toDecimal2(x) {
 
 function genererCmd() {
     var economie = document.getElementById("price_eco").innerText;
-    var xhr = new XMLHttpRequest();    
+    var xhr = new XMLHttpRequest();
     // Requête au serveur avec les paramètres éventuels.
-    xhr.open("GET", "ServletGenererCommande?economie="+economie);
-    alert("ServletGenererCommande?economie="+economie);
+    xhr.open("GET", "ServletGenererCommande?economie=" + economie);
+    //alert("ServletGenererCommande?economie=" + economie);
     // On précise ce que l'on va faire quand on aura reçu la réponse du serveur.
     xhr.onload = function () {
 
@@ -132,23 +137,23 @@ function genererCmd() {
 function remplacerProd() {
     var eltdispon = document.getElementsByName("dispon");
     var listProdVect = new Array(eltdispon.length);
-    for(i = 0;i<eltdispon.length;i++){
+    for (i = 0; i < eltdispon.length; i++) {
         listProdVect[i] = eltdispon[i].id;
     }
-    var listProdStrig=listProdVect.toString();
-    
+    var listProdStrig = listProdVect.toString();
+
 //    alert(lidP);
-    var xhr = new XMLHttpRequest();    
+    var xhr = new XMLHttpRequest();
     // Requete au serveur avec les parametres eventuels.
-    xhr.open("GET", "ServletStockerRemplacerProd?lidP="+listProdStrig);
-    alert(listProdStrig);
+    xhr.open("GET", "ServletStockerRemplacerProd?lidP=" + listProdStrig);
+    console.log(listProdStrig);
     // On precise ce que l'on va faire quand on aura reçu la réponse du serveur.
     xhr.onload = function () {
         // Si la requete http s'est bien passee.
         if (xhr.status === 200) {
-            alert("nice");
+            //alert("nice");
         } else {
-            alert("pb");
+            //alert("pb");
         }
     };
     xhr.send();
@@ -160,5 +165,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.getElementById("valider").addEventListener("click", genererCmd);
     document.getElementById("btnremplacer").addEventListener("click", remplacerProd);
+    document.getElementById("pointf").addEventListener("click", getAmount);
 });
 

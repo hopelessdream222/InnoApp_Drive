@@ -90,7 +90,7 @@ function choisirMag() {
         }
     }
     //location.href="Creneau?"+"magasin="+encodeURI(idMag.value);
-    alert(nomMag + "    " + date+"---------"+idMag);
+    //alert(nomMag + "    " + date+"---------"+idMag);
     // Objet XMLHttpRequest.
     var xhr = new XMLHttpRequest();
 
