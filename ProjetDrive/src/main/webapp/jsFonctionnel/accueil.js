@@ -507,7 +507,7 @@ function plusDetail() {
                 srcNS +
                 "<br/><span><span>" + prixUniteProd + " " + prixApresPromo + "</span>" +
                 "<label>Quantit&#xE9;:</label>" +
-                "<input type='text' value='1' id='detail_qte'/>" +
+                "<input type='number' value='1' id='detail_qte'/>" +
                 "<button type='button' class='btn btn-fefault cart' name='" + xhr.responseXML.getElementsByTagName("idProd")[0].firstChild.nodeValue +
                 "' id='btn_detail_ajouter'>" +
                 "<i class='fa fa-shopping-cart'></i>" +
