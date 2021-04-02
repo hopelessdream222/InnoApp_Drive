@@ -18,7 +18,7 @@ function afficherCreneau() {
                 if (xhr2.status === 200) {
                     var elt2 = document.getElementById("J_userInfo");
                     elt2.innerHTML = "Magasin :  " + xhr2.responseXML.getElementsByTagName("nomMag")[0].firstChild.nodeValue+
-                            " Bonjour " + xhr2.responseXML.getElementsByTagName("emailCli")[0].firstChild.nodeValue;       
+                            ", Bienvenue! " + xhr2.responseXML.getElementsByTagName("emailCli")[0].firstChild.nodeValue;       
                 }
             };
             xhr2.send();

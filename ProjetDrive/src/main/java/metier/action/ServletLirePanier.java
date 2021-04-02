@@ -57,7 +57,7 @@ public class ServletLirePanier extends HttpServlet {
                                 + comporter.getProduits().getIdP() + "</idP>");
 
                     } else if (libelleProm == 1) {
-                        res = pourcentage * 100 + " % sur premierAchete";
+                        res = "- " + pourcentage * 100 + " % sur premierAchete";
                         out.println("<src>image/produits/" + comporter.getProduits().getIdP() + ".jpg</src><libelleP>"
                                 + comporter.getProduits().getLibelleP()
                                 + "</libelleP><promotion> (" + res + ")</promotion><PrixUnitaireP>"
@@ -67,7 +67,7 @@ public class ServletLirePanier extends HttpServlet {
                                 + comporter.getProduits().getIdP() + "</idP>");
 
                     } else if (libelleProm == 2) {
-                        res = pourcentage * 100 + " % sur deuxiemeAchete";
+                        res = "- " + pourcentage * 100 + " % sur deuxiemeAchete";
                         out.println("<src>image/produits/" + comporter.getProduits().getIdP() + ".jpg</src><libelleP>"
                                 + comporter.getProduits().getLibelleP()
                                 + "</libelleP><promotion> (" + res + ")</promotion><PrixUnitaireP>"
@@ -77,7 +77,7 @@ public class ServletLirePanier extends HttpServlet {
                                 + comporter.getProduits().getIdP() + "</idP>");
 
                     } else if (libelleProm == 3) {
-                        res = pourcentage * 100 + " % sur troisiemeAchete";
+                        res = "- " + pourcentage * 100 + " % sur troisiemeAchete";
                         out.println("<src>image/produits/" + comporter.getProduits().getIdP() + ".jpg</src><libelleP>"
                                 + comporter.getProduits().getLibelleP()
                                 + "</libelleP><promotion> (" + res + ")</promotion><PrixUnitaireP>"

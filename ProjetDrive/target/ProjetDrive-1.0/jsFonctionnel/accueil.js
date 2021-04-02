@@ -15,6 +15,7 @@ function chargerPage() {
         if (xhr.status === 200) {
             //determiner si le client se connecte ou pas
             var verifierConnexion = "horsConnection";
+            afficherQte();
             if (xhr.responseXML.getElementsByTagName("client")[0].firstChild.nodeValue !== "horsConnection") {
                 var conn = document.getElementById("connexion");
                 conn.innerHTML = "Bienvenue! " + xhr.responseXML.getElementsByTagName("client")[0].firstChild.nodeValue;
@@ -22,7 +23,6 @@ function chargerPage() {
                 document.getElementById("panier").style.display = "block";
                 document.getElementById("listeCourses").style.display = "block";
                 document.getElementById("cartcounter").style.display = "block";
-                afficherQte();
                 
                 verifierConnexion = "connexion";
             }
@@ -333,7 +333,7 @@ function afficherProduits() {
  */
 function ajouter(q) {
     var produitchoisi = event.srcElement.name;
-    alert(produitchoisi);
+    console.log(produitchoisi);
     var result = confirm("Vous voulez l'ajouter au panier ?");
     if (result) {
         // Objet XMLHttpRequest.
@@ -358,7 +358,7 @@ function ajouter(q) {
  */
 function ajouterDetail(q) {
     var produitchoisi = document.getElementById("btn_detail_ajouter").name;
-    alert(produitchoisi);
+    console.log(produitchoisi);
     var result = confirm("Vous voulez l'ajouter au panier ?");
     if (result) {
         // Objet XMLHttpRequest.
@@ -533,7 +533,7 @@ function plusDetail() {
                 srcNS +
                 "<br/><span><span>" + prixUniteProd + " " + prixApresPromo + "</span>" +
                 "<label>Quantit&#xE9;:</label>" +
-                "<input type='number' value='1' id='detail_qte'/>" +
+                "<input type='number' value='1' min='1' id='detail_qte'/>" +
                 "<button type='button' class='btn btn-fefault cart' name='" + xhr.responseXML.getElementsByTagName("idProd")[0].firstChild.nodeValue +
                 "' id='btn_detail_ajouter'>" +
                 "<i class='fa fa-shopping-cart'></i>" +

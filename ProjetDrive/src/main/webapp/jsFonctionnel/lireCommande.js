@@ -22,7 +22,7 @@ window.onload = function () {
                     var eltDate = document.getElementById("date");
                     eltDate.innerHTML = "Date : " + xhr2.responseXML.getElementsByTagName("date")[0].firstChild.nodeValue;
                     var elt2 = document.getElementById("J_userInfo");
-                    elt2.innerHTML = "Bonjour " + xhr2.responseXML.getElementsByTagName("emailCli")[0].firstChild.nodeValue;
+                    elt2.innerHTML = "Bienvenue! " + xhr2.responseXML.getElementsByTagName("emailCli")[0].firstChild.nodeValue;
 
                 }
             };
@@ -94,7 +94,7 @@ function getAmount() {
     sum = toDecimal2(sum);
     var check = document.getElementById("pointf");
     if (check.checked) {
-        document.getElementById("price_num").innerText = sum - document.getElementById("pointspan").innerText / 10;
+        document.getElementById("price_num").innerText = toDecimal2(sum - document.getElementById("pointspan").innerText / 10);
     } else {
         document.getElementById("price_num").innerText = sum;
     }
@@ -118,14 +118,21 @@ function toDecimal2(x) {
 
 function genererCmd() {
     var economie = document.getElementById("price_eco").innerText;
+    var check = document.getElementById("pointf");
+    var pointfidelite = 0;
+    if (check.checked) {
+        pointfidelite = 1;
+    } else {
+        pointfidelite = 0;
+    }
     var xhr = new XMLHttpRequest();
-    // Requête au serveur avec les paramètres éventuels.
-    xhr.open("GET", "ServletGenererCommande?economie=" + economie);
+    // Requête au serveur avec les paramètres �ventuels.
+    xhr.open("GET", "ServletGenererCommande?economie=" + economie+"&pointfidelite="+pointfidelite);
     //alert("ServletGenererCommande?economie=" + economie);
-    // On précise ce que l'on va faire quand on aura reçu la réponse du serveur.
+    // On pr�cise ce que l'on va faire quand on aura reçu la r�ponse du serveur.
     xhr.onload = function () {
 
-        // Si la requête http s'est bien passée.
+        // Si la requête http s'est bien pass�e.
         if (xhr.status === 200) {
             alert("La facture est ete envoye. ");
         } else {

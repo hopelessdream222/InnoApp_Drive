@@ -68,18 +68,16 @@ public class ServletGenererCommande extends HttpServlet {
         int idCren = (Integer) s.getAttribute("idCre");
         String dateR = (String) s.getAttribute("date");
         float economie = Float.parseFloat(request.getParameter("economie"));
+        int pointfidelite = Integer.parseInt(request.getParameter("pointfidelite"));
         int idCmd;
         try {
-            idCmd = TestHibernate.enregistrerCmd(client.getIdCli(), idMag, idCren, dateR, economie);
+            idCmd = TestHibernate.enregistrerCmd(client.getIdCli(), idMag, idCren, dateR, economie, pointfidelite);
             imprimerFacturation(client.getIdCli(), idCmd);
         } catch (ParseException ex) {
             Logger.getLogger(ServletGenererCommande.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-//            
-//        } catch (ParseException ex) {
-//            Logger.getLogger(ServletGenererCommande.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+
     }
 
 

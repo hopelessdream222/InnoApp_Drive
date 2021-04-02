@@ -31,6 +31,7 @@ public class Commande {
     private Date datecmd;
     private Date dateRetrait;
     private float economieCmd;
+    private int utilisationPointF;
     
     // Relation <LigneCommande>
     @OneToMany(mappedBy = "commandes",cascade=CascadeType.ALL)
@@ -133,7 +134,15 @@ public class Commande {
     public void setEconomieCmd(float economieCmd) {
         this.economieCmd = economieCmd;
     }
-    
+
+    public int getUtilisationPointF() {
+        return utilisationPointF;
+    }
+
+    public void setUtilisationPointF(int utilisationPointF) {
+        this.utilisationPointF = utilisationPointF;
+    }    
+       
     @Override
     public String toString() {
         return "Commande{" + "idCmd=" + idCmd + ", datecmd=" + datecmd + ", lignecommandes=" + lignecommandes + ", clientCmd=" + clientCmd + ", magasinCmd=" + magasinCmd + '}';

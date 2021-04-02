@@ -52,13 +52,13 @@ public class EnvoyerEmail {
         try {
             email_attach.setFrom(FROM);
             email_attach.addTo(c.getEmailCli());
-            email_attach.setSubject("JavaMail attachment");
-            email_attach.setMsg("Cet email contient un ficher attaché !");
+            email_attach.setSubject("Merci pour votre commande!");
+            email_attach.setMsg("Cher client, ceci est un message automatique avec en pi�ce jointe votre facture pour votre commande !");
             email_attach.attach(attachment);
             email_attach.send();
-            System.out.println("Mail avec un fichier attaché envoyé !");
+            System.out.println("Mail avec un fichier attache envoye !");
         } catch (EmailException ex) {
-            System.out.println("Erreur lors de l'envoi d'un mail avec un fichier attaché !\n" + ex.getMessage());
+            System.out.println("Erreur lors de l'envoi d'un mail avec un fichier attache !\n" + ex.getMessage());
         }
 //        System.out.println(c.getEmailCli());
     }

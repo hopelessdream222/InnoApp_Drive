@@ -84,26 +84,6 @@ public class TestHibernate
         }
         return lp;
     }
-     
-    public static void loadPhotos() throws FileNotFoundException, IOException, SQLException {
-        /*----- Ouverture de la session -----*/
-        try ( Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
-            /*----- Ouverture d'une transaction -----*/
-            Transaction t = session.beginTransaction();
-            List<Produit> liste = session.createQuery("from Produit").list();
-            for (Produit p : liste) {
-                InputStream inputStream = p.getPhotoP().getBinaryStream();
-                FileOutputStream fos = new FileOutputStream("src\\main\\webapp\\image\\" + p.getIdP() + ".jpg");
-                byte[] b = new byte[1024];
-                int len = -1;
-                while ((len = inputStream.read(b)) != -1) {
-                    fos.write(b, 0, len);
-                }
-                fos.close();
-                inputStream.close();
-            }
-        }
-    }
 
     public static Client clientConnecter(String email, String mdp) {
         Client c = new Client();
@@ -172,14 +152,23 @@ public class TestHibernate
         return lstLables;
     }
 
+    /**
+     * 
+     * @return tous les rayons dans la base de données
+     */
     public static List<Rayon> obtenirRayons() {
+        List<Rayon> lstRay=new ArrayList<>();
         /*----- Ouverture de la session -----*/
         try ( Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
             /*----- Ouverture d'une transaction -----*/
             Transaction t = session.beginTransaction();
             List<Rayon> liste = session.createQuery("from Rayon").list();
-            return liste;
+            for (int i = 0; i < liste.size(); i++) {
+                Rayon r = session.get(Rayon.class, liste.get(i).getIdRay());
+                lstRay.add(r);
+            }
         }
+         return lstRay;
     }
     
     
@@ -231,6 +220,7 @@ public class TestHibernate
         }
          return lstRec;
     }
+    
     public static void insertRecettePanier(int idCli, int idRect) {
         List<Necessiter> lstNes = chercherIngRecette(idRect);
         for (Necessiter n : lstNes) {
@@ -239,6 +229,7 @@ public class TestHibernate
             System.out.println("cli: " + idCli + "ingredient: " + n.getIngredient().getLibelleIng() + "produit: " + lstP.get(0).getIdP());
         }
     }
+    
     public static List<Produit> chercherPromsProduits() {
         List<Produit> lstP=new ArrayList<>();
         /*----- Ouverture de la session -----*/
@@ -266,8 +257,7 @@ public class TestHibernate
             return r;
         }
     }
-    
-    
+        
     public static List<Produit> chercherProduitRecommenter(int idRect, int idIng) { 
         List<Produit> lstP = new ArrayList<>();
         /*----- Ouverture de la session -----*/
@@ -315,7 +305,6 @@ public class TestHibernate
             }
         return res;
     }
-    
     
      public static List<Necessiter> chercherIngRecette(int id) { //Client client
         /*----- Ouverture de la session -----*/
@@ -421,13 +410,13 @@ public class TestHibernate
         return liste;
     }
     /*----- Enregistrer les donnees d'une commande-----*/
-    public static int enregistrerCmd(int idCli, int idMag, int idCren, String dateR,float economie) throws ParseException {
+    public static int enregistrerCmd(int idCli, int idMag, int idCren, String dateR,float economie,int utilisationPointF) throws ParseException {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction t = session.beginTransaction();
         System.out.println("---------------------"+idCli+idMag+idCren);
 
         // La date de la commande
-        Date dateSys = new Date();
+        Date dateSys = new Date();   
         SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String date = formatDate.format(dateSys);
         Date dateCmd = formatDate.parse(date);
@@ -457,13 +446,34 @@ public class TestHibernate
         cmd.setMagasinCmd(magCmd);
         cmd.setDateRetrait(dateRetrait);
         cmd.setEconomieCmd(economie);
-        session.save(cmd);
+        // Calculer le prixTotal de la commande
+        float prixTotal = 0;
+        for (miage.metier.Comporter comporter : liste) {
+            prixTotal += comporter.getQtePP() * comporter.getProduits().getPrixUnitaireP();
+        }
         t.commit();
+        //point fidelite apres l'utilisation pour une commande
+        float c = clientCmd.getPointCli() - chercherPointfideliteUtilisableClient(clientCmd.getIdCli()) * 10;
+        // point fidelite apres la validation d'une commande
+        int c1 = (int) (c + prixTotal - calculerEconomiePromotionClient(clientCmd.getIdCli())) / 10;
+
+        if (utilisationPointF == 1) {
+            cmd.setUtilisationPointF(1);
+            cmd.getClientCmd().setPointCli(c1);
+        } else if (utilisationPointF == 0) {
+            cmd.setUtilisationPointF(0);
+        }
+        Session session1 = HibernateUtil.getSessionFactory().getCurrentSession();
+        Transaction t1 = session1.beginTransaction();
+        session1.save(cmd);
+        t1.commit();
 
         // Generation des lignes commandes
         enregistrerLigneCmd(clientCmd, cmd, liste);
         return cmd.getIdCmd();
     }
+    
+    
     /*----- Enregistrer des lignes commandes -----*/ 
     public static void enregistrerLigneCmd(Client clientCmd, Commande cmd, List<Comporter> liste) throws ParseException {
         for (Comporter c : liste) {
@@ -503,7 +513,6 @@ public class TestHibernate
         try (Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
             Transaction t = session.beginTransaction();
             Client c = session.get(Client.class, idCli);
-
         
             for (Produit p : c.getPanier().getComportements().keySet()) {
                 liste.add(c.getPanier().getComportements().get(p));
@@ -546,13 +555,13 @@ public class TestHibernate
                 if (libelleProm == 0) {
                     economie = 0;
                 } else if (libelleProm == 1) {
-                    economie = pu * (1-pourcentage);
+                    economie = pu * pourcentage;
 //                    System.out.println("libelleProm == 1: " + economie);
                 } else if (libelleProm == 2) {
-                    economie = pu - (pu * pourcentage+ pu)/2 ;
+                    economie = pu - (pu * (1-pourcentage)+ pu)/2 ;
 //                    System.out.println("libelleProm == 2: " + economie);
                 } else if (libelleProm == 3) {
-                    economie = pu - (pu * pourcentage+ 2*pu)/3;
+                    economie = pu - (pu * (1-pourcentage)+ 2*pu)/3;
 //                    System.out.println("libelleProm == 3: " + economie);
                 }
             } catch (NullPointerException npe) {
@@ -763,10 +772,8 @@ public class TestHibernate
             t.commit();
         }
     }
-    
-    
-    //-----------------------------------------------
-    
+      
+    //-----------------------------------------------   
     public static Magasin chercherMagasin(int idMag) {
         try (Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
             /*----- Ouverture d'une transaction -----*/
@@ -810,7 +817,7 @@ public class TestHibernate
             libelleProm = p.getProm().getLibelleProm();
             t.commit();
             if (libelleProm > 0) {
-                PUApresProm = (calculerEconomiePromotionClientUnProd(idP) * qtePan / libelleProm + p.getPrixUnitaireP() * (qtePan - qtePan / libelleProm)) / qtePan; //??
+                PUApresProm = ((p.getPrixUnitaireP()-calculerEconomiePromotionClientUnProd(idP)) *libelleProm* (int)(qtePan / libelleProm) + p.getPrixUnitaireP() * (int)(qtePan % libelleProm)) / qtePan; //??
             } else if (libelleProm == 0) {
                 PUApresProm = p.getPrixUnitaireP();
             }

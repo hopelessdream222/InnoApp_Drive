@@ -13,7 +13,7 @@ function afficherMag() {
             if (xhr.responseXML.getElementsByTagName("client")[0] === null) {
             } else {
                 var elt2 = document.getElementById("J_userInfo");
-                elt2.innerHTML = "Bonjour " + xhr.responseXML.getElementsByTagName("client")[0].firstChild.nodeValue;
+                elt2.innerHTML = "Bienvenue! " + xhr.responseXML.getElementsByTagName("client")[0].firstChild.nodeValue;
             }
 
 
